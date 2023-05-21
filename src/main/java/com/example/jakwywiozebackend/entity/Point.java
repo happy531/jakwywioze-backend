@@ -8,10 +8,13 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
+@Table(name = "points")
 public class Point {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column
+    private String name;
     @Column
     private String openingHours;
     @Column
@@ -24,7 +27,7 @@ public class Point {
     private String street;
     @Column
     private Boolean type;
-    @Column
+    @PrimaryKeyJoinColumn
     @OneToOne
     private DynamicPointInfo dynamicPointInfo;
     @Column
