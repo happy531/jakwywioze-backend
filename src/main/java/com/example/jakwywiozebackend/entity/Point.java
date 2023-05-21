@@ -3,14 +3,12 @@ package com.example.jakwywiozebackend.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 
 import java.util.List;
 
 @Entity
 @Getter
 @Setter
-@ToString
 @Table
 public class Point {
     @Id
@@ -35,6 +33,11 @@ public class Point {
     private DynamicPointInfo dynamicPointInfo;
     @Column
     @ManyToMany
+    @JoinTable(
+            name = "point_waste",
+            joinColumns = @JoinColumn(name = "point_id"),
+            inverseJoinColumns = @JoinColumn(name = "waste_type_id")
+    )
     private List<WasteType> wasteTypes;
     @Column
     @OneToMany

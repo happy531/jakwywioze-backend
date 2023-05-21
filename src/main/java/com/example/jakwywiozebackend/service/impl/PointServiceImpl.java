@@ -22,13 +22,12 @@ public class PointServiceImpl implements PointService {
 
     @Override
     public PointDto getPoint(Long id) {
-        return null;
+        return pointMapper.toPointDto(pointRepository.findById(id).orElseThrow(() -> new RuntimeException("null point")));
     }
 
     @Override
     public PointDto createPoint(PointDto pointDto) {
         Point point = pointMapper.toPoint(pointDto);
-        System.out.println(pointDto.toString());
         return pointMapper.toPointDto(pointRepository.save(point));
     }
 }

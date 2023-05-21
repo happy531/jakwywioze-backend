@@ -20,9 +20,9 @@ public class PointController {
         return new ResponseEntity<>(pointService.createPoint(pointDto), HttpStatus.CREATED);
     }
 
-    @GetMapping("/test")
-    public ResponseEntity<String> apiTest(){
-        return new ResponseEntity<>("Jest git", HttpStatus.OK);
+    @GetMapping("/{id}")
+    public ResponseEntity<PointDto> getPoint(@RequestBody @PathVariable Long id){
+        return new ResponseEntity<>(pointService.getPoint(id), HttpStatus.OK);
     }
 
     @GetMapping
