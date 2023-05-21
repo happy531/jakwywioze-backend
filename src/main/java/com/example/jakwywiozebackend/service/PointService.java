@@ -7,4 +7,5 @@ import java.util.List;
 public interface PointService {
     List<PointDto> getPoints();
     PointDto getPoint(Long id);
+    PointDto createPoint(PointDto pointDto);
 }
