@@ -16,13 +16,19 @@ public class DynamicPointInfo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne
-    User user;
+    private User user;
+    @PrimaryKeyJoinColumn
     @OneToOne
-    Point point;
-    String city;
-    String street;
-    LocalDateTime startingDateTime;
-    LocalDateTime endingDateTime;
+    private Point point;
+    @Column
+    private String city;
+    @Column
+    private String street;
+    @Column
+    private LocalDateTime startingDateTime;
+    @Column
+    private LocalDateTime endingDateTime;
+    @Column
     @ElementCollection
-    List<String> additionalWasteTypes;
+    private List<String> additionalWasteTypes;
 }
