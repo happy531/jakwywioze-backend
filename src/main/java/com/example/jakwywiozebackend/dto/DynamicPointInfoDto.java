@@ -1,28 +1,23 @@
-package com.example.jakwywiozebackend.entity;
+package com.example.jakwywiozebackend.dto;
 
-import jakarta.persistence.*;
+import com.example.jakwywiozebackend.entity.*;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
 import java.util.List;
-
-@Entity
+@Data
 @Getter
 @Setter
-@Table
-public class DynamicPointInfo {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class DynamicPointInfoDto {
+
     private Long id;
-    @ManyToOne
     User user;
-    @OneToOne
     Point point;
     String city;
     String street;
     LocalDateTime startingDateTime;
     LocalDateTime endingDateTime;
-    @ElementCollection
     List<String> additionalWasteTypes;
 }
