@@ -29,4 +29,9 @@ public class PointController {
     public ResponseEntity<List<PointDto>> getAllPoints(){
         return new ResponseEntity<>(pointService.getPoints(), HttpStatus.OK);
     }
+
+    @GetMapping("/cities")
+    public ResponseEntity<List<String>> getAllCities(){
+        return new ResponseEntity<>(pointService.getCities(), HttpStatus.OK);
+    }
 }

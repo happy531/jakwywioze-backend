@@ -8,6 +8,7 @@ import com.example.jakwywiozebackend.service.PointService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 @Service
 @RequiredArgsConstructor
@@ -29,5 +30,15 @@ public class PointServiceImpl implements PointService {
     public PointDto createPoint(PointDto pointDto) {
         Point point = pointMapper.toPoint(pointDto);
         return pointMapper.toPointDto(pointRepository.save(point));
+    }
+
+    @Override
+    public List<String> getCities() {
+        List<String> cities = new ArrayList<>();
+        List<Point> points = pointRepository.findAll();
+        for (Point point : points) {
+            cities.add(point.getCity());
+        }
+        return cities;
     }
 }
