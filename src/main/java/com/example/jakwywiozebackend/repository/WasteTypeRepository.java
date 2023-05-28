@@ -16,4 +16,5 @@ public interface WasteTypeRepository extends JpaRepository<WasteType,Long> {
 
     Optional<WasteType> findById(Long id);
 
+    Optional<WasteType> findByName(String name);
 }

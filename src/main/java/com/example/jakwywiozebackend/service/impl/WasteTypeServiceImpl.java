@@ -5,6 +5,8 @@ import com.example.jakwywiozebackend.entity.WasteType;
 import com.example.jakwywiozebackend.mapper.WasteTypeMapper;
 import com.example.jakwywiozebackend.repository.WasteTypeRepository;
 import com.example.jakwywiozebackend.service.WasteTypeService;
+import jakarta.persistence.EntityExistsException;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -21,12 +23,15 @@ public class WasteTypeServiceImpl implements WasteTypeService {
 
     @Override
     public WasteTypeDto getWasteType(Long id) {
-        return wasteTypeMapper.toWasteTypeDto(wasteTypeRepository.findById(id).orElseThrow(() -> new RuntimeException("null waste type")));
+        return wasteTypeMapper.toWasteTypeDto(wasteTypeRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Waste type not found")));
     }
 
     @Override
     public WasteTypeDto createWasteType(WasteTypeDto wasteTypeDto) {
         WasteType wasteType = wasteTypeMapper.toWasteType(wasteTypeDto);
+        if(wasteTypeRepository.findByName(wasteType.getName()).isPresent()){
+            throw new EntityExistsException("Waste type already exists");
+        }
         return wasteTypeMapper.toWasteTypeDto(wasteTypeRepository.save(wasteType));
     }
 }
