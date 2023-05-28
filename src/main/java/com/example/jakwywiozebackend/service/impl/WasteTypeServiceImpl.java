@@ -34,4 +34,11 @@ public class WasteTypeServiceImpl implements WasteTypeService {
         }
         return wasteTypeMapper.toWasteTypeDto(wasteTypeRepository.save(wasteType));
     }
+
+    @Override
+    public WasteTypeDto deleteWasteType(Long id) {
+        WasteTypeDto wasteTypeDto = getWasteType(id);
+        wasteTypeRepository.delete(wasteTypeMapper.toWasteType(wasteTypeDto));
+        return wasteTypeDto;
+    }
 }

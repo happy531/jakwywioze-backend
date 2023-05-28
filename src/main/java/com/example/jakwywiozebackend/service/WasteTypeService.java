@@ -8,4 +8,5 @@ public interface WasteTypeService {
     List<WasteTypeDto> getWasteTypes();
     WasteTypeDto getWasteType(Long id);
     WasteTypeDto createWasteType(WasteTypeDto wasteTypeDto);
+    WasteTypeDto deleteWasteType(Long id);
 }
