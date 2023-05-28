@@ -1,6 +1,7 @@
 package com.example.jakwywiozebackend.controller;
 
 import com.example.jakwywiozebackend.dto.PointDto;
+import com.example.jakwywiozebackend.dto.WasteTypeDto;
 import com.example.jakwywiozebackend.service.PointService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -28,6 +29,11 @@ public class PointController {
     @GetMapping
     public ResponseEntity<List<PointDto>> getAllPoints(){
         return new ResponseEntity<>(pointService.getPoints(), HttpStatus.OK);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<PointDto> addWasteType(@RequestBody @PathVariable Long id, @RequestBody WasteTypeDto wasteTypeDto){
+        return new ResponseEntity<>(pointService.addWasteType(id, wasteTypeDto), HttpStatus.OK);
     }
 
     @GetMapping("/cities")

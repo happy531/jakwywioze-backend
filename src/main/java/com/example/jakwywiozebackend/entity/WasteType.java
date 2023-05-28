@@ -3,6 +3,7 @@ package com.example.jakwywiozebackend.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.util.List;
 
@@ -22,7 +23,6 @@ public class WasteType {
             allocationSize = 1
     )
     @Column(
-            name = "id",
             unique = true,
             updatable = false,
             nullable = false
@@ -31,6 +31,7 @@ public class WasteType {
     @Column
     private String name;
     @Column
+    @JsonIgnore
     @ManyToMany(mappedBy = "wasteTypes")
     private List<Point> points;
 }

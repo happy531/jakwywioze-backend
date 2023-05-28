@@ -10,6 +10,6 @@ import java.util.List;
 public interface PointMapper {
     Point toPoint(PointDto pointDto);
     PointDto toPointDto(Point point);
-    List<Point> toPointList(List<PointDto> pointDto);
-    List<PointDto> toPointDtoList(List<Point> point);
+    List<Point> toPointList(List<PointDto> pointDtos);
+    List<PointDto> toPointDtoList(List<Point> points);
 }

@@ -31,8 +31,9 @@ public class Point {
     @PrimaryKeyJoinColumn
     @OneToOne
     private DynamicPointInfo dynamicPointInfo;
-    @Column
-    @ManyToMany
+    @ManyToMany(
+            cascade = {CascadeType.ALL}
+    )
     @JoinTable(
             name = "point_waste",
             joinColumns = @JoinColumn(name = "point_id"),
