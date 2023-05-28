@@ -35,4 +35,9 @@ public class PointController {
     public ResponseEntity<PointDto> addWasteType(@RequestBody @PathVariable Long id, @RequestBody WasteTypeDto wasteTypeDto){
         return new ResponseEntity<>(pointService.addWasteType(id, wasteTypeDto), HttpStatus.OK);
     }
+
+    @GetMapping("/cities")
+    public ResponseEntity<List<String>> getAllCities(){
+        return new ResponseEntity<>(pointService.getCities(), HttpStatus.OK);
+    }
 }

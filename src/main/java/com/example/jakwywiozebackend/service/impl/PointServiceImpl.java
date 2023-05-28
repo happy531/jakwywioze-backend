@@ -11,6 +11,7 @@ import com.example.jakwywiozebackend.service.PointService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 @Service
 @RequiredArgsConstructor
@@ -46,5 +47,15 @@ public class PointServiceImpl implements PointService {
         wasteTypes.add(wasteTypeMapper.toWasteType(wasteTypeDto));
         point.setWasteTypes(wasteTypes);
         return pointMapper.toPointDto(pointRepository.save(point));
+    }
+
+    @Override
+    public List<String> getCities() {
+        List<String> cities = new ArrayList<>();
+        List<Point> points = pointRepository.findAll();
+        for (Point point : points) {
+            cities.add(point.getCity());
+        }
+        return cities;
     }
 }

@@ -10,4 +10,5 @@ public interface PointService {
     PointDto getPoint(Long id);
     PointDto createPoint(PointDto pointDto);
     PointDto addWasteType(Long id, WasteTypeDto wasteTypeDto);
+    List<String> getCities();
 }
