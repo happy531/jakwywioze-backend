@@ -29,4 +29,9 @@ public class WasteTypeController {
     public ResponseEntity<List<WasteTypeDto>> getAllWasteTypes(){
         return new ResponseEntity<>(wasteTypeService.getWasteTypes(), HttpStatus.OK);
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<WasteTypeDto> deleteWasteType(@RequestBody @PathVariable Long id){
+        return new ResponseEntity<>(wasteTypeService.deleteWasteType(id), HttpStatus.OK);
+    }
 }

@@ -8,6 +8,8 @@ import com.example.jakwywiozebackend.mapper.PointMapper;
 import com.example.jakwywiozebackend.mapper.WasteTypeMapper;
 import com.example.jakwywiozebackend.repository.PointRepository;
 import com.example.jakwywiozebackend.service.PointService;
+import jakarta.persistence.EntityExistsException;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -28,13 +30,19 @@ public class PointServiceImpl implements PointService {
 
     @Override
     public PointDto getPoint(Long id) {
-        return pointMapper.toPointDto(pointRepository.findById(id).orElseThrow(() -> new RuntimeException("null point")));
+        return pointMapper.toPointDto(pointRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Point not found")));
     }
 
     @Override
     public PointDto createPoint(PointDto pointDto) {
-        Point point = pointMapper.toPoint(pointDto);
-        return pointMapper.toPointDto(pointRepository.save(point));
+        List<PointDto> points = getPoints();
+        for (PointDto p: points) {
+            if(p.getLon() == pointDto.getLon()
+                    && p.getLat() == pointDto.getLat()){
+                throw new EntityExistsException("Point already exists");
+            }
+        }
+        return pointMapper.toPointDto(pointRepository.save(pointMapper.toPoint(pointDto)));
     }
 
     @Override
