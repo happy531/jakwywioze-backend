@@ -17,9 +17,10 @@ services:
     ports:
       - '8081:8081'
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/postgres
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/jakwywioze
       - SPRING_DATASOURCE_USERNAME=jakwywioze
       - SPRING_DATASOURCE_PASSWORD=jakwywioze
+      - SPRING_SESSION_JDBC_INITIALIZE_SCHEMA=always
     depends_on:
       - db
   nginx:
