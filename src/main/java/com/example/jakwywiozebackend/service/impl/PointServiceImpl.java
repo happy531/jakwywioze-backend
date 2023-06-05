@@ -1,5 +1,6 @@
 package com.example.jakwywiozebackend.service.impl;
 
+import com.example.jakwywiozebackend.dto.FilterInfoDto;
 import com.example.jakwywiozebackend.dto.PointDto;
 import com.example.jakwywiozebackend.dto.WasteTypeDto;
 import com.example.jakwywiozebackend.entity.Point;
@@ -65,5 +66,10 @@ public class PointServiceImpl implements PointService {
             cities.add(point.getCity());
         }
         return cities;
+    }
+
+    @Override
+    public List<PointDto> getFilteredPoints(FilterInfoDto filterInfoDto) {
+        return null;
     }
 }

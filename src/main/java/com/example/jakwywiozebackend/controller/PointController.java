@@ -1,5 +1,6 @@
 package com.example.jakwywiozebackend.controller;
 
+import com.example.jakwywiozebackend.dto.FilterInfoDto;
 import com.example.jakwywiozebackend.dto.PointDto;
 import com.example.jakwywiozebackend.dto.WasteTypeDto;
 import com.example.jakwywiozebackend.service.PointService;
@@ -19,6 +20,11 @@ public class PointController {
     @PostMapping
     public ResponseEntity<PointDto> createPoint(@RequestBody PointDto pointDto){
         return new ResponseEntity<>(pointService.createPoint(pointDto), HttpStatus.CREATED);
+    }
+
+    @PostMapping("/filtered")
+    public ResponseEntity<List<PointDto>> getFilteredPoints(@RequestBody FilterInfoDto filterInfoDto){
+        return new ResponseEntity<>(pointService.getFilteredPoints(filterInfoDto), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")

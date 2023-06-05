@@ -1,5 +1,6 @@
 package com.example.jakwywiozebackend.service;
 
+import com.example.jakwywiozebackend.dto.FilterInfoDto;
 import com.example.jakwywiozebackend.dto.PointDto;
 import com.example.jakwywiozebackend.dto.WasteTypeDto;
 
@@ -11,4 +12,5 @@ public interface PointService {
     PointDto createPoint(PointDto pointDto);
     PointDto addWasteType(Long id, WasteTypeDto wasteTypeDto);
     List<String> getCities();
+    List<PointDto> getFilteredPoints(FilterInfoDto filterInfoDto);
 }
