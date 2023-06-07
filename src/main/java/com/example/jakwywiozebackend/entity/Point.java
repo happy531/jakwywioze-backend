@@ -27,6 +27,8 @@ public class Point {
     @Column
     private String street;
     @Column
+    private String zipcode;
+    @Column
     private Boolean type;
     @PrimaryKeyJoinColumn
     @OneToOne

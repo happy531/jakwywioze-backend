@@ -20,6 +20,7 @@ public class PointDto {
     private float lat;
     private String city;
     private String street;
+    private String zipcode;
     private Boolean type;
     private DynamicPointInfo dynamicPointInfo;
     private List<WasteType> wasteTypes;

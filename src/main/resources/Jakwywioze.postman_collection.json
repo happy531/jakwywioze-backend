@@ -1,0 +1,168 @@
+{
+	"info": {
+		"_postman_id": "77a570f8-3376-4855-a577-057ff25c82d2",
+		"name": "Jakwywioze",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "15331703"
+	},
+	"item": [
+		{
+			"name": "Create point",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\":\"name 2\",\r\n    \"openingHours\":\"text\",\r\n    \"lon\": 1.1,\r\n    \"lat\": 1.0,\r\n    \"city\":\"text\"\r\n\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8081/points",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"points"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get points",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8081/points/2",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"points",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create waste type",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\":\"bio\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8081/waste-types",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"waste-types"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get waste types",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8081/waste-types/2",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"waste-types",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add waste type to point",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\":\"szklo\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8081/points/2",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"points",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get cities",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8081/points/cities",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"points",
+						"cities"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete waste type",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:8081/waste-types/5",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"waste-types",
+						"5"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

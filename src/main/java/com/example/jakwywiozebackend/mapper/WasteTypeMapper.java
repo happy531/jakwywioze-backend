@@ -11,4 +11,6 @@ public interface WasteTypeMapper {
     WasteTypeDto toWasteTypeDto(WasteType wasteType);
     List<WasteType> toWasteTypeList(List<WasteTypeDto> wasteTypeDtos);
     List<WasteTypeDto> toWasteTypeDtoList(List<WasteType> wasteTypes);
+    WasteTypeDto map(String name);
+    List<WasteTypeDto> toWasteTypeDtoListFromStringList(List<String> wasteList);
 }
