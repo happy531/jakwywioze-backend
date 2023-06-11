@@ -70,6 +70,11 @@ public class PointServiceImpl implements PointService {
 
     @Override
     public List<PointDto> getFilteredPoints(FilterInfoDto filterInfoDto) {
-        return null;
+        String city = filterInfoDto.getCity();
+        List<String> wasteTypes = filterInfoDto.getWasteTypesNames();
+        List<Point> points = pointRepository.findAllByCityAndWasteTypeIn(city, wasteTypes);
+        points.forEach(point -> point.setDynamicPointInfo(null));
+
+        return pointMapper.toPointDtoList(points);
     }
 }
