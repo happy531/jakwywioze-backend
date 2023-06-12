@@ -10,6 +10,7 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 @Service
 @RequiredArgsConstructor
@@ -17,8 +18,13 @@ public class WasteTypeServiceImpl implements WasteTypeService {
     private final WasteTypeRepository wasteTypeRepository;
     private final WasteTypeMapper wasteTypeMapper;
     @Override
-    public List<WasteTypeDto> getWasteTypes() {
-        return wasteTypeMapper.toWasteTypeDtoList(wasteTypeRepository.findAll());
+    public List<String> getWasteTypes() {
+        List<String> wasteTypeNames = new ArrayList<>();
+        List<WasteType> wasteTypeDtos = wasteTypeRepository.findAll();
+        wasteTypeDtos.forEach(wasteType -> {
+            wasteTypeNames.add(wasteType.getName());
+        });
+        return wasteTypeNames;
     }
 
     @Override

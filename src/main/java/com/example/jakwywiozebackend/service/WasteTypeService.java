@@ -5,7 +5,7 @@ import com.example.jakwywiozebackend.dto.WasteTypeDto;
 import java.util.List;
 
 public interface WasteTypeService {
-    List<WasteTypeDto> getWasteTypes();
+    List<String> getWasteTypes();
     WasteTypeDto getWasteType(Long id);
     WasteTypeDto createWasteType(WasteTypeDto wasteTypeDto);
     WasteTypeDto deleteWasteType(Long id);
