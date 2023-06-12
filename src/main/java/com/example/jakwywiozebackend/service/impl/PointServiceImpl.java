@@ -95,28 +95,40 @@ public class PointServiceImpl implements PointService {
         return EARTH_RADIUS * c;
     }
 
-    @Override
-    public List<PointDto> getFilteredPoints(FilterInfoDto filterInfoDto) {
-        String city = filterInfoDto.getCity();
-        List<String> wasteTypes = filterInfoDto.getWasteTypesNames();
-
-        List<Point> points = pointRepository.findAllByCityAndWasteTypeIn(city, wasteTypes);
-
-        // TODO fix
-        points.forEach(point -> point.setDynamicPointInfo(null));
-
+    private static List<Point> getPointsInRange(List<Point> points, int range) {
         // TODO get lat and lon from db or current current user location if he shares it
-        double poznanLon = 52.4064;
-        double poznanLat = 16.9252;
-
+        double poznanLon = 52.4064; // current lon
+        double poznanLat = 16.9252; // current lat
         // TODO postgis
         List<Point> pointsInRange = new ArrayList<>();
         points.forEach(point -> {
-            if (calculateRange(poznanLat, poznanLon, point.getLat(), point.getLon()) <= filterInfoDto.getRange()) {
+            if (calculateRange(poznanLat, poznanLon, point.getLat(), point.getLon()) <= range) {
                 pointsInRange.add(point);
             }
         });
 
-        return pointMapper.toPointDtoList(pointsInRange);
+        return pointsInRange;
+    }
+
+    @Override
+    public List<PointDto> getFilteredPoints(FilterInfoDto filterInfoDto) {
+        String city = filterInfoDto.getCity();
+        List<String> wasteTypes = filterInfoDto.getWasteTypesNames();
+        int range = filterInfoDto.getRange();
+
+        List<Point> points;
+
+        // if there is no range given
+        if (range == 0) {
+            points = pointRepository.findAllByCityAndWasteTypeIn(city, wasteTypes);
+        } else {
+            List<Point> allPointsByWasteTypeIn = pointRepository.findAllByRangeAndWasteTypeIn(wasteTypes);
+            points = getPointsInRange(allPointsByWasteTypeIn, range);
+        }
+
+        // TODO fix
+        points.forEach(point -> point.setDynamicPointInfo(null));
+
+        return pointMapper.toPointDtoList(points);
     }
 }
