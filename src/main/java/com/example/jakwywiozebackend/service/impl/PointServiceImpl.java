@@ -8,6 +8,7 @@ import com.example.jakwywiozebackend.entity.WasteType;
 import com.example.jakwywiozebackend.mapper.PointMapper;
 import com.example.jakwywiozebackend.mapper.WasteTypeMapper;
 import com.example.jakwywiozebackend.repository.PointRepository;
+import com.example.jakwywiozebackend.repository.WasteTypeRepository;
 import com.example.jakwywiozebackend.service.PointService;
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
@@ -23,6 +24,7 @@ public class PointServiceImpl implements PointService {
     private final PointRepository pointRepository;
     private final PointMapper pointMapper;
     private final WasteTypeMapper wasteTypeMapper;
+    private final WasteTypeRepository wasteTypeRepository;
 
     @Override
     public List<PointDto> getPoints() {
@@ -57,6 +59,10 @@ public class PointServiceImpl implements PointService {
                 return pointMapper.toPointDto(pointRepository.save(point));
             }
             i++;
+        }
+        if(wasteTypeRepository.findByName(wasteTypeDto.getName()).isPresent()){
+            wasteTypes.add(wasteTypeRepository.findByName(wasteTypeDto.getName()).get());
+            return pointMapper.toPointDto(pointRepository.save(point));
         }
         wasteTypes.add(wasteTypeMapper.toWasteType(wasteTypeDto));
         point.setWasteTypes(wasteTypes);
