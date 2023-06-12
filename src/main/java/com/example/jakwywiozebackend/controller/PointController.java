@@ -22,11 +22,6 @@ public class PointController {
         return new ResponseEntity<>(pointService.createPoint(pointDto), HttpStatus.CREATED);
     }
 
-    @PostMapping("/filtered")
-    public ResponseEntity<List<PointDto>> getFilteredPoints(@RequestBody FilterInfoDto filterInfoDto){
-        return new ResponseEntity<>(pointService.getFilteredPoints(filterInfoDto), HttpStatus.OK);
-    }
-
     @GetMapping("/{id}")
     public ResponseEntity<PointDto> getPoint(@RequestBody @PathVariable Long id){
         return new ResponseEntity<>(pointService.getPoint(id), HttpStatus.OK);
@@ -45,5 +40,10 @@ public class PointController {
     @GetMapping("/cities")
     public ResponseEntity<List<String>> getAllCities(){
         return new ResponseEntity<>(pointService.getCities(), HttpStatus.OK);
+    }
+
+    @PostMapping("/filtered")
+    public ResponseEntity<List<PointDto>> getFilteredPoints(@RequestBody FilterInfoDto filterInfoDto){
+        return new ResponseEntity<>(pointService.getFilteredPoints(filterInfoDto), HttpStatus.OK);
     }
 }
