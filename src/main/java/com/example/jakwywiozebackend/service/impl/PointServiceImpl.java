@@ -48,11 +48,16 @@ public class PointServiceImpl implements PointService {
 
     @Override
     public PointDto addWasteType(Long id, WasteTypeDto wasteTypeDto) {
-        Point point = new Point();
-        if(pointRepository.findById(id).isPresent()){
-            point = pointRepository.findById(id).get();
-        }
+        Point point = pointRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Point not found"));
         List<WasteType> wasteTypes = point.getWasteTypes();
+        // only god can judge me
+        int i = 0;
+        while (i < wasteTypes.size()){
+            if(wasteTypes.get(i).getName().equals(wasteTypeDto.getName())) {
+                return pointMapper.toPointDto(pointRepository.save(point));
+            }
+            i++;
+        }
         wasteTypes.add(wasteTypeMapper.toWasteType(wasteTypeDto));
         point.setWasteTypes(wasteTypes);
         return pointMapper.toPointDto(pointRepository.save(point));
