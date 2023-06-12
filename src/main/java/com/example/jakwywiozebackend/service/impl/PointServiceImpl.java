@@ -24,6 +24,7 @@ public class PointServiceImpl implements PointService {
     private final PointRepository pointRepository;
     private final PointMapper pointMapper;
     private final WasteTypeMapper wasteTypeMapper;
+    private final WasteTypeRepository wasteTypeRepository;
     private static final double EARTH_RADIUS = 6371.0; // Earth's radius in kilometers
 
     @Override
