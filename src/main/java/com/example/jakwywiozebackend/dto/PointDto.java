@@ -22,6 +22,9 @@ public class PointDto {
     private String street;
     private String zipcode;
     private Boolean type;
+    private String phoneNumber;
+    private String website;
+    private String imageLink;
     private DynamicPointInfo dynamicPointInfo;
     private List<WasteType> wasteTypes;
     private List<Comment> comments;
