@@ -29,6 +29,12 @@ public class Point {
     @Column
     private String zipcode;
     @Column
+    private String phoneNumber;
+    @Column
+    private String website;
+    @Column
+    private String imageLink;
+    @Column
     private Boolean type;
     @PrimaryKeyJoinColumn
     @OneToOne
