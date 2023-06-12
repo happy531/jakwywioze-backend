@@ -8,6 +8,7 @@ import com.example.jakwywiozebackend.entity.WasteType;
 import com.example.jakwywiozebackend.mapper.PointMapper;
 import com.example.jakwywiozebackend.mapper.WasteTypeMapper;
 import com.example.jakwywiozebackend.repository.PointRepository;
+import com.example.jakwywiozebackend.repository.WasteTypeRepository;
 import com.example.jakwywiozebackend.service.PointService;
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
@@ -23,6 +24,7 @@ public class PointServiceImpl implements PointService {
     private final PointRepository pointRepository;
     private final PointMapper pointMapper;
     private final WasteTypeMapper wasteTypeMapper;
+    private final WasteTypeRepository wasteTypeRepository;
     private static final double EARTH_RADIUS = 6371.0; // Earth's radius in kilometers
 
     @Override
@@ -49,11 +51,20 @@ public class PointServiceImpl implements PointService {
 
     @Override
     public PointDto addWasteType(Long id, WasteTypeDto wasteTypeDto) {
-        Point point = new Point();
-        if(pointRepository.findById(id).isPresent()){
-            point = pointRepository.findById(id).get();
-        }
+        Point point = pointRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Point not found"));
         List<WasteType> wasteTypes = point.getWasteTypes();
+        // only god can judge me
+        int i = 0;
+        while (i < wasteTypes.size()){
+            if(wasteTypes.get(i).getName().equals(wasteTypeDto.getName())) {
+                return pointMapper.toPointDto(pointRepository.save(point));
+            }
+            i++;
+        }
+        if(wasteTypeRepository.findByName(wasteTypeDto.getName()).isPresent()){
+            wasteTypes.add(wasteTypeRepository.findByName(wasteTypeDto.getName()).get());
+            return pointMapper.toPointDto(pointRepository.save(point));
+        }
         wasteTypes.add(wasteTypeMapper.toWasteType(wasteTypeDto));
         point.setWasteTypes(wasteTypes);
         return pointMapper.toPointDto(pointRepository.save(point));

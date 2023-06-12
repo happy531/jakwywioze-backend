@@ -26,7 +26,7 @@ public class WasteTypeController {
     }
 
     @GetMapping
-    public ResponseEntity<List<WasteTypeDto>> getAllWasteTypes(){
+    public ResponseEntity<List<String>> getAllWasteTypes(){
         return new ResponseEntity<>(wasteTypeService.getWasteTypes(), HttpStatus.OK);
     }
 
