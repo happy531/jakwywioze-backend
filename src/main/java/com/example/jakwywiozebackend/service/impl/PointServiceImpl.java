@@ -119,4 +119,35 @@ public class PointServiceImpl implements PointService {
 
         return pointMapper.toPointDtoList(pointsInRange);
     }
+
+    @Override
+    public List<PointDto> getFilteredPointsNoWasteType(FilterInfoDto filterInfoDto) {
+        String city = filterInfoDto.getCity();
+
+        List<Point> points = pointRepository.findAll();
+
+        // TODO fix
+        points.forEach(point -> point.setDynamicPointInfo(null));
+
+        // TODO get lat and lon from db or current current user location if he shares it
+        double poznanLon = 52.4064;
+        double poznanLat = 16.9252;
+        List<Point> pointsInCity = new ArrayList<>();
+
+        points.forEach(point -> {
+            if (point.getCity().equals(city)) {
+                pointsInCity.add(point);
+            }
+        });
+
+        // TODO postgis
+        List<Point> pointsInRange = new ArrayList<>();
+        pointsInCity.forEach(point -> {
+            if (calculateRange(poznanLat, poznanLon, point.getLat(), point.getLon()) <= filterInfoDto.getRange()) {
+                pointsInRange.add(point);
+            }
+        });
+
+        return pointMapper.toPointDtoList(pointsInRange);
+    }
 }
