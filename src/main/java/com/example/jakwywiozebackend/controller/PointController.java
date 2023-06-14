@@ -44,9 +44,6 @@ public class PointController {
 
     @PostMapping("/filtered")
     public ResponseEntity<List<PointDto>> getFilteredPoints(@RequestBody FilterInfoDto filterInfoDto){
-        if(filterInfoDto.getWasteTypesNames().isEmpty()){
-            return new ResponseEntity<>(pointService.getFilteredPointsNoWasteType(filterInfoDto), HttpStatus.OK);
-        }
         return new ResponseEntity<>(pointService.getFilteredPoints(filterInfoDto), HttpStatus.OK);
     }
 }
