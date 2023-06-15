@@ -95,40 +95,89 @@ public class PointServiceImpl implements PointService {
         return EARTH_RADIUS * c;
     }
 
-    private static List<Point> getPointsInRange(List<Point> points, int range) {
-        // TODO get lat and lon from db or current current user location if he shares it
-        double poznanLon = 52.4064; // current lon
-        double poznanLat = 16.9252; // current lat
-        // TODO postgis
-        List<Point> pointsInRange = new ArrayList<>();
-        points.forEach(point -> {
-            if (calculateRange(poznanLat, poznanLon, point.getLat(), point.getLon()) <= range) {
-                pointsInRange.add(point);
-            }
-        });
-
-        return pointsInRange;
-    }
-
-    @Override
-    public List<PointDto> getFilteredPoints(FilterInfoDto filterInfoDto) {
+    private List<PointDto> getFilteredPointsWithAllInfo(FilterInfoDto filterInfoDto) {
         String city = filterInfoDto.getCity();
         List<String> wasteTypes = filterInfoDto.getWasteTypesNames();
-        int range = filterInfoDto.getRange();
 
-        List<Point> points;
-
-        // if there is no range given
-        if (range == 0) {
-            points = pointRepository.findAllByCityAndWasteTypeIn(city, wasteTypes);
-        } else {
-            List<Point> allPointsByWasteTypeIn = pointRepository.findAllByRangeAndWasteTypeIn(wasteTypes);
-            points = getPointsInRange(allPointsByWasteTypeIn, range);
-        }
+        List<Point> points = pointRepository.findAllByCityAndWasteTypeIn(city, wasteTypes);
 
         // TODO fix
         points.forEach(point -> point.setDynamicPointInfo(null));
 
-        return pointMapper.toPointDtoList(points);
+        // TODO get lat and lon from db or current current user location if he shares it
+        double poznanLon = 52.4064;
+        double poznanLat = 16.9252;
+
+        // TODO postgis
+        List<Point> pointsInRange = new ArrayList<>();
+        points.forEach(point -> {
+            if (calculateRange(poznanLat, poznanLon, point.getLat(), point.getLon()) <= filterInfoDto.getRange()) {
+                pointsInRange.add(point);
+            }
+        });
+
+        return pointMapper.toPointDtoList(pointsInRange);
+    }
+
+    private List<PointDto> getFilteredPointsNoWasteType(FilterInfoDto filterInfoDto) {
+        String city = filterInfoDto.getCity();
+
+        List<Point> points = pointRepository.findAll();
+
+        // TODO fix
+        points.forEach(point -> point.setDynamicPointInfo(null));
+
+        // TODO get lat and lon from db or current current user location if he shares it
+        double poznanLon = 52.4064;
+        double poznanLat = 16.9252;
+        List<Point> pointsInCity = new ArrayList<>();
+
+        points.forEach(point -> {
+            if (point.getCity().equals(city)) {
+                pointsInCity.add(point);
+            }
+        });
+
+        // TODO postgis
+        List<Point> pointsInRange = new ArrayList<>();
+        pointsInCity.forEach(point -> {
+            if (calculateRange(poznanLat, poznanLon, point.getLat(), point.getLon()) <= filterInfoDto.getRange()) {
+                pointsInRange.add(point);
+            }
+        });
+
+        return pointMapper.toPointDtoList(pointsInRange);
+    }
+
+    private List<PointDto> getFilteredPointsNoCity(FilterInfoDto filterInfoDto) {
+
+        List<Point> points = pointRepository.findAll();
+
+        // TODO fix
+        points.forEach(point -> point.setDynamicPointInfo(null));
+        List<Point> filteredPoints = new ArrayList<>();
+
+        points.forEach(point -> {
+            if(point.getWasteTypes().stream().anyMatch(wasteType -> filterInfoDto.getWasteTypesNames().contains(wasteType.getName()))){
+                filteredPoints.add(point);
+            }
+        });
+
+
+        return pointMapper.toPointDtoList(filteredPoints);
+    }
+
+    @Override
+    public List<PointDto> getFilteredPoints(FilterInfoDto filterInfoDto) {
+        if(filterInfoDto.getCity().isEmpty() && filterInfoDto.getWasteTypesNames().isEmpty()){
+            return getPoints();
+        }
+        if(filterInfoDto.getWasteTypesNames().isEmpty()){
+            return getFilteredPointsNoWasteType(filterInfoDto);
+        }
+        if(filterInfoDto.getCity().isEmpty()){
+            return getFilteredPointsNoCity(filterInfoDto);
+        }
+        return getFilteredPointsWithAllInfo(filterInfoDto);
     }
 }
