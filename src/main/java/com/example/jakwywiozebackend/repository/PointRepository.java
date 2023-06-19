@@ -19,7 +19,7 @@ public interface PointRepository extends JpaRepository<Point,Long> {
     Optional<Point> findById(Long id);
 
     @Query(value = "SELECT * from point where id IN (SELECT point_id FROM point_waste ps WHERE ps.point_id = (SELECT id FROM point WHERE city = :city) " +
-            "AND ps.waste_type_id = (SELECT id FROM waste_type WHERE name IN :wasteTypes))", nativeQuery = true)
+            "AND ps.waste_type_id IN (SELECT id FROM waste_type WHERE name IN :wasteTypes))", nativeQuery = true)
     List<Point> findAllByCityAndWasteTypeIn(@Param("city") String city, @Param("wasteTypes") List<String> wasteTypes);
 
     // TODO postgis
