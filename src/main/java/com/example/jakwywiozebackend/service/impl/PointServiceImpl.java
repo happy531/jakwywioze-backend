@@ -149,7 +149,47 @@ public class PointServiceImpl implements PointService {
         return pointMapper.toPointDtoList(pointsInRange);
     }
 
+    private List<PointDto> getFilteredPointsOnlyCity(FilterInfoDto filterInfoDto) {
+        String city = filterInfoDto.getCity();
+
+        List<Point> points = pointRepository.findAll();
+
+        // TODO fix
+        points.forEach(point -> point.setDynamicPointInfo(null));
+
+        // TODO get lat and lon from db or current current user location if he shares it
+        double poznanLon = 52.4064;
+        double poznanLat = 16.9252;
+        List<Point> pointsInCity = new ArrayList<>();
+
+        points.forEach(point -> {
+            if (point.getCity().equals(city)) {
+                pointsInCity.add(point);
+            }
+        });
+
+        return pointMapper.toPointDtoList(pointsInCity);
+    }
+
     private List<PointDto> getFilteredPointsNoCity(FilterInfoDto filterInfoDto) {
+
+        List<Point> points = pointRepository.findAll();
+
+        // TODO fix
+        points.forEach(point -> point.setDynamicPointInfo(null));
+        List<Point> filteredPoints = new ArrayList<>();
+
+        points.forEach(point -> {
+            if(point.getWasteTypes().stream().anyMatch(wasteType -> filterInfoDto.getWasteTypesNames().contains(wasteType.getName()))){
+                filteredPoints.add(point);
+            }
+        });
+
+
+        return pointMapper.toPointDtoList(filteredPoints);
+    }
+
+    private List<PointDto> getFilteredPointsOnlyWasteType(FilterInfoDto filterInfoDto) {
 
         List<Point> points = pointRepository.findAll();
 
@@ -173,10 +213,10 @@ public class PointServiceImpl implements PointService {
             return getPoints();
         }
         if(filterInfoDto.getWasteTypesNames().isEmpty()){
-            return getFilteredPointsNoWasteType(filterInfoDto);
+            return getFilteredPointsOnlyCity(filterInfoDto);
         }
         if(filterInfoDto.getCity().isEmpty()){
-            return getFilteredPointsNoCity(filterInfoDto);
+            return getFilteredPointsOnlyWasteType(filterInfoDto);
         }
         return getFilteredPointsWithAllInfo(filterInfoDto);
     }
