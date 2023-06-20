@@ -16,7 +16,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 @RequiredArgsConstructor
 public class PointServiceImpl implements PointService {
@@ -98,55 +101,38 @@ public class PointServiceImpl implements PointService {
     private List<PointDto> getFilteredPointsWithAllInfo(FilterInfoDto filterInfoDto) {
         String city = filterInfoDto.getCity();
         List<String> wasteTypes = filterInfoDto.getWasteTypesNames();
+        int range = filterInfoDto.getRange();
 
-        List<Point> points = pointRepository.findAllByCityAndWasteTypeIn(city, wasteTypes);
-
-        // TODO fix
-        points.forEach(point -> point.setDynamicPointInfo(null));
-
-        // TODO get lat and lon from db or current current user location if he shares it
-        double poznanLon = 52.4064;
-        double poznanLat = 16.9252;
-
-        // TODO postgis
-        List<Point> pointsInRange = new ArrayList<>();
-        points.forEach(point -> {
-            if (calculateRange(poznanLat, poznanLon, point.getLat(), point.getLon()) <= filterInfoDto.getRange()) {
-                pointsInRange.add(point);
-            }
-        });
-
-        return pointMapper.toPointDtoList(pointsInRange);
-    }
-
-    private List<PointDto> getFilteredPointsNoWasteType(FilterInfoDto filterInfoDto) {
-        String city = filterInfoDto.getCity();
-
+        List<Point> pointsWithAccurateWasteTypesAndCity = new ArrayList<>();
         List<Point> points = pointRepository.findAll();
-
-        // TODO fix
-        points.forEach(point -> point.setDynamicPointInfo(null));
-
-        // TODO get lat and lon from db or current current user location if he shares it
-        double poznanLon = 52.4064;
-        double poznanLat = 16.9252;
-        List<Point> pointsInCity = new ArrayList<>();
-
         points.forEach(point -> {
-            if (point.getCity().equals(city)) {
-                pointsInCity.add(point);
+            // names has at least 1 element from wasteTypes
+            List<String> names = point.getWasteTypes().stream()
+                    .map(WasteType::getName)
+                    .collect(Collectors.toList());
+            if(point.getCity().equals(city) && !Collections.disjoint(names, wasteTypes)) {
+                pointsWithAccurateWasteTypesAndCity.add(point);
             }
+
+            // TODO fix
+            point.setDynamicPointInfo(null);
         });
 
-        // TODO postgis
-        List<Point> pointsInRange = new ArrayList<>();
-        pointsInCity.forEach(point -> {
-            if (calculateRange(poznanLat, poznanLon, point.getLat(), point.getLon()) <= filterInfoDto.getRange()) {
-                pointsInRange.add(point);
-            }
-        });
+        if(range > 0) {
+            // TODO get lat and lon from db or current current user location if he shares it
+            double poznanLon = 52.4064;
+            double poznanLat = 16.9252;
 
-        return pointMapper.toPointDtoList(pointsInRange);
+            List<Point> pointsInRange = new ArrayList<>();
+            pointsWithAccurateWasteTypesAndCity.forEach(point -> {
+                if (calculateRange(poznanLat, poznanLon, point.getLat(), point.getLon()) <= filterInfoDto.getRange()) {
+                    pointsInRange.add(point);
+                }
+            });
+
+            return pointMapper.toPointDtoList(pointsInRange);
+        }
+        return pointMapper.toPointDtoList(pointsWithAccurateWasteTypesAndCity);
     }
 
     private List<PointDto> getFilteredPointsOnlyCity(FilterInfoDto filterInfoDto) {
@@ -169,24 +155,6 @@ public class PointServiceImpl implements PointService {
         });
 
         return pointMapper.toPointDtoList(pointsInCity);
-    }
-
-    private List<PointDto> getFilteredPointsNoCity(FilterInfoDto filterInfoDto) {
-
-        List<Point> points = pointRepository.findAll();
-
-        // TODO fix
-        points.forEach(point -> point.setDynamicPointInfo(null));
-        List<Point> filteredPoints = new ArrayList<>();
-
-        points.forEach(point -> {
-            if(point.getWasteTypes().stream().anyMatch(wasteType -> filterInfoDto.getWasteTypesNames().contains(wasteType.getName()))){
-                filteredPoints.add(point);
-            }
-        });
-
-
-        return pointMapper.toPointDtoList(filteredPoints);
     }
 
     private List<PointDto> getFilteredPointsOnlyWasteType(FilterInfoDto filterInfoDto) {
