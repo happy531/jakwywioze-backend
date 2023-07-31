@@ -10,9 +10,11 @@ import com.example.jakwywiozebackend.mapper.WasteTypeMapper;
 import com.example.jakwywiozebackend.repository.PointRepository;
 import com.example.jakwywiozebackend.repository.WasteTypeRepository;
 import com.example.jakwywiozebackend.service.PointService;
+import com.example.jakwywiozebackend.service.PointSpecification;
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -187,5 +189,12 @@ public class PointServiceImpl implements PointService {
             return getFilteredPointsOnlyWasteType(filterInfoDto);
         }
         return getFilteredPointsWithAllInfo(filterInfoDto);
+    }
+
+    @Override
+    public List<PointDto> findPoints(String city, List<String> wasteTypes) {
+        Specification<Point> spec = Specification.where(PointSpecification.getPointByCity(city));
+        List<Point> points = pointRepository.findAll(spec);
+        return pointMapper.toPointDtoList(points);
     }
 }

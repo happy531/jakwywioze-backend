@@ -18,4 +18,6 @@ public interface PointService {
     List<String> getCities();
 
     List<PointDto> getFilteredPoints(FilterInfoDto filterInfoDto);
+
+    List<PointDto> findPoints(String city, List<String> wasteTypes);
 }

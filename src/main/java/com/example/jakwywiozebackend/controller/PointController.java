@@ -46,4 +46,12 @@ public class PointController {
     public ResponseEntity<List<PointDto>> getFilteredPoints(@RequestBody FilterInfoDto filterInfoDto){
         return new ResponseEntity<>(pointService.getFilteredPoints(filterInfoDto), HttpStatus.OK);
     }
+
+    @GetMapping("/filter")
+    public ResponseEntity<List<PointDto>> findPoints(
+            @RequestParam(value = "city", required = false) String city,
+            @RequestParam(value = "wasteTypes", required = false) List<String> wasteTypes
+                                                     ){
+        return new ResponseEntity<>(pointService.findPoints(city, wasteTypes), HttpStatus.OK);
+    }
 }
