@@ -50,8 +50,7 @@ public class PointController {
     @GetMapping("/filter")
     public ResponseEntity<List<PointDto>> findPoints(
             @RequestParam(value = "city", required = false) String city,
-            @RequestParam(value = "wasteTypes", required = false) List<String> wasteTypes
-                                                     ){
+            @RequestParam(value = "wasteTypes", required = false) List<String> wasteTypes){
         return new ResponseEntity<>(pointService.findPoints(city, wasteTypes), HttpStatus.OK);
     }
 }

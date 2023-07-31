@@ -193,7 +193,8 @@ public class PointServiceImpl implements PointService {
 
     @Override
     public List<PointDto> findPoints(String city, List<String> wasteTypes) {
-        Specification<Point> spec = Specification.where(PointSpecification.getPointByCity(city));
+        Specification<Point> spec = Specification.where(PointSpecification.getPointByCity(city))
+                .and(PointSpecification.getPointByWasteTypes(wasteTypes));
         List<Point> points = pointRepository.findAll(spec);
         return pointMapper.toPointDtoList(points);
     }
