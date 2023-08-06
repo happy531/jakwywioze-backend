@@ -179,22 +179,10 @@ public class PointServiceImpl implements PointService {
 
     @Override
     public List<PointDto> getFilteredPoints(FilterInfoDto filterInfoDto) {
-        if(true){
-            Specification<Point> spec = Specification.where(PointSpecification.getPointByCity(filterInfoDto.getCity()))
-                    .and(PointSpecification.getPointByWasteTypes(filterInfoDto.getWasteTypesNames()));
-            List<Point> points = pointRepository.findAll(spec);
-            return pointMapper.toPointDtoList(points);
-        }
-        if(filterInfoDto.getCity().isEmpty() && filterInfoDto.getWasteTypesNames().isEmpty()){
-            return getPoints();
-        }
-        if(filterInfoDto.getWasteTypesNames().isEmpty()){
-            return getFilteredPointsOnlyCity(filterInfoDto);
-        }
-        if(filterInfoDto.getCity().isEmpty()){
-            return getFilteredPointsOnlyWasteType(filterInfoDto);
-        }
-        return getFilteredPointsWithAllInfo(filterInfoDto);
+        Specification<Point> spec = Specification.where(PointSpecification.getPointByCity(filterInfoDto.getCity()))
+                .and(PointSpecification.getPointByWasteTypes(filterInfoDto.getWasteTypesNames()));
+        List<Point> points = pointRepository.findAll(spec);
+        return pointMapper.toPointDtoList(points);
     }
 
     @Override
