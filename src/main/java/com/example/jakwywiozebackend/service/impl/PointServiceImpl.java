@@ -78,7 +78,7 @@ public class PointServiceImpl implements PointService {
         List<String> cities = new ArrayList<>();
         List<Point> points = pointRepository.findAll();
         for (Point point : points) {
-            cities.add(point.getCity());
+            cities.add(point.getCity().getName());
         }
         return cities;
     }
@@ -110,7 +110,7 @@ public class PointServiceImpl implements PointService {
             List<String> names = point.getWasteTypes().stream()
                     .map(WasteType::getName)
                     .collect(Collectors.toList());
-            if(point.getCity().equals(city) && !Collections.disjoint(names, wasteTypes)) {
+            if(point.getCity().getName().equals(city) && !Collections.disjoint(names, wasteTypes)) {
                 pointsWithAccurateWasteTypesAndCity.add(point);
             }
 
@@ -149,7 +149,7 @@ public class PointServiceImpl implements PointService {
         List<Point> pointsInCity = new ArrayList<>();
 
         points.forEach(point -> {
-            if (point.getCity().equals(city)) {
+            if (point.getCity().getName().equals(city)) {
                 pointsInCity.add(point);
             }
         });

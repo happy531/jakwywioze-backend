@@ -1,8 +1,6 @@
 package com.example.jakwywiozebackend.mapper;
 import com.example.jakwywiozebackend.dto.DynamicPointInfoDto;
-import com.example.jakwywiozebackend.dto.PointDto;
 import com.example.jakwywiozebackend.entity.DynamicPointInfo;
-import com.example.jakwywiozebackend.entity.Point;
 import org.mapstruct.Mapper;
 
 
