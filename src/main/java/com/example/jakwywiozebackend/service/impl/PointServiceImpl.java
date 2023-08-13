@@ -14,6 +14,7 @@ import com.example.jakwywiozebackend.service.PointSpecification;
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
@@ -30,6 +31,8 @@ public class PointServiceImpl implements PointService {
     private final PointMapper pointMapper;
     private final WasteTypeMapper wasteTypeMapper;
     private final WasteTypeRepository wasteTypeRepository;
+    @Autowired
+    private UtilsServiceImpl utilsService;
 
     @Override
     public List<PointDto> getPoints() {
@@ -111,7 +114,7 @@ public class PointServiceImpl implements PointService {
 
             List<Point> pointsInRange = new ArrayList<>();
             pointsWithAccurateWasteTypesAndCity.forEach(point -> {
-                if (UtilsServiceImpl.calculateRange(poznanLat, poznanLon, point.getLat(), point.getLon()) <= filterInfoDto.getRange()) {
+                if (utilsService.calculateRange(poznanLat, poznanLon, point.getLat(), point.getLon()) <= filterInfoDto.getRange()) {
                     pointsInRange.add(point);
                 }
             });

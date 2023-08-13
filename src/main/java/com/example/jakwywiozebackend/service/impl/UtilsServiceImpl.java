@@ -1,14 +1,17 @@
 package com.example.jakwywiozebackend.service.impl;
 
 import com.example.jakwywiozebackend.service.UtilsService;
+import org.springframework.stereotype.Service;
 
+@Service
 public class UtilsServiceImpl implements UtilsService {
     /*
     Earth's radius in kilometers
      */
     private static final double EARTH_RADIUS = 6371.0;
 
-    public static double calculateRange(double lat1, double lon1, double lat2, double lon2) {
+    @Override
+    public double calculateRange(double lat1, double lon1, double lat2, double lon2) {
         double lat1Rad = Math.toRadians(lat1);
         double lon1Rad = Math.toRadians(lon1);
         double lat2Rad = Math.toRadians(lat2);
