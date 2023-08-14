@@ -21,9 +21,7 @@ public class WasteTypeServiceImpl implements WasteTypeService {
     public List<String> getWasteTypes() {
         List<String> wasteTypeNames = new ArrayList<>();
         List<WasteType> wasteTypeDtos = wasteTypeRepository.findAll();
-        wasteTypeDtos.forEach(wasteType -> {
-            wasteTypeNames.add(wasteType.getName());
-        });
+        wasteTypeDtos.forEach(wasteType -> wasteTypeNames.add(wasteType.getName()));
         return wasteTypeNames;
     }
 

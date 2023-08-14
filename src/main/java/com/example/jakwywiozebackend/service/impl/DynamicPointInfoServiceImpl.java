@@ -1,15 +1,10 @@
 package com.example.jakwywiozebackend.service.impl;
 
 import com.example.jakwywiozebackend.dto.DynamicPointInfoDto;
-import com.example.jakwywiozebackend.dto.PointDto;
 import com.example.jakwywiozebackend.entity.DynamicPointInfo;
-import com.example.jakwywiozebackend.entity.Point;
 import com.example.jakwywiozebackend.mapper.DynamicPointInfoMapper;
-import com.example.jakwywiozebackend.mapper.PointMapper;
 import com.example.jakwywiozebackend.repository.DynamicPointInfoRepository;
-import com.example.jakwywiozebackend.repository.PointRepository;
 import com.example.jakwywiozebackend.service.DynamicPointInfoService;
-import com.example.jakwywiozebackend.service.PointService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

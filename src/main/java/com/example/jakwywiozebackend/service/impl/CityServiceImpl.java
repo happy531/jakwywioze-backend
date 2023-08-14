@@ -1,6 +1,7 @@
 package com.example.jakwywiozebackend.service.impl;
 
 import com.example.jakwywiozebackend.dto.CityDto;
+import com.example.jakwywiozebackend.entity.City;
 import com.example.jakwywiozebackend.mapper.CityMapper;
 import com.example.jakwywiozebackend.repository.CityRepository;
 import com.example.jakwywiozebackend.service.CityService;
@@ -28,6 +29,6 @@ public class CityServiceImpl implements CityService {
 
     @Override
     public List<CityDto> getCitiesByNameSubstring(String name) {
-        return null;
-    }
-}
+        List<City> cities = cityRepository.findByNameContaining(name);
+        return cityMapper.toCityDtoList(cities);
+    }}
