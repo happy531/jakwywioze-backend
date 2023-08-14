@@ -10,4 +10,6 @@ public class FilterInfoDto {
     private List<String> wasteTypesNames;
     private String city;
     private int range;
+    private int page;
+    private int itemsPerPage;
 }

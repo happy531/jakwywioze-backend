@@ -15,13 +15,15 @@ import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.data.domain.Pageable;
+
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -87,96 +89,14 @@ public class PointServiceImpl implements PointService {
         return cities;
     }
 
-    private List<PointDto> getFilteredPointsWithAllInfo(FilterInfoDto filterInfoDto) {
-        String city = filterInfoDto.getCity();
-        List<String> wasteTypes = filterInfoDto.getWasteTypesNames();
-        int range = filterInfoDto.getRange();
-
-        List<Point> pointsWithAccurateWasteTypesAndCity = new ArrayList<>();
-        List<Point> points = pointRepository.findAll();
-        points.forEach(point -> {
-            // names has at least 1 element from wasteTypes
-            List<String> names = point.getWasteTypes().stream()
-                    .map(WasteType::getName)
-                    .collect(Collectors.toList());
-            if(point.getCity().getName().equals(city) && !Collections.disjoint(names, wasteTypes)) {
-                pointsWithAccurateWasteTypesAndCity.add(point);
-            }
-
-            // TODO fix
-            point.setDynamicPointInfo(null);
-        });
-
-        if(range > 0) {
-            // TODO get lat and lon from db or current current user location if he shares it
-            double poznanLon = 52.4064;
-            double poznanLat = 16.9252;
-
-            List<Point> pointsInRange = new ArrayList<>();
-            pointsWithAccurateWasteTypesAndCity.forEach(point -> {
-                if (utilsService.calculateRange(poznanLat, poznanLon, point.getLat(), point.getLon()) <= filterInfoDto.getRange()) {
-                    pointsInRange.add(point);
-                }
-            });
-
-            return pointMapper.toPointDtoList(pointsInRange);
-        }
-        return pointMapper.toPointDtoList(pointsWithAccurateWasteTypesAndCity);
-    }
-
-    private List<PointDto> getFilteredPointsOnlyCity(FilterInfoDto filterInfoDto) {
-        String city = filterInfoDto.getCity();
-
-        List<Point> points = pointRepository.findAll();
-
-        // TODO fix
-        points.forEach(point -> point.setDynamicPointInfo(null));
-
-        // TODO get lat and lon from db or current current user location if he shares it
-        double poznanLon = 52.4064;
-        double poznanLat = 16.9252;
-        List<Point> pointsInCity = new ArrayList<>();
-
-        points.forEach(point -> {
-            if (point.getCity().getName().equals(city)) {
-                pointsInCity.add(point);
-            }
-        });
-
-        return pointMapper.toPointDtoList(pointsInCity);
-    }
-
-    private List<PointDto> getFilteredPointsOnlyWasteType(FilterInfoDto filterInfoDto) {
-
-        List<Point> points = pointRepository.findAll();
-
-        // TODO fix
-        points.forEach(point -> point.setDynamicPointInfo(null));
-        List<Point> filteredPoints = new ArrayList<>();
-
-        points.forEach(point -> {
-            if(point.getWasteTypes().stream().anyMatch(wasteType -> filterInfoDto.getWasteTypesNames().contains(wasteType.getName()))){
-                filteredPoints.add(point);
-            }
-        });
-
-
-        return pointMapper.toPointDtoList(filteredPoints);
-    }
-
     @Override
     public List<PointDto> getFilteredPoints(FilterInfoDto filterInfoDto) {
-        Specification<Point> spec = Specification.where(PointSpecification.getPointByCity(filterInfoDto.getCity()))
+        Specification<Point> spec = Specification
+                .where(PointSpecification.getPointByCity(filterInfoDto.getCity()))
                 .and(PointSpecification.getPointByWasteTypes(filterInfoDto.getWasteTypesNames()));
-        List<Point> points = pointRepository.findAll(spec);
-        return pointMapper.toPointDtoList(points);
-    }
-
-    @Override
-    public List<PointDto> findPoints(String city, List<String> wasteTypes) {
-        Specification<Point> spec = Specification.where(PointSpecification.getPointByCity(city))
-                .and(PointSpecification.getPointByWasteTypes(wasteTypes));
-        List<Point> points = pointRepository.findAll(spec);
+        Pageable pageable = PageRequest.of(filterInfoDto.getPage(), filterInfoDto.getItemsPerPage());
+        Page<Point> pointsPage = pointRepository.findAll(spec, pageable);
+        List<Point> points = pointsPage.getContent();
         return pointMapper.toPointDtoList(points);
     }
 }
