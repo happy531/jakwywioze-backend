@@ -15,7 +15,9 @@ public class City {
     @Column
     private String name;
     @Column
-    private String province;
+    private String voivodeship;
+    @Column
+    private String county;
     @Column
     private float longitude;
     @Column

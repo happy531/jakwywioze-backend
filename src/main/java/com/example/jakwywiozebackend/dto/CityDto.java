@@ -7,7 +7,8 @@ import lombok.Data;
 public class CityDto {
     private Long id;
     private String name;
-    private String province;
+    private String voivodeship;
+    private String county;
     private float longitude;
     private float latitude;
 }
