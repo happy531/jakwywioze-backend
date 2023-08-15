@@ -29,7 +29,7 @@ public class CityController {
     }
 
     @GetMapping("/find")
-    public ResponseEntity<List<CityDto>> getFilteredPoints(@RequestParam(value = "name") @Length(min = 3, message = "Name should be at least 3 characters") String nameSubstring){
+    public ResponseEntity<List<CityDto>> getFilteredCities(@RequestParam(value = "name") @Length(min = 3, message = "Name should be at least 3 characters") String nameSubstring){
         return new ResponseEntity<>(cityService.getCitiesByNameSubstring(nameSubstring), HttpStatus.OK);
     }
 }
