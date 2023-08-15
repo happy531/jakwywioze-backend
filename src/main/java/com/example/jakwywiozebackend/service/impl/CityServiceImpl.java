@@ -5,8 +5,10 @@ import com.example.jakwywiozebackend.entity.City;
 import com.example.jakwywiozebackend.mapper.CityMapper;
 import com.example.jakwywiozebackend.repository.CityRepository;
 import com.example.jakwywiozebackend.service.CityService;
+import com.example.jakwywiozebackend.service.CitySpecification;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -28,7 +30,9 @@ public class CityServiceImpl implements CityService {
     }
 
     @Override
-    public List<CityDto> getCitiesByNameSubstring(String name) {
-        List<City> cities = cityRepository.findByNameContaining(name);
+    public List<CityDto> getCitiesByNameSubstring(String substring) {
+        Specification<City> citySpecification = Specification
+                .where(CitySpecification.getCityBySubstring(substring));
+        List<City> cities = cityRepository.findAll(citySpecification);
         return cityMapper.toCityDtoList(cities);
     }}

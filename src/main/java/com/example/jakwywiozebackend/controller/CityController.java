@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/city")
+@RequestMapping("/cities")
 @RequiredArgsConstructor
 public class CityController {
     private final CityService cityService;
@@ -23,5 +23,10 @@ public class CityController {
     @GetMapping
     public ResponseEntity<List<CityDto>> getCities(){
         return new ResponseEntity<>(cityService.getAllCities(), HttpStatus.OK);
+    }
+
+    @GetMapping("/find")
+    public ResponseEntity<List<CityDto>> getFilteredPoints(@RequestParam(value = "name") String nameSubstring){
+        return new ResponseEntity<>(cityService.getCitiesByNameSubstring(nameSubstring), HttpStatus.OK);
     }
 }
