@@ -3,8 +3,10 @@ package com.example.jakwywiozebackend.controller;
 import com.example.jakwywiozebackend.dto.CityDto;
 import com.example.jakwywiozebackend.service.CityService;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.validator.constraints.Length;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -12,6 +14,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/cities")
 @RequiredArgsConstructor
+@Validated
 public class CityController {
     private final CityService cityService;
 
@@ -26,7 +29,7 @@ public class CityController {
     }
 
     @GetMapping("/find")
-    public ResponseEntity<List<CityDto>> getFilteredPoints(@RequestParam(value = "name") String nameSubstring){
+    public ResponseEntity<List<CityDto>> getFilteredPoints(@RequestParam(value = "name") @Length(min = 3, message = "Name should be at least 3 characters") String nameSubstring){
         return new ResponseEntity<>(cityService.getCitiesByNameSubstring(nameSubstring), HttpStatus.OK);
     }
 }
