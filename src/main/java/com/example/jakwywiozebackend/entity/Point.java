@@ -22,9 +22,8 @@ public class Point {
     private float lon;
     @Column
     private float lat;
-    @ManyToOne
-    @JoinColumn(name = "city_id")
-    private City city;
+    @Column
+    private String city;
     @Column
     private String street;
     @Column

@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.List;
 
 @Entity
 @Getter
@@ -13,11 +12,13 @@ import java.util.List;
 public class City {
     @Id
     private Long id;
+    @Column
     private String name;
+    @Column
     private String province;
+    @Column
     private float longitude;
+    @Column
     private float latitude;
-    @OneToMany(mappedBy = "city")
-    private List<Point> points;
 
 }
