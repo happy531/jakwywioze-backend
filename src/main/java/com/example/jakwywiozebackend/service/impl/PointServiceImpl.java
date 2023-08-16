@@ -1,16 +1,20 @@
 package com.example.jakwywiozebackend.service.impl;
 
+import com.example.jakwywiozebackend.dto.CityDto;
 import com.example.jakwywiozebackend.dto.FilterInfoDto;
 import com.example.jakwywiozebackend.dto.PointDto;
 import com.example.jakwywiozebackend.dto.WasteTypeDto;
+import com.example.jakwywiozebackend.entity.City;
 import com.example.jakwywiozebackend.entity.Point;
 import com.example.jakwywiozebackend.entity.WasteType;
 import com.example.jakwywiozebackend.mapper.PointMapper;
 import com.example.jakwywiozebackend.mapper.WasteTypeMapper;
 import com.example.jakwywiozebackend.repository.PointRepository;
 import com.example.jakwywiozebackend.repository.WasteTypeRepository;
+import com.example.jakwywiozebackend.service.CityService;
 import com.example.jakwywiozebackend.service.PointService;
 import com.example.jakwywiozebackend.service.PointSpecification;
+import com.example.jakwywiozebackend.utils.Utils;
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -19,9 +23,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Pageable;
-
-
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -32,6 +33,7 @@ public class PointServiceImpl implements PointService {
     private final PointMapper pointMapper;
     private final WasteTypeMapper wasteTypeMapper;
     private final WasteTypeRepository wasteTypeRepository;
+    private final CityServiceImpl cityService;
 
     @Override
     public List<PointDto> getPoints() {
@@ -77,22 +79,15 @@ public class PointServiceImpl implements PointService {
     }
 
     @Override
-    public List<String> getCities() {
-        List<String> cities = new ArrayList<>();
-        List<Point> points = pointRepository.findAll();
-        for (Point point : points) {
-            cities.add(point.getCity());
-        }
-        return cities;
-    }
-
-    @Override
     public List<PointDto> getFilteredPoints(FilterInfoDto filterInfoDto) {
         Specification<Point> spec = Specification
                 .where(PointSpecification.getPointByCity(filterInfoDto.getCity()))
                 .and(PointSpecification.getPointByWasteTypes(filterInfoDto.getWasteTypesNames()));
+        List<Point> pointWithoutRange = pointRepository.findAll(spec);
+        CityDto city = cityService.getCityByName(filterInfoDto.getCity());
+        List<Point> pointsInRange = Utils.filterPointsByRange(pointWithoutRange, city, filterInfoDto.getRange());
         Pageable pageable = PageRequest.of(filterInfoDto.getPage(), filterInfoDto.getItemsPerPage());
-        Page<Point> pointsPage = pointRepository.findAll(spec, pageable);
+        Page<Point> pointsPage = pointRepository.findAll(pointWithoutRange, pageable);
         List<Point> points = pointsPage.getContent();
         return pointMapper.toPointDtoList(points);
     }

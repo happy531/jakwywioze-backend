@@ -37,11 +37,6 @@ public class PointController {
         return new ResponseEntity<>(pointService.addWasteType(id, wasteTypeDto), HttpStatus.OK);
     }
 
-    @GetMapping("/cities")
-    public ResponseEntity<List<String>> getAllCities(){
-        return new ResponseEntity<>(pointService.getCities(), HttpStatus.OK);
-    }
-
     @PostMapping("/filtered")
     public ResponseEntity<List<PointDto>> getFilteredPoints(@RequestBody FilterInfoDto filterInfoDto){
         return new ResponseEntity<>(pointService.getFilteredPoints(filterInfoDto), HttpStatus.OK);

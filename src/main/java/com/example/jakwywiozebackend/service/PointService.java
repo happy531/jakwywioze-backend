@@ -15,8 +15,6 @@ public interface PointService {
 
     PointDto addWasteType(Long id, WasteTypeDto wasteTypeDto);
 
-    List<String> getCities();
-
     List<PointDto> getFilteredPoints(FilterInfoDto filterInfoDto);
 
 }
