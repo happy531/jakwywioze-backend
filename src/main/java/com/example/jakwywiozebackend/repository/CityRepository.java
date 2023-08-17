@@ -8,4 +8,5 @@ import java.util.List;
 
 public interface CityRepository extends JpaRepository<City,Long>, JpaSpecificationExecutor<City> {
     List<City> findByNameContaining(String name);
+    City findByName(String name);
 }

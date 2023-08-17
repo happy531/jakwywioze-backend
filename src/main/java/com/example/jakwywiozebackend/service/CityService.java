@@ -8,4 +8,5 @@ public interface CityService {
     CityDto getCityById(Long id);
     List<CityDto> getAllCities();
     List<CityDto> getCitiesByNameSubstring(String name);
+    CityDto getCityByName(String name);
 }
