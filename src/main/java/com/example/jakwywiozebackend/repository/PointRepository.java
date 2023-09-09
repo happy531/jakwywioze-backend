@@ -20,7 +20,6 @@ public interface PointRepository extends JpaRepository<Point,Long> {
     Optional<Point> findById(Long id);
 
     List<Point> findAll(Specification<Point> spec);
-    Page<Point> findAll(List<Point> points, Pageable pageable);
     Page<Point> findAll(Specification<Point> spec, Pageable pageable);
 
 }

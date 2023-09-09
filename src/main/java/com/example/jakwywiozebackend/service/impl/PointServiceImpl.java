@@ -1,9 +1,6 @@
 package com.example.jakwywiozebackend.service.impl;
 
-import com.example.jakwywiozebackend.dto.CityDto;
-import com.example.jakwywiozebackend.dto.FilterInfoDto;
-import com.example.jakwywiozebackend.dto.PointDto;
-import com.example.jakwywiozebackend.dto.WasteTypeDto;
+import com.example.jakwywiozebackend.dto.*;
 import com.example.jakwywiozebackend.entity.Point;
 import com.example.jakwywiozebackend.entity.WasteType;
 import com.example.jakwywiozebackend.mapper.PointMapper;
@@ -16,7 +13,6 @@ import com.example.jakwywiozebackend.utils.Utils;
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
@@ -80,14 +76,33 @@ public class PointServiceImpl implements PointService {
     @Override
     public List<PointDto> getFilteredPoints(FilterInfoDto filterInfoDto) {
         Specification<Point> spec = Specification
-                .where(PointSpecification.getPointByCity(filterInfoDto.getCity()))
-                .and(PointSpecification.getPointByWasteTypes(filterInfoDto.getWasteTypesNames()));
-        List<Point> pointWithoutRange = pointRepository.findAll(spec);
+                .where(PointSpecification.getPointByWasteTypes(filterInfoDto.getWasteTypesNames()));
+        List<Point> pointsWithoutRange = pointRepository.findAll(spec);
         CityDto city = cityService.getCityByName(filterInfoDto.getCity());
-        List<Point> pointsInRange = Utils.filterPointsByRange(pointWithoutRange, city, filterInfoDto.getRange());
+        List<Point> pointsInRange = Utils.filterPointsByRange(pointsWithoutRange, city, filterInfoDto.getRange());
         Pageable pageable = PageRequest.of(filterInfoDto.getPage(), filterInfoDto.getItemsPerPage());
-        Page<Point> pointsPage = pointRepository.findAll(pointsInRange, pageable);
+        PageDTO<Point> pointsPage = getPaginatedList(pointsInRange, pageable.getPageNumber(), pageable.getPageSize());
         List<Point> points = pointsPage.getContent();
+        System.out.println(pointsWithoutRange);
         return pointMapper.toPointDtoList(points);
+    }
+
+    private PageDTO<Point> getPaginatedList(List<Point> list, int page, int pageSize) {
+        int totalElements = list.size();
+        int totalPages = (int) Math.ceil((double) totalElements / pageSize);
+
+        // Calculate the start and end indices for the current page
+        int startIndex = page * pageSize;
+        int endIndex = Math.min(startIndex + pageSize, totalElements);
+
+        // Create a sublist for the current page
+        List<Point> pageContent = list.subList(startIndex, endIndex);
+
+        PageDTO<Point> pageDTO = new PageDTO<>();
+        pageDTO.setContent(pageContent);
+        pageDTO.setTotalPages(totalPages);
+        pageDTO.setTotalElements(totalElements);
+
+        return pageDTO;
     }
 }
