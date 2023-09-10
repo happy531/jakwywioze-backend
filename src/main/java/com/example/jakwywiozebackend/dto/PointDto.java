@@ -19,6 +19,7 @@ public class PointDto {
     private float lon;
     private float lat;
     private String city;
+    private Long cityId;
     private String street;
     private String zipcode;
     private Boolean type;

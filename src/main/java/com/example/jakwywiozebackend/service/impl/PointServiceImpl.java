@@ -32,12 +32,12 @@ public class PointServiceImpl implements PointService {
 
     @Override
     public List<PointDto> getPoints() {
-        return pointMapper.toPointDtoList(pointRepository.findAll());
+        return addIdToPointDtos(pointMapper.toPointDtoList(pointRepository.findAll()));
     }
 
     @Override
     public PointDto getPoint(Long id) {
-        return pointMapper.toPointDto(pointRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Point not found")));
+        return addIdToPointDto(pointMapper.toPointDto(pointRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Point not found"))));
     }
 
     @Override
@@ -49,7 +49,7 @@ public class PointServiceImpl implements PointService {
                 throw new EntityExistsException("Point already exists");
             }
         }
-        return pointMapper.toPointDto(pointRepository.save(pointMapper.toPoint(pointDto)));
+        return addIdToPointDto(pointMapper.toPointDto(pointRepository.save(pointMapper.toPoint(pointDto))));
     }
 
     @Override
@@ -70,7 +70,7 @@ public class PointServiceImpl implements PointService {
         }
         wasteTypes.add(wasteTypeMapper.toWasteType(wasteTypeDto));
         point.setWasteTypes(wasteTypes);
-        return pointMapper.toPointDto(pointRepository.save(point));
+        return addIdToPointDto(pointMapper.toPointDto(pointRepository.save(point)));
     }
 
     @Override
@@ -83,8 +83,7 @@ public class PointServiceImpl implements PointService {
         Pageable pageable = PageRequest.of(filterInfoDto.getPage(), filterInfoDto.getItemsPerPage());
         PageDTO<Point> pointsPage = getPaginatedList(pointsInRange, pageable.getPageNumber(), pageable.getPageSize());
         List<Point> points = pointsPage.getContent();
-        System.out.println(pointsWithoutRange);
-        return pointMapper.toPointDtoList(points);
+        return addIdToPointDtos(pointMapper.toPointDtoList(points));
     }
 
     private PageDTO<Point> getPaginatedList(List<Point> list, int page, int pageSize) {
@@ -104,5 +103,21 @@ public class PointServiceImpl implements PointService {
         pageDTO.setTotalElements(totalElements);
 
         return pageDTO;
+    }
+
+    private List<PointDto> addIdToPointDtos(List<PointDto> points){
+        for (PointDto point:points) {
+            if(cityService.getCityByName(point.getCity()) != null){
+                point.setCityId(cityService.getCityByName(point.getCity()).getId());
+            }
+        }
+        return points;
+    }
+
+    private PointDto addIdToPointDto(PointDto point){
+        if(cityService.getCityByName(point.getCity()) != null) {
+            point.setCityId(cityService.getCityByName(point.getCity()).getId());
+        }
+        return point;
     }
 }
