@@ -1,5 +1,6 @@
 package com.example.jakwywiozebackend.service.impl;
 
+import com.example.jakwywiozebackend.dto.LoginRequest;
 import com.example.jakwywiozebackend.dto.UserDto;
 import com.example.jakwywiozebackend.entity.User;
 import com.example.jakwywiozebackend.mapper.UserMapper;
@@ -8,6 +9,10 @@ import com.example.jakwywiozebackend.service.UserService;
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,6 +22,8 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final UserMapper userMapper;
+    private final BCryptPasswordEncoder passwordEncoder;
+    private final AuthenticationManager authenticationManager;
     @Override
     public List<UserDto> getUsers() {
         return userMapper.toUserDtoList(userRepository.findAll());
@@ -33,6 +40,18 @@ public class UserServiceImpl implements UserService {
         if(userRepository.findByUsername(user.getUsername()).isPresent()){
             throw new EntityExistsException("User already exists");
         }
+        String encodedPassword = passwordEncoder.encode(user.getPassword());
+        user.setPassword(encodedPassword);
         return userMapper.toUserDto(userRepository.save(user));
+    }
+
+    @Override
+    public String login(LoginRequest loginRequest) {
+        try {
+            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
+            return "Login successful";
+        } catch (AuthenticationException e){
+          return "Login unsuccessful";
+        }
     }
 }
