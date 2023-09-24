@@ -9,8 +9,6 @@ import com.example.jakwywiozebackend.service.UserService;
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -23,7 +21,8 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
     private final BCryptPasswordEncoder passwordEncoder;
-    private final AuthenticationManager authenticationManager;
+    private final AuthService authService;
+
     @Override
     public List<UserDto> getUsers() {
         return userMapper.toUserDtoList(userRepository.findAll());
@@ -48,8 +47,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public String login(LoginRequest loginRequest) {
         try {
-            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
-            return "Login successful";
+
+            return authService.generateToken(loginRequest.getUsername(), loginRequest.getPassword());
         } catch (AuthenticationException e){
           return "Login unsuccessful";
         }
