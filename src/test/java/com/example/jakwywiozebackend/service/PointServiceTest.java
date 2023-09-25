@@ -6,6 +6,7 @@ import com.example.jakwywiozebackend.entity.Point;
 import com.example.jakwywiozebackend.mapper.PointMapper;
 import com.example.jakwywiozebackend.repository.PointRepository;
 import com.example.jakwywiozebackend.repository.WasteTypeRepository;
+import com.example.jakwywiozebackend.service.impl.CityServiceImpl;
 import com.example.jakwywiozebackend.service.impl.PointServiceImpl;
 import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
@@ -26,13 +27,13 @@ public class PointServiceTest {
 
     @InjectMocks
     private PointServiceImpl pointService;
+    @Mock
+    private CityServiceImpl cityService;
 
     @Mock
     private PointRepository pointRepository;
-
     @Mock
     private PointMapper pointMapper;
-
     @Mock
     private WasteTypeRepository wasteTypeRepository;
 

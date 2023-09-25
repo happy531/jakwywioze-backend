@@ -7,6 +7,7 @@ import com.example.jakwywiozebackend.mapper.PointMapper;
 import com.example.jakwywiozebackend.mapper.WasteTypeMapper;
 import com.example.jakwywiozebackend.repository.PointRepository;
 import com.example.jakwywiozebackend.repository.WasteTypeRepository;
+import com.example.jakwywiozebackend.service.CityService;
 import com.example.jakwywiozebackend.service.PointService;
 import com.example.jakwywiozebackend.service.PointSpecification;
 import com.example.jakwywiozebackend.utils.Utils;
@@ -28,7 +29,7 @@ public class PointServiceImpl implements PointService {
     private final PointMapper pointMapper;
     private final WasteTypeMapper wasteTypeMapper;
     private final WasteTypeRepository wasteTypeRepository;
-    private final CityServiceImpl cityService;
+    private final CityService cityService;
 
     @Override
     public List<PointDto> getPoints() {
