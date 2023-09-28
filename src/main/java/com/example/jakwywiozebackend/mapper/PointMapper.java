@@ -10,7 +10,6 @@ import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface PointMapper {
-    @Mapping(target = "cityId", ignore = true)
     Point toPoint(PointDto pointDto);
     @Mapping(target = "cityId", ignore = true)
     PointDto toPointDto(Point point);
