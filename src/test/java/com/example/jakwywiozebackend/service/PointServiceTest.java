@@ -28,6 +28,9 @@ public class PointServiceTest {
     private PointServiceImpl pointService;
 
     @Mock
+    private CityService cityService;
+
+    @Mock
     private PointRepository pointRepository;
 
     @Mock
