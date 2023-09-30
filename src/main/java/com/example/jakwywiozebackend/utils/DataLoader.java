@@ -24,6 +24,11 @@ public class DataLoader {
 
     @EventListener(ContextRefreshedEvent.class)
     public void loadData() {
+        loadPoints();
+        loadCities();
+    }
+
+    private void loadPoints() {
         String line = "";
         String splitBy = ";";
         try {
@@ -32,7 +37,7 @@ public class DataLoader {
             br.readLine();
             while ((line = br.readLine()) != null) {
                 String[] data = line.split(splitBy);
-                insertData(data);
+                insertPoints(data);
             }
             br.close();
         } catch (Exception e) {
@@ -40,7 +45,7 @@ public class DataLoader {
         }
     }
 
-    private void insertData(String[] data) {
+    private void insertPoints(String[] data) {
         try (Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/jakwywioze", "jakwywioze", "jakwywioze")) {
             String query = "INSERT INTO point (name, street, zipcode, city, lon, lat, phone_number, website, image_link, opening_hours, type) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -65,4 +70,49 @@ public class DataLoader {
             e.printStackTrace();
         }
     }
+
+    private void loadCities() {
+        String line = "";
+        String splitBy = ";";
+        int id = 1; // Initialize the id counter
+        try {
+            Resource resource = resourceLoader.getResource("classpath:cities.txt");
+            BufferedReader br = new BufferedReader(new InputStreamReader(resource.getInputStream()));
+            br.readLine();
+            while ((line = br.readLine()) != null) {
+                String[] data = line.split(splitBy);
+                insertCities(id, data);
+                id++; // Increment the id for each city
+            }
+            br.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void insertCities(int id, String[] data) {
+        try (Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/jakwywioze", "jakwywioze", "jakwywioze")) {
+            String query = "INSERT INTO city (id, name, voivodeship, county, latitude, longitude) VALUES (?, ?, ?, ?, ?, ?) ON CONFLICT (id) DO NOTHING";
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, id); // Set the id value
+            for (int i = 0; i < 5; i++) {
+                if (i == 3 || i == 4) { // If the column is 'latitude' or 'longitude'
+                    try {
+                        float value = Float.parseFloat(data[i]);
+                        preparedStatement.setFloat(i + 2, value); // Note the index is now i + 2
+                    } catch (NumberFormatException e) {
+                        System.out.println("Error parsing float value for data[" + i + "]: " + data[i]);
+                        e.printStackTrace();
+                    }
+                } else {
+                    preparedStatement.setString(i + 2, data[i]); // Note the index is now i + 2
+                }
+            }
+
+            preparedStatement.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 }
