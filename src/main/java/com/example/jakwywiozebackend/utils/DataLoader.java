@@ -26,6 +26,7 @@ public class DataLoader {
     public void loadData() {
         loadPoints();
         loadCities();
+        loadWasteTypes();
     }
 
     private void loadPoints() {
@@ -74,7 +75,7 @@ public class DataLoader {
     private void loadCities() {
         String line = "";
         String splitBy = ";";
-        int id = 1; // Initialize the id counter
+        int id = 1;
         try {
             Resource resource = resourceLoader.getResource("classpath:cities.txt");
             BufferedReader br = new BufferedReader(new InputStreamReader(resource.getInputStream()));
@@ -82,7 +83,7 @@ public class DataLoader {
             while ((line = br.readLine()) != null) {
                 String[] data = line.split(splitBy);
                 insertCities(id, data);
-                id++; // Increment the id for each city
+                id++;
             }
             br.close();
         } catch (Exception e) {
@@ -94,18 +95,18 @@ public class DataLoader {
         try (Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/jakwywioze", "jakwywioze", "jakwywioze")) {
             String query = "INSERT INTO city (id, name, voivodeship, county, latitude, longitude) VALUES (?, ?, ?, ?, ?, ?) ON CONFLICT (id) DO NOTHING";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setInt(1, id); // Set the id value
+            preparedStatement.setInt(1, id);
             for (int i = 0; i < 5; i++) {
-                if (i == 3 || i == 4) { // If the column is 'latitude' or 'longitude'
+                if (i == 3 || i == 4) {
                     try {
                         float value = Float.parseFloat(data[i]);
-                        preparedStatement.setFloat(i + 2, value); // Note the index is now i + 2
+                        preparedStatement.setFloat(i + 2, value);
                     } catch (NumberFormatException e) {
                         System.out.println("Error parsing float value for data[" + i + "]: " + data[i]);
                         e.printStackTrace();
                     }
                 } else {
-                    preparedStatement.setString(i + 2, data[i]); // Note the index is now i + 2
+                    preparedStatement.setString(i + 2, data[i]);
                 }
             }
 
@@ -115,4 +116,35 @@ public class DataLoader {
         }
     }
 
+    private void loadWasteTypes() {
+        String line = "";
+        String splitBy = ";";
+        int id = 1;
+        try {
+            Resource resource = resourceLoader.getResource("classpath:waste_types.txt");
+            BufferedReader br = new BufferedReader(new InputStreamReader(resource.getInputStream()));
+            br.readLine();
+            while ((line = br.readLine()) != null) {
+                String[] data = line.split(splitBy);
+                insertWasteType(id, data);
+                id++;
+            }
+            br.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void insertWasteType(int id, String[] data) {
+        try (Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/jakwywioze", "jakwywioze", "jakwywioze")) {
+            String query = "INSERT INTO waste_type (id, name) VALUES (?, ?) ON CONFLICT (id) DO NOTHING";
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, id);
+            preparedStatement.setString(2, data[0]);
+
+            preparedStatement.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }
