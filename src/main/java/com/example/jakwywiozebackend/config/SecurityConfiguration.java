@@ -23,6 +23,7 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(authorize ->
                         authorize
                                 .requestMatchers("/users/login").permitAll()
+                                .requestMatchers("/points/filtered").permitAll()
                                 .anyRequest().authenticated()
                 )
                 .logout()
