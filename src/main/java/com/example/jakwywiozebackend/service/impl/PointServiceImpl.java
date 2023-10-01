@@ -78,13 +78,15 @@ public class PointServiceImpl implements PointService {
     public List<PointDto> getFilteredPoints(FilterInfoDto filterInfoDto) {
         Specification<Point> spec = Specification
                 .where(PointSpecification.getPointByWasteTypes(filterInfoDto.getWasteTypesNames()));
-        List<Point> pointsWithoutRange = pointRepository.findAll(spec);
+        List<Point> points = pointRepository.findAll(spec);
         CityDto city = cityService.getCityByName(filterInfoDto.getCity());
-        List<Point> pointsInRange = Utils.filterPointsByRange(pointsWithoutRange, city, filterInfoDto.getRange());
+        if(city != null){
+            points = Utils.filterPointsByRange(points, city, filterInfoDto.getRange());
+        }
         Pageable pageable = PageRequest.of(filterInfoDto.getPage(), filterInfoDto.getItemsPerPage());
-        PageDTO<Point> pointsPage = getPaginatedList(pointsInRange, pageable.getPageNumber(), pageable.getPageSize());
-        List<Point> points = pointsPage.getContent();
-        return addIdToPointDtos(pointMapper.toPointDtoList(points));
+        PageDTO<Point> pointsPage = getPaginatedList(points, pageable.getPageNumber(), pageable.getPageSize());
+        List<Point> pointsPaged = pointsPage.getContent();
+        return addIdToPointDtos(pointMapper.toPointDtoList(pointsPaged));
     }
 
     private PageDTO<Point> getPaginatedList(List<Point> list, int page, int pageSize) {
