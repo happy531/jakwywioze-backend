@@ -9,6 +9,6 @@ public class CitySpecification {
         if(substring == null){
             return ((root, query, criteriaBuilder) -> criteriaBuilder.isTrue(criteriaBuilder.literal(true)));
         }
-        return (root, query, criteriaBuilder) -> criteriaBuilder.like(root.get("name"), substring+"%");
+        return (root, query, criteriaBuilder) -> criteriaBuilder.like(criteriaBuilder.lower(root.get("name")), substring.toLowerCase()+"%");
     }
 }
