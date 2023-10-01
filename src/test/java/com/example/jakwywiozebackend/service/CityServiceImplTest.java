@@ -61,10 +61,9 @@ public class CityServiceImplTest {
     @Test
     public void testGetCitiesByNameSubstring() {
         String name = "test";
-        List<City> cities = List.of(new City(), new City());
-        when(cityRepository.findByNameContaining(name)).thenReturn(cities);
+        List<CityDto> cities = List.of(new CityDto(), new CityDto());
+        when(cityService.getCitiesByNameSubstring(name)).thenReturn(cities);
         List<CityDto> cityDtos = List.of(new CityDto(), new CityDto());
-        when(cityMapper.toCityDtoList(cities)).thenReturn(cityDtos);
 
         List<CityDto> result = cityService.getCitiesByNameSubstring(name);
         assertEquals(cityDtos.size(), result.size());

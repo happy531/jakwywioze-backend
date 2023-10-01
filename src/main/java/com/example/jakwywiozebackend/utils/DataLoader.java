@@ -27,18 +27,21 @@ public class DataLoader {
         loadPoints();
         loadCities();
         loadWasteTypes();
+        insertUser();
     }
 
     private void loadPoints() {
         String line = "";
-        String splitBy = ";";
+        String splitBy = ";\t";
+        Long id = 1L;
         try {
             Resource resource = resourceLoader.getResource("classpath:points.txt");
             BufferedReader br = new BufferedReader(new InputStreamReader(resource.getInputStream()));
             br.readLine();
             while ((line = br.readLine()) != null) {
                 String[] data = line.split(splitBy);
-                insertPoints(data);
+                insertPoints(id, data);
+                id++;
             }
             br.close();
         } catch (Exception e) {
@@ -46,25 +49,26 @@ public class DataLoader {
         }
     }
 
-    private void insertPoints(String[] data) {
+    private void insertPoints(Long id, String[] data) {
         try (Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/jakwywioze", "jakwywioze", "jakwywioze")) {
-            String query = "INSERT INTO point (name, street, zipcode, city, lon, lat, phone_number, website, image_link, opening_hours, type) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            String query = "INSERT INTO point (id, name, street, zipcode, city, lat, lon, phone_number, website, image_link, opening_hours, type) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ON CONFLICT (id) DO NOTHING";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             for (int i = 0; i < 9; i++) {
                 if (i == 4 || i == 5) { // If the column is 'lon' or 'lat'
                     try {
+                        preparedStatement.setLong(1, id);
                         float value = Float.parseFloat(data[i]);
-                        preparedStatement.setFloat(i + 1, value);
+                        preparedStatement.setFloat(i + 2, value);
                     } catch (NumberFormatException e) {
                         System.out.println("Error parsing float value for data[" + i + "]: " + data[i]);
                         e.printStackTrace();
                     }
                 } else {
-                    preparedStatement.setString(i + 1, data[i]);
+                    preparedStatement.setString(i + 2, data[i]);
                 }
             }
-            preparedStatement.setNull(10, java.sql.Types.VARCHAR);
-            preparedStatement.setNull(11, Types.BOOLEAN);
+            preparedStatement.setNull(11, java.sql.Types.VARCHAR);
+            preparedStatement.setNull(12, Types.BOOLEAN);
 
             preparedStatement.executeUpdate();
         } catch (Exception e) {
@@ -74,7 +78,7 @@ public class DataLoader {
 
     private void loadCities() {
         String line = "";
-        String splitBy = ";";
+        String splitBy = ";\t";
         int id = 1;
         try {
             Resource resource = resourceLoader.getResource("classpath:cities.txt");
@@ -141,6 +145,21 @@ public class DataLoader {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setInt(1, id);
             preparedStatement.setString(2, data[0]);
+
+            preparedStatement.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void insertUser() {
+        try (Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/jakwywioze", "jakwywioze", "jakwywioze")) {
+            String query = "INSERT INTO \"user\" (id, username, password, role) VALUES (?, ?, ?, ?) ON CONFLICT (id) DO NOTHING";
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setLong(1, 0);
+            preparedStatement.setString(2, "admin");
+            preparedStatement.setString(3, "$2a$12$QcRYVci5qvmVlPMrZynv4.CuolM6g1IhGBgs690Ga6fQRMVP/GMue");
+            preparedStatement.setString(4, "ADMIN");
 
             preparedStatement.executeUpdate();
         } catch (Exception e) {
