@@ -31,7 +31,7 @@ public class DataLoader {
 
     private void loadPoints() {
         String line = "";
-        String splitBy = ";";
+        String splitBy = ";\t";
         try {
             Resource resource = resourceLoader.getResource("classpath:points.txt");
             BufferedReader br = new BufferedReader(new InputStreamReader(resource.getInputStream()));
@@ -48,7 +48,7 @@ public class DataLoader {
 
     private void insertPoints(String[] data) {
         try (Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/jakwywioze", "jakwywioze", "jakwywioze")) {
-            String query = "INSERT INTO point (name, street, zipcode, city, lon, lat, phone_number, website, image_link, opening_hours, type) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            String query = "INSERT INTO point (name, street, zipcode, city, lat, lon, phone_number, website, image_link, opening_hours, type) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ON CONFLICT (id) DO NOTHING";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             for (int i = 0; i < 9; i++) {
                 if (i == 4 || i == 5) { // If the column is 'lon' or 'lat'
@@ -74,7 +74,7 @@ public class DataLoader {
 
     private void loadCities() {
         String line = "";
-        String splitBy = ";";
+        String splitBy = ";\t";
         int id = 1;
         try {
             Resource resource = resourceLoader.getResource("classpath:cities.txt");
