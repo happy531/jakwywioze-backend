@@ -1,11 +1,13 @@
 package com.example.jakwywiozebackend.service.impl;
 
+import com.example.jakwywiozebackend.dto.CityCoordsRequest;
 import com.example.jakwywiozebackend.dto.CityDto;
 import com.example.jakwywiozebackend.entity.City;
 import com.example.jakwywiozebackend.mapper.CityMapper;
 import com.example.jakwywiozebackend.repository.CityRepository;
 import com.example.jakwywiozebackend.service.CityService;
 import com.example.jakwywiozebackend.service.CitySpecification;
+import com.example.jakwywiozebackend.utils.Utils;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
@@ -40,5 +42,21 @@ public class CityServiceImpl implements CityService {
     public CityDto getCityByName(String name) {
         City city = cityRepository.findByName(name);
         return cityMapper.toCityDto(city);
+    }
+
+    @Override
+    public CityDto getClosestCity(CityCoordsRequest coordsRequest) {
+        List<City> cities = cityRepository.findAll();
+        float min = Float.MAX_VALUE;
+        float distance;
+        City closestCity = null;
+        for (City city: cities) {
+            distance = Utils.distanceFrom(coordsRequest.getLatitude(), coordsRequest.getLongitude(), city.getLatitude(), city.getLongitude());
+            if(distance<min){
+                min = distance;
+                closestCity = city;
+            }
+        }
+        return cityMapper.toCityDto(closestCity);
     }
 }
