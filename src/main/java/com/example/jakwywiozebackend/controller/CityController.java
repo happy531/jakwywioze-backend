@@ -1,5 +1,6 @@
 package com.example.jakwywiozebackend.controller;
 
+import com.example.jakwywiozebackend.dto.CityCoordsRequest;
 import com.example.jakwywiozebackend.dto.CityDto;
 import com.example.jakwywiozebackend.service.CityService;
 import lombok.RequiredArgsConstructor;
@@ -31,5 +32,10 @@ public class CityController {
     @GetMapping("/find")
     public ResponseEntity<List<CityDto>> getFilteredCities(@RequestParam(value = "name") @Length(min = 3, message = "Name should be at least 3 characters") String nameSubstring){
         return new ResponseEntity<>(cityService.getCitiesByNameSubstring(nameSubstring), HttpStatus.OK);
+    }
+
+    @PostMapping("/closest")
+    public ResponseEntity<CityDto> getClosestCity(@RequestBody CityCoordsRequest cityCoordsRequest){
+        return new ResponseEntity<>(cityService.getClosestCity(cityCoordsRequest), HttpStatus.OK);
     }
 }
