@@ -80,7 +80,6 @@ public class PointServiceImpl implements PointService {
                 .where(PointSpecification.getPointByWasteTypes(filterInfoDto.getWasteTypesNames()));
         List<Point> points = pointRepository.findAll(spec);
         CityDto city = cityService.getCityById(filterInfoDto.getCityId());
-        System.out.println(filterInfoDto.getRange());
         if(city != null){
             if(filterInfoDto.getRange() != 0){
                 points = Utils.filterPointsByRange(points, city, filterInfoDto.getRange());
