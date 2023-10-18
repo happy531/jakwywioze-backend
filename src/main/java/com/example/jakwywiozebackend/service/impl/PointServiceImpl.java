@@ -79,9 +79,15 @@ public class PointServiceImpl implements PointService {
         Specification<Point> spec = Specification
                 .where(PointSpecification.getPointByWasteTypes(filterInfoDto.getWasteTypesNames()));
         List<Point> points = pointRepository.findAll(spec);
-        CityDto city = cityService.getCityByName(filterInfoDto.getCity());
+        CityDto city = cityService.getCityById(filterInfoDto.getCityId());
+        System.out.println(filterInfoDto.getRange());
         if(city != null){
-            points = Utils.filterPointsByRange(points, city, filterInfoDto.getRange());
+            if(filterInfoDto.getRange() != 0){
+                points = Utils.filterPointsByRange(points, city, filterInfoDto.getRange());
+            }
+            else {
+                points.removeIf(point -> !point.getCity().equals(city.getName()));
+            }
         }
         Pageable pageable = PageRequest.of(filterInfoDto.getPage(), filterInfoDto.getItemsPerPage());
         PageDTO<Point> pointsPage = getPaginatedList(points, pageable.getPageNumber(), pageable.getPageSize());
