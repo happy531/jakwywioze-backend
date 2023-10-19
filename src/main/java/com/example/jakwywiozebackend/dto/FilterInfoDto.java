@@ -8,7 +8,7 @@ import java.util.List;
 @ToString
 public class FilterInfoDto {
     private List<String> wasteTypesNames;
-    private String city;
+    private Long cityId;
     private int range;
     private int page;
     private int itemsPerPage;
