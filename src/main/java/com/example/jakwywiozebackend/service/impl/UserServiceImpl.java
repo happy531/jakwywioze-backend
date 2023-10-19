@@ -12,6 +12,7 @@ import com.example.jakwywiozebackend.repository.UserRepository;
 import com.example.jakwywiozebackend.repository.VerificationTokenRepository;
 import com.example.jakwywiozebackend.service.UserService;
 import com.example.jakwywiozebackend.utils.Events.OnRegistrationCompleteEvent;
+import com.example.jakwywiozebackend.utils.Events.PasswordResetEvent;
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -48,6 +49,10 @@ public class UserServiceImpl implements UserService {
         return userMapper.toUserDto(userRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("User not found")));
     }
 
+    public User findUserByUsername(String username) {
+        return userRepository.findByUsername(username).orElseThrow(() -> new EntityNotFoundException("User not found"));
+    }
+
     @Override
     public UserDto createUser(UserDto userDto) {
         User user = userMapper.toUser(userDto);
@@ -61,7 +66,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public String login(LoginRequest loginRequest) {
-        User user = userRepository.findByUsername(loginRequest.getUsername()).orElseThrow(EntityNotFoundException::new);
+        User user = findUserByUsername(loginRequest.getUsername());
         if (!user.isActive()){
             return "User not active";
         }
@@ -74,6 +79,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public String register(RegisterRequest registerRequest) {
+        if(userRepository.findByEmail(registerRequest.getEmail()).isPresent()){
+            throw new EntityExistsException("User with this email already exists");
+        }
         UserDto userDto = new UserDto();
         userDto.setEmail(registerRequest.getEmail());
         userDto.setUsername(registerRequest.getUsername());
@@ -84,7 +92,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void createVerificationToken(User user, String token) {
+    public void createVerificationTokenForUser(User user, String token) {
         VerificationTokenDto verificationToken = new VerificationTokenDto();
         verificationToken.setToken(token);
         verificationToken.setUser(userMapper.toUserDto(user));
@@ -104,6 +112,37 @@ public class UserServiceImpl implements UserService {
         }
         user.setActive(true);
         userRepository.save(user);
+        verificationTokenRepository.delete(verificationToken);
         return "Account activated";
+    }
+
+    public User findUserByEmail(String email){
+        return userRepository.findByEmail(email).orElseThrow(EntityNotFoundException::new);
+    }
+
+    @Override
+    public String resetPasswordRequest(String email) {
+        eventPublisher.publishEvent(new PasswordResetEvent(email));
+        return "Password reset request sent";
+    }
+
+    @Override
+    public String resetPassword(String token, String password) {
+        VerificationToken verificationToken = verificationTokenRepository.findByToken(token);
+        if (verificationToken == null) {
+            throw new EntityNotFoundException("Token not found");
+        }
+        User user = verificationToken.getUser();
+        Calendar calendar = Calendar.getInstance();
+        if ((verificationToken.getExpiryDate().getTime() - calendar.getTime().getTime()) <= 0) {
+            return "Token expired";
+        }
+
+        String encodedPassword = passwordEncoder.encode(password);
+        user.setPassword(encodedPassword);
+
+        userRepository.save(user);
+        verificationTokenRepository.delete(verificationToken);
+        return "Password reset successful";
     }
 }

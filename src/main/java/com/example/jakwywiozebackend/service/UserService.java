@@ -16,7 +16,11 @@ public interface UserService {
 
     String register(RegisterRequest registerRequest);
 
-    void createVerificationToken(User user, String token);
+    void createVerificationTokenForUser(User user, String token);
 
     String confirmRegistration(String token);
+
+    String resetPassword(String token, String password);
+    String resetPasswordRequest(String email);
+    User findUserByEmail(String email);
 }

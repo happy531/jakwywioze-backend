@@ -1,15 +1,13 @@
-package com.example.jakwywiozebackend.utils.LIsteners;
+package com.example.jakwywiozebackend.utils.Listeners;
 
 import com.example.jakwywiozebackend.entity.User;
 import com.example.jakwywiozebackend.service.UserService;
 import com.example.jakwywiozebackend.utils.Events.OnRegistrationCompleteEvent;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
-import org.springframework.context.MessageSource;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.stereotype.Component;
 
 import java.util.UUID;
@@ -20,23 +18,22 @@ public class RegistrationListener implements
         ApplicationListener<OnRegistrationCompleteEvent> {
 
     private final UserService userService;
-    private final MessageSource messages;
     private final JavaMailSender mailSender;
 
 
     @Override
-    public void onApplicationEvent(OnRegistrationCompleteEvent event) {
+    public void onApplicationEvent(@NonNull OnRegistrationCompleteEvent event) {
         this.confirmRegistration(event);
     }
 
     private void confirmRegistration(OnRegistrationCompleteEvent event) {
         User user = event.getUser();
         String token = UUID.randomUUID().toString();
-        userService.createVerificationToken(user, token);
+        userService.createVerificationTokenForUser(user, token);
 
         String recipientAddress = user.getEmail();
         String subject = "Registration Confirmation";
-        String confirmationUrl = "http://localhost:8081/users/confirmRegistration?token=" + token;
+        String confirmationUrl = "http://localhost:8081/users/confirm-registration?token=" + token;
 
         SimpleMailMessage email = new SimpleMailMessage();
         email.setTo(recipientAddress);
