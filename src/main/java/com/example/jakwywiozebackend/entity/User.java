@@ -15,6 +15,8 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column
+    private String email;
+    @Column
     private String username;
     @Column
     private String password;
@@ -26,4 +28,6 @@ public class User {
     @Column
     @OneToMany
     private List<Comment> comments;
+    @Column
+    private boolean active = false;
 }

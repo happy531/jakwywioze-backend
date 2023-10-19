@@ -1,6 +1,7 @@
 package com.example.jakwywiozebackend.controller;
 
 import com.example.jakwywiozebackend.dto.LoginRequest;
+import com.example.jakwywiozebackend.dto.RegisterRequest;
 import com.example.jakwywiozebackend.dto.UserDto;
 import com.example.jakwywiozebackend.service.UserService;
 import jakarta.validation.Valid;
@@ -35,5 +36,13 @@ public class UserController {
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody @Valid LoginRequest loginRequest){
         return new ResponseEntity<>(userService.login(loginRequest), HttpStatus.OK);
+    }
+    @PostMapping("/register")
+    public ResponseEntity<String> register(@RequestBody @Valid RegisterRequest registerRequest){
+        return new ResponseEntity<>(userService.register(registerRequest), HttpStatus.OK);
+    }
+    @PostMapping("/confirmRegistration")
+    public ResponseEntity<String> register(@RequestParam String token){
+        return new ResponseEntity<>(userService.confirmRegistration(token), HttpStatus.OK);
     }
 }
