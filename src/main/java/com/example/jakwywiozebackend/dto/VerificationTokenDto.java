@@ -7,15 +7,13 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.List;
+
 @Data
 @Getter
 @Setter
-public class UserDto {
+public class VerificationTokenDto {
 
     private Long id;
-    private String email;
-    private String username;
-    private String password;
-    private List<DynamicPointInfo> dynamicPointInfoList;
-    private List<Comment> comments;
+    private String token;
+    private UserDto user;
 }

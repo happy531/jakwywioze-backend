@@ -1,5 +1,9 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="run backend" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+    <envs>
+      <env name="EMAIL" value="jakwywioze@gmail.com" />
+      <env name="PASSWORD" value="mfuunbwozssnuesp" />
+    </envs>
     <module name="jakwywioze-backend" />
     <option name="SPRING_BOOT_MAIN_CLASS" value="com.example.jakwywiozebackend.JakwywiozeBackendApplication" />
     <extension name="net.ashald.envfile">
