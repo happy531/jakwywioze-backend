@@ -9,10 +9,9 @@ import org.springframework.stereotype.Component;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.Types;
+import java.sql.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Component
 public class DataLoader {
@@ -31,47 +30,42 @@ public class DataLoader {
             loadAndInsertCities(connection);
             loadAndInsertWasteTypes(connection);
             insertUser(connection);
+            loadAndInsertPointWaste(connection);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     private void loadAndInsertPoints(Connection connection) {
-        String line = "";
+        String line;
         String splitBy = ";\t";
-        Long id = 1L;
+        long id = 1L;
 
         try {
             Resource resource = resourceLoader.getResource("classpath:points.txt");
             InputStream inputStream = resource.getInputStream();
             BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));
-            br.readLine();
 
-            String query = "INSERT INTO point (id, name, street, zipcode, city, lat, lon, phone_number, website, image_link, opening_hours, type) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ON CONFLICT (id) DO NOTHING";
+            String query = "INSERT INTO point (id, city, image_link, lat, lon, name, opening_hours, phone_number, street, type, website, zipcode) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ON CONFLICT (id) DO NOTHING";
 
             while ((line = br.readLine()) != null) {
                 String[] data = line.split(splitBy);
                 PreparedStatement preparedStatement = connection.prepareStatement(query);
 
-                for (int i = 0; i < 9; i++) {
-                    if (i == 4 || i == 5) { // If the column is 'lon' or 'lat'
-                        try {
-                            preparedStatement.setLong(1, id);
-                            float value = Float.parseFloat(data[i]);
-                            preparedStatement.setFloat(i + 2, value);
-                        } catch (NumberFormatException e) {
-                            System.out.println("Error parsing float value for data[" + i + "]: " + data[i]);
-                            e.printStackTrace();
-                        }
-                    } else {
-                        preparedStatement.setString(i + 2, data[i]);
-                    }
-                }
-                preparedStatement.setNull(11, java.sql.Types.VARCHAR);
-                preparedStatement.setNull(12, Types.BOOLEAN);
+                preparedStatement.setLong(1, id++);
+                preparedStatement.setString(2, data[1]);
+                preparedStatement.setString(3, data[2]);
+                preparedStatement.setFloat(4, Float.parseFloat(data[3]));
+                preparedStatement.setFloat(5, Float.parseFloat(data[4]));
+                preparedStatement.setString(6, data[5]);
+                preparedStatement.setString(7, data[6]);
+                preparedStatement.setString(8, data[7]);
+                preparedStatement.setString(9, data[8]);
+                preparedStatement.setBoolean(10, Boolean.parseBoolean(data[9]));
+                preparedStatement.setString(11, data[10]);
+                preparedStatement.setString(12, data[11]);
 
                 preparedStatement.executeUpdate();
-                id++;
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -79,7 +73,7 @@ public class DataLoader {
     }
 
     private void loadAndInsertCities(Connection connection) {
-        String line = "";
+        String line;
         String splitBy = ";\t";
         int id = 1;
 
@@ -87,30 +81,21 @@ public class DataLoader {
             Resource resource = resourceLoader.getResource("classpath:cities.txt");
             InputStream inputStream = resource.getInputStream();
             BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));
-            br.readLine();
 
-            String query = "INSERT INTO city (id, name, voivodeship, county, latitude, longitude) VALUES (?, ?, ?, ?, ?, ?) ON CONFLICT (id) DO NOTHING";
-            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            String query = "INSERT INTO city (id, county, latitude, longitude, name, voivodeship) VALUES (?, ?, ?, ?, ?, ?) ON CONFLICT (id) DO NOTHING";
 
             while ((line = br.readLine()) != null) {
                 String[] data = line.split(splitBy);
+                PreparedStatement preparedStatement = connection.prepareStatement(query);
 
-                for (int i = 0; i < 5; i++) {
-                    if (i == 3 || i == 4) {
-                        try {
-                            float value = Float.parseFloat(data[i]);
-                            preparedStatement.setFloat(i + 2, value);
-                        } catch (NumberFormatException e) {
-                            System.out.println("Error parsing float value for data[" + i + "]: " + data[i]);
-                            e.printStackTrace();
-                        }
-                    } else {
-                        preparedStatement.setString(i + 2, data[i]);
-                    }
-                }
+                preparedStatement.setInt(1, id++);
+                preparedStatement.setString(2, null);
+                preparedStatement.setFloat(3, Float.parseFloat(data[1]));
+                preparedStatement.setFloat(4, Float.parseFloat(data[2]));
+                preparedStatement.setString(5, data[0]);
+                preparedStatement.setString(6, null);
 
                 preparedStatement.executeUpdate();
-                id++;
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -118,7 +103,7 @@ public class DataLoader {
     }
 
     private void loadAndInsertWasteTypes(Connection connection) {
-        String line = "";
+        String line;
         String splitBy = ";";
         int id = 1;
 
@@ -126,7 +111,6 @@ public class DataLoader {
             Resource resource = resourceLoader.getResource("classpath:waste_types.txt");
             InputStream inputStream = resource.getInputStream();
             BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));
-            br.readLine();
 
             String query = "INSERT INTO waste_type (id, name) VALUES (?, ?) ON CONFLICT (id) DO NOTHING";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -134,11 +118,10 @@ public class DataLoader {
             while ((line = br.readLine()) != null) {
                 String[] data = line.split(splitBy);
 
-                preparedStatement.setInt(1, id);
+                preparedStatement.setInt(1, id++);
                 preparedStatement.setString(2, data[0]);
 
                 preparedStatement.executeUpdate();
-                id++;
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -155,6 +138,50 @@ public class DataLoader {
             preparedStatement.setString(4, "ADMIN");
 
             preparedStatement.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void loadAndInsertPointWaste(Connection connection) {
+        String line;
+        String splitBy = ";";
+
+        try {
+            // Check if the unique index exists, if not create it
+            DatabaseMetaData metaData = connection.getMetaData();
+            ResultSet resultSet = metaData.getIndexInfo(null, null, "point_waste", true, false);
+            boolean indexExists = false;
+
+            while (resultSet.next()) {
+                String indexName = resultSet.getString("INDEX_NAME");
+                if ("idx_point_waste".equals(indexName)) {
+                    indexExists = true;
+                    break;
+                }
+            }
+
+            if (!indexExists) {
+                try (Statement stmt = connection.createStatement()) {
+                    stmt.execute("CREATE UNIQUE INDEX idx_point_waste ON point_waste (point_id, waste_type_id)");
+                }
+            }
+
+            Resource resource = resourceLoader.getResource("classpath:point_waste.txt");
+            InputStream inputStream = resource.getInputStream();
+            BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));
+
+            String query = "INSERT INTO point_waste (point_id, waste_type_id) VALUES (?, ?) ON CONFLICT (point_id, waste_type_id) DO NOTHING";
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+
+            while ((line = br.readLine()) != null) {
+                String[] data = line.split(splitBy);
+
+                preparedStatement.setInt(1, Integer.parseInt(data[0]));
+                preparedStatement.setInt(2, Integer.parseInt(data[1]));
+
+                preparedStatement.executeUpdate();
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
