@@ -20,6 +20,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -76,18 +78,30 @@ public class PointServiceImpl implements PointService {
 
     @Override
     public FilterResponse getFilteredPoints(FilterInfoDto filterInfoDto) {
+        List<String> filterWasteTypes = filterInfoDto.getWasteTypesNames();
         Specification<Point> spec = Specification
-                .where(PointSpecification.getPointByWasteTypes(filterInfoDto.getWasteTypesNames()));
+                .where(PointSpecification.getPointByWasteTypes(filterWasteTypes));
         List<Point> points = pointRepository.findAll(spec);
-        CityDto city = cityService.getCityById(filterInfoDto.getCityId());
-        if(city != null){
-            if(filterInfoDto.getRange() != 0){
-                points = Utils.filterPointsByRange(points, city, filterInfoDto.getRange());
-            }
-            else {
-                points.removeIf(point -> !point.getCity().equals(city.getName()));
-            }
+        Optional<CityDto> cityOptional = Optional.ofNullable(cityService.getCityById(filterInfoDto.getCityId()));
+        if (cityOptional.isPresent()) {
+            CityDto city = cityOptional.get();
+            points = (filterInfoDto.getRange() != 0)
+                    ? Utils.filterPointsByRange(points, city, filterInfoDto.getRange())
+                    : points.stream().filter(point -> point.getCity().equals(city.getName())).collect(Collectors.toList());
+
+            points.sort((p1, p2) -> {
+                int matches1 = (int) p1.getWasteTypes().stream().map(WasteType::getName).filter(filterWasteTypes::contains).count();
+                int matches2 = (int) p2.getWasteTypes().stream().map(WasteType::getName).filter(filterWasteTypes::contains).count();
+                if (matches1 != matches2) {
+                    return matches2 - matches1;
+                } else {
+                    double range1 = Utils.calculateRange(city.getLatitude(), city.getLongitude(), p1.getLat(), p1.getLon());
+                    double range2 = Utils.calculateRange(city.getLatitude(), city.getLongitude(), p2.getLat(), p2.getLon());
+                    return Double.compare(range1, range2);
+                }
+            });
         }
+
         Pageable pageable = PageRequest.of(filterInfoDto.getPage(), filterInfoDto.getItemsPerPage());
         PageDTO<Point> pointsPage = getPaginatedList(points, pageable.getPageNumber(), pageable.getPageSize());
         List<Point> pointsPaged = pointsPage.getContent();
@@ -113,17 +127,17 @@ public class PointServiceImpl implements PointService {
         return pageDTO;
     }
 
-    private List<PointDto> addIdToPointDtos(List<PointDto> points){
-        for (PointDto point:points) {
-            if(cityService.getCityByName(point.getCity()) != null){
+    private List<PointDto> addIdToPointDtos(List<PointDto> points) {
+        for (PointDto point : points) {
+            if (cityService.getCityByName(point.getCity()) != null) {
                 point.setCityId(cityService.getCityByName(point.getCity()).getId());
             }
         }
         return points;
     }
 
-    private PointDto addIdToPointDto(PointDto point){
-        if(cityService.getCityByName(point.getCity()) != null) {
+    private PointDto addIdToPointDto(PointDto point) {
+        if (cityService.getCityByName(point.getCity()) != null) {
             point.setCityId(cityService.getCityByName(point.getCity()).getId());
         }
         return point;
