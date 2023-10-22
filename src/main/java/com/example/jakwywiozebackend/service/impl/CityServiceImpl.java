@@ -23,7 +23,7 @@ public class CityServiceImpl implements CityService {
 
     @Override
     public CityDto getCityById(Long id) {
-        return cityMapper.toCityDto(cityRepository.findById(id).orElseThrow(EntityNotFoundException::new));
+        return cityRepository.findById(id).map(cityMapper::toCityDto).orElse(null);
     }
 
     @Override
