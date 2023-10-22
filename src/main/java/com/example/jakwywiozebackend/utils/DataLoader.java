@@ -10,8 +10,6 @@ import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.sql.*;
-import java.util.HashSet;
-import java.util.Set;
 
 @Component
 public class DataLoader {
@@ -130,12 +128,13 @@ public class DataLoader {
 
     private void insertUser(Connection connection) {
         try {
-            String query = "INSERT INTO \"user\" (id, username, password, role) VALUES (?, ?, ?, ?) ON CONFLICT (id) DO NOTHING";
+            String query = "INSERT INTO \"user\" (id, username, password, role, active) VALUES (?, ?, ?, ?, ?) ON CONFLICT (id) DO NOTHING";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setLong(1, 0);
             preparedStatement.setString(2, "admin");
             preparedStatement.setString(3, "$2a$12$QcRYVci5qvmVlPMrZynv4.CuolM6g1IhGBgs690Ga6fQRMVP/GMue");
             preparedStatement.setString(4, "ADMIN");
+            preparedStatement.setBoolean(5, true);
 
             preparedStatement.executeUpdate();
         } catch (Exception e) {
@@ -148,7 +147,6 @@ public class DataLoader {
         String splitBy = ";";
 
         try {
-            // Check if the unique index exists, if not create it
             DatabaseMetaData metaData = connection.getMetaData();
             ResultSet resultSet = metaData.getIndexInfo(null, null, "point_waste", true, false);
             boolean indexExists = false;
