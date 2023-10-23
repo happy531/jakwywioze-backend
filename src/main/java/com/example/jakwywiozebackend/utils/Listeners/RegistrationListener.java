@@ -33,7 +33,7 @@ public class RegistrationListener implements
 
         String recipientAddress = user.getEmail();
         String subject = "Registration Confirmation";
-        String confirmationUrl = "http://localhost:8081/users/confirm-registration?token=" + token;
+        String confirmationUrl = "http://localhost:8080/users/confirm-registration?token=" + token;
 
         SimpleMailMessage email = new SimpleMailMessage();
         email.setTo(recipientAddress);

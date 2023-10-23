@@ -33,7 +33,7 @@ public class PasswordResetListener implements
 
         String recipientAddress = event.getEmail();
         String subject = "Password reset";
-        String confirmationUrl = "http://localhost:8081/users/password-reset-confirmation?token=" + token;
+        String confirmationUrl = "http://localhost:8080/users/password-reset-confirmation?token=" + token;
 
         SimpleMailMessage email = new SimpleMailMessage();
         email.setTo(recipientAddress);
