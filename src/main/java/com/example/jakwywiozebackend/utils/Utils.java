@@ -11,6 +11,7 @@ public class Utils {
         Earth's radius in kilometers
     */
     private static final double EARTH_RADIUS = 6371.0;
+    public static final String BASE_URL = "http://localhost:8080";
 
     public static double calculateRange(double lat1, double lon1, double lat2, double lon2) {
         double lat1Rad = Math.toRadians(lat1);

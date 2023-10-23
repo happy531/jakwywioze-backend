@@ -12,6 +12,8 @@ import org.springframework.stereotype.Component;
 
 import java.util.UUID;
 
+import static com.example.jakwywiozebackend.utils.Utils.BASE_URL;
+
 @Component
 @RequiredArgsConstructor
 public class PasswordResetListener implements
@@ -33,7 +35,7 @@ public class PasswordResetListener implements
 
         String recipientAddress = event.getEmail();
         String subject = "Password reset";
-        String confirmationUrl = "http://localhost:8080/users/password-reset-confirmation?token=" + token;
+        String confirmationUrl = BASE_URL + "/users/password-reset-confirmation?token=" + token;
 
         SimpleMailMessage email = new SimpleMailMessage();
         email.setTo(recipientAddress);

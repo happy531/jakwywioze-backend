@@ -36,6 +36,7 @@ public class UserServiceImpl implements UserService {
     private final VerificationTokenMapper verificationTokenMapper;
     private final BCryptPasswordEncoder passwordEncoder;
     private final AuthService authService;
+    private final String success = "Success";
 
     @Autowired
     ApplicationEventPublisher eventPublisher;
@@ -89,7 +90,7 @@ public class UserServiceImpl implements UserService {
         userDto.setPassword(registerRequest.getPassword());
         User user = userMapper.toUser(createUser(userDto));
         eventPublisher.publishEvent(new OnRegistrationCompleteEvent(user));
-        return "Success";
+        return success;
     }
 
     @Override
@@ -106,7 +107,7 @@ public class UserServiceImpl implements UserService {
 
         user.setActive(true);
         userRepository.save(user);
-        return "Account activated";
+        return success;
     }
 
     public User findUserByEmail(String email){
@@ -116,7 +117,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public String resetPasswordRequest(String email) {
         eventPublisher.publishEvent(new PasswordResetEvent(email));
-        return "Password reset request sent";
+        return success;
     }
 
     @Override
@@ -127,7 +128,7 @@ public class UserServiceImpl implements UserService {
         user.setPassword(encodedPassword);
 
         userRepository.save(user);
-        return "Password reset successful";
+        return success;
     }
 
     private User getUserFromToken(String token){
