@@ -12,6 +12,8 @@ import org.springframework.stereotype.Component;
 
 import java.util.UUID;
 
+import static com.example.jakwywiozebackend.utils.Utils.BASE_URL;
+
 @Component
 @RequiredArgsConstructor
 public class RegistrationListener implements
@@ -33,7 +35,7 @@ public class RegistrationListener implements
 
         String recipientAddress = user.getEmail();
         String subject = "Registration Confirmation";
-        String confirmationUrl = "http://localhost:8081/users/confirm-registration?token=" + token;
+        String confirmationUrl = BASE_URL + "/users/confirm-registration?token=" + token;
 
         SimpleMailMessage email = new SimpleMailMessage();
         email.setTo(recipientAddress);
