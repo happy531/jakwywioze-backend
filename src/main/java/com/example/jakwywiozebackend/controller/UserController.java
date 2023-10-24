@@ -1,9 +1,6 @@
 package com.example.jakwywiozebackend.controller;
 
-import com.example.jakwywiozebackend.dto.LoginRequest;
-import com.example.jakwywiozebackend.dto.PasswordResetRequest;
-import com.example.jakwywiozebackend.dto.RegisterRequest;
-import com.example.jakwywiozebackend.dto.UserDto;
+import com.example.jakwywiozebackend.dto.*;
 import com.example.jakwywiozebackend.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -43,8 +40,8 @@ public class UserController {
         return new ResponseEntity<>(userService.register(registerRequest), HttpStatus.OK);
     }
     @PostMapping("/confirm-registration")
-    public ResponseEntity<String> register(@RequestParam String token){
-        return new ResponseEntity<>(userService.confirmRegistration(token), HttpStatus.OK);
+    public ResponseEntity<String> register(@RequestBody @Valid RegistrationConfirmRequest registerRequest){
+        return new ResponseEntity<>(userService.confirmRegistration(registerRequest.getToken()), HttpStatus.OK);
     }
     @PostMapping("/reset-password")
     public ResponseEntity<String> resetPassword(@RequestBody PasswordResetRequest resetRequest){
