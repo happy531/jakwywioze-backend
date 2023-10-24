@@ -68,6 +68,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public String login(LoginRequest loginRequest) {
+        if(!userRepository.findByUsername(loginRequest.getUsername()).isPresent()){
+            return "Login unsuccessful";
+        }
         User user = findUserByUsername(loginRequest.getUsername());
         if (!user.isActive()){
             return "User not active";
