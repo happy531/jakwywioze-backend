@@ -15,15 +15,17 @@ import java.sql.*;
 public class DataLoader {
 
     private final ResourceLoader resourceLoader;
-    private static final String HOST = "localhost";
-
     public DataLoader(ResourceLoader resourceLoader) {
         this.resourceLoader = resourceLoader;
     }
 
     @EventListener(ContextRefreshedEvent.class)
     public void loadData() {
-        try (Connection connection = DriverManager.getConnection("jdbc:postgresql://" + HOST + ":5432/jakwywioze", "jakwywioze", "jakwywioze")) {
+        String url = System.getenv("SPRING_DATASOURCE_URL") != null ? System.getenv("SPRING_DATASOURCE_URL") : "jdbc:postgresql://localhost:5432/jakwywioze";
+        String username = System.getenv("SPRING_DATASOURCE_USERNAME") != null ? System.getenv("SPRING_DATASOURCE_USERNAME") : "jakwywioze";
+        String password = System.getenv("SPRING_DATASOURCE_PASSWORD") != null ? System.getenv("SPRING_DATASOURCE_PASSWORD") : "jakwywioze";
+
+        try (Connection connection = DriverManager.getConnection(url, username, password)) {
             loadAndInsertPoints(connection);
             loadAndInsertCities(connection);
             loadAndInsertWasteTypes(connection);
