@@ -68,6 +68,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public String login(LoginRequest loginRequest) {
+        if(!userRepository.findByUsername(loginRequest.getUsername()).isPresent()){
+            return "Login unsuccessful";
+        }
         User user = findUserByUsername(loginRequest.getUsername());
         if (!user.isActive()){
             return "User not active";
@@ -134,7 +137,7 @@ public class UserServiceImpl implements UserService {
     private User getUserFromToken(String token){
         VerificationToken verificationToken = verificationTokenRepository.findByToken(token);
         if (verificationToken == null) {
-            throw new EntityNotFoundException();
+            throw new EntityNotFoundException("Token invalid");
         }
         Calendar calendar = Calendar.getInstance();
         if ((verificationToken.getExpiryDate().getTime() - calendar.getTime().getTime()) <= 0) {
