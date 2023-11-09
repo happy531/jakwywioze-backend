@@ -90,8 +90,8 @@ public class DataLoader {
 
                 preparedStatement.setInt(1, id++);
                 preparedStatement.setString(2, null);
-                preparedStatement.setFloat(3, Float.parseFloat(data[1]));
-                preparedStatement.setFloat(4, Float.parseFloat(data[2]));
+                preparedStatement.setFloat(3, Float.parseFloat(data[2]));
+                preparedStatement.setFloat(4, Float.parseFloat(data[1]));
                 preparedStatement.setString(5, data[0]);
                 preparedStatement.setString(6, null);
 
