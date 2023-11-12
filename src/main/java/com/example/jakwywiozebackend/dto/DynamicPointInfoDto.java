@@ -1,11 +1,10 @@
 package com.example.jakwywiozebackend.dto;
 
-import com.example.jakwywiozebackend.entity.*;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 @Data
 @Getter
@@ -13,11 +12,9 @@ import java.util.List;
 public class DynamicPointInfoDto {
 
     private Long id;
-    User user;
-    Point point;
-    String city;
-    String street;
-    LocalDateTime startingDateTime;
-    LocalDateTime endingDateTime;
-    List<String> additionalWasteTypes;
+    private Long user;
+    private Long point;
+    private LocalDate startDate;
+    private LocalDate endDate;
+    private List<String> additionalWasteTypes;
 }

@@ -1,7 +1,6 @@
 package com.example.jakwywiozebackend.dto;
 
 import com.example.jakwywiozebackend.entity.Comment;
-import com.example.jakwywiozebackend.entity.DynamicPointInfo;
 import com.example.jakwywiozebackend.entity.WasteType;
 import lombok.Data;
 import lombok.Getter;
@@ -26,7 +25,7 @@ public class PointDto {
     private String phoneNumber;
     private String website;
     private String imageLink;
-    private DynamicPointInfo dynamicPointInfo;
+    private DynamicPointInfoDto dynamicPointInfo;
     private List<WasteType> wasteTypes;
     private List<Comment> comments;
 }

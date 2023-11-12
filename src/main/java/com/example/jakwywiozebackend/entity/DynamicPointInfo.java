@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 
 @Entity
@@ -17,17 +17,12 @@ public class DynamicPointInfo {
     private Long id;
     @ManyToOne
     private User user;
-    @PrimaryKeyJoinColumn
-    @OneToOne
+    @OneToOne(mappedBy = "dynamicPointInfo")
     private Point point;
     @Column
-    private String city;
+    private LocalDate startDate;
     @Column
-    private String street;
-    @Column
-    private LocalDateTime startingDateTime;
-    @Column
-    private LocalDateTime endingDateTime;
+    private LocalDate endDate;
     @Column
     @ElementCollection
     private List<String> additionalWasteTypes;

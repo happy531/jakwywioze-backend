@@ -1,13 +1,16 @@
 package com.example.jakwywiozebackend.service.impl;
 
 import com.example.jakwywiozebackend.dto.*;
+import com.example.jakwywiozebackend.entity.DynamicPointInfo;
 import com.example.jakwywiozebackend.entity.Point;
 import com.example.jakwywiozebackend.entity.WasteType;
+import com.example.jakwywiozebackend.mapper.DynamicPointInfoMapper;
 import com.example.jakwywiozebackend.mapper.PointMapper;
 import com.example.jakwywiozebackend.mapper.WasteTypeMapper;
 import com.example.jakwywiozebackend.repository.PointRepository;
 import com.example.jakwywiozebackend.repository.WasteTypeRepository;
 import com.example.jakwywiozebackend.service.CityService;
+import com.example.jakwywiozebackend.service.DynamicPointInfoService;
 import com.example.jakwywiozebackend.service.PointService;
 import com.example.jakwywiozebackend.service.PointSpecification;
 import com.example.jakwywiozebackend.utils.Utils;
@@ -32,6 +35,8 @@ public class PointServiceImpl implements PointService {
     private final WasteTypeMapper wasteTypeMapper;
     private final WasteTypeRepository wasteTypeRepository;
     private final CityService cityService;
+    private final DynamicPointInfoService dynamicPointService;
+    private final DynamicPointInfoMapper dynamicPointMapper;
 
     @Override
     public List<PointDto> getPoints() {
@@ -52,7 +57,10 @@ public class PointServiceImpl implements PointService {
                 throw new EntityExistsException("Point already exists");
             }
         }
-        return addIdToPointDto(pointMapper.toPointDto(pointRepository.save(pointMapper.toPoint(pointDto))));
+        DynamicPointInfo dynamicPointInfo = dynamicPointMapper.toDynamicPointInfo(dynamicPointService.createDynamicPointInfo(pointDto.getDynamicPointInfo()));
+        Point point = pointMapper.toPoint(pointDto);
+        point.setDynamicPointInfo(dynamicPointInfo);
+        return addIdToPointDto(pointMapper.toPointDto(pointRepository.save(point)));
     }
 
     @Override

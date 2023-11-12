@@ -36,8 +36,8 @@ public class Point {
     private String imageLink;
     @Column
     private Boolean type;
-    @PrimaryKeyJoinColumn
     @OneToOne
+    @JoinColumn(name = "point", referencedColumnName = "id")
     private DynamicPointInfo dynamicPointInfo;
     @ManyToMany(
             cascade = {CascadeType.ALL}

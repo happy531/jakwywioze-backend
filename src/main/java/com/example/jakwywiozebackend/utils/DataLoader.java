@@ -39,7 +39,7 @@ public class DataLoader {
     private void loadAndInsertPoints(Connection connection) {
         String line;
         String splitBy = ";\t";
-        long id = 1L;
+        long id = 1000L;
 
         try {
             Resource resource = resourceLoader.getResource("classpath:points.txt");
@@ -75,7 +75,7 @@ public class DataLoader {
     private void loadAndInsertCities(Connection connection) {
         String line;
         String splitBy = ";\t";
-        int id = 1;
+        int id = 1000;
 
         try {
             Resource resource = resourceLoader.getResource("classpath:cities.txt");
@@ -105,7 +105,7 @@ public class DataLoader {
     private void loadAndInsertWasteTypes(Connection connection) {
         String line;
         String splitBy = ";";
-        int id = 1;
+        int id = 1000;
 
         try {
             Resource resource = resourceLoader.getResource("classpath:waste_types.txt");
@@ -132,7 +132,7 @@ public class DataLoader {
         try {
             String query = "INSERT INTO \"user\" (id, username, password, role, active) VALUES (?, ?, ?, ?, ?) ON CONFLICT (id) DO NOTHING";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
-            preparedStatement.setLong(1, 0);
+            preparedStatement.setLong(1, 1);
             preparedStatement.setString(2, "admin");
             preparedStatement.setString(3, "$2a$12$QcRYVci5qvmVlPMrZynv4.CuolM6g1IhGBgs690Ga6fQRMVP/GMue");
             preparedStatement.setString(4, "ADMIN");
