@@ -49,6 +49,6 @@ public class Point {
     )
     private List<WasteType> wasteTypes;
     @Column
-    @OneToMany
+    @OneToMany(mappedBy = "point")
     private List<Comment> comments;
 }

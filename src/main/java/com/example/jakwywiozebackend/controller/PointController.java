@@ -1,9 +1,6 @@
 package com.example.jakwywiozebackend.controller;
 
-import com.example.jakwywiozebackend.dto.FilterInfoDto;
-import com.example.jakwywiozebackend.dto.FilterResponse;
-import com.example.jakwywiozebackend.dto.PointDto;
-import com.example.jakwywiozebackend.dto.WasteTypeDto;
+import com.example.jakwywiozebackend.dto.*;
 import com.example.jakwywiozebackend.service.PointService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
