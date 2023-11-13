@@ -13,7 +13,6 @@ public class DynamicPointInfoDto {
 
     private Long id;
     private Long user;
-    private Long point;
     private LocalDate startDate;
     private LocalDate endDate;
     private List<String> additionalWasteTypes;
