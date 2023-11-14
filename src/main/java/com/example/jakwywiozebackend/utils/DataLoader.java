@@ -46,7 +46,7 @@ public class DataLoader {
             InputStream inputStream = resource.getInputStream();
             BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));
 
-            String query = "INSERT INTO point (id, city, image_link, lat, lon, name, opening_hours, phone_number, street, type, website, zipcode) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ON CONFLICT (id) DO NOTHING";
+            String query = "INSERT INTO point (id, city, image_link, lat, lon, name, opening_hours, phone_number, street, is_dynamic, website, zipcode) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ON CONFLICT (id) DO NOTHING";
 
             while ((line = br.readLine()) != null) {
                 String[] data = line.split(splitBy);
@@ -61,7 +61,7 @@ public class DataLoader {
                 preparedStatement.setString(7, data[6]);
                 preparedStatement.setString(8, data[7]);
                 preparedStatement.setString(9, data[8]);
-                preparedStatement.setBoolean(10, Boolean.parseBoolean(data[9]));
+                preparedStatement.setBoolean(10, false);
                 preparedStatement.setString(11, data[10]);
                 preparedStatement.setString(12, data[11]);
 

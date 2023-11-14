@@ -57,9 +57,13 @@ public class PointServiceImpl implements PointService {
                 throw new EntityExistsException("Point already exists");
             }
         }
-        DynamicPointInfo dynamicPointInfo = dynamicPointMapper.toDynamicPointInfo(dynamicPointService.createDynamicPointInfo(pointDto.getDynamicPointInfo()));
         Point point = pointMapper.toPoint(pointDto);
-        point.setDynamicPointInfo(dynamicPointInfo);
+        point.setIsDynamic(false);
+        if(pointDto.getDynamicPointInfo() != null){
+            DynamicPointInfo dynamicPointInfo = dynamicPointMapper.toDynamicPointInfo(dynamicPointService.createDynamicPointInfo(pointDto.getDynamicPointInfo()));
+            point.setDynamicPointInfo(dynamicPointInfo);
+            point.setIsDynamic(true);
+        }
         return addIdToPointDto(pointMapper.toPointDto(pointRepository.save(point)));
     }
 

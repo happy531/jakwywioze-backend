@@ -35,7 +35,7 @@ public class Point {
     @Column
     private String imageLink;
     @Column
-    private Boolean type;
+    private Boolean isDynamic;
     @OneToOne
     @JoinColumn(name = "point", referencedColumnName = "id")
     private DynamicPointInfo dynamicPointInfo;

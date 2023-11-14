@@ -20,7 +20,7 @@ public class PointDto {
     private Long cityId;
     private String street;
     private String zipcode;
-    private Boolean type;
+    private Boolean isDynamic;
     private String phoneNumber;
     private String website;
     private String imageLink;
