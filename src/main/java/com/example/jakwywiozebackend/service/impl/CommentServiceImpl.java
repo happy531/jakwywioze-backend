@@ -1,6 +1,7 @@
 package com.example.jakwywiozebackend.service.impl;
 
-import com.example.jakwywiozebackend.dto.CommentDto;
+import com.example.jakwywiozebackend.dto.comment.CommentBasic;
+import com.example.jakwywiozebackend.dto.comment.CommentDto;
 import com.example.jakwywiozebackend.entity.Comment;
 import com.example.jakwywiozebackend.mapper.CommentMapper;
 import com.example.jakwywiozebackend.repository.CommentRepository;
@@ -25,9 +26,9 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public List<CommentDto> getCommentsForPoint(Long id) {
+    public List<CommentBasic> getCommentsForPoint(Long id) {
         Specification<Comment> spec = Specification
                 .where(CommentSpecification.getCommentsByPoint(id));
-        return commentMapper.toCommentDtoList(commentRepository.findAll(spec));
+        return commentMapper.toCommentBasicList(commentRepository.findAll(spec));
     }
 }

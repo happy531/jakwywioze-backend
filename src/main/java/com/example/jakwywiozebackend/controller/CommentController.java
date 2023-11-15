@@ -1,6 +1,7 @@
 package com.example.jakwywiozebackend.controller;
 
-import com.example.jakwywiozebackend.dto.*;
+import com.example.jakwywiozebackend.dto.comment.CommentBasic;
+import com.example.jakwywiozebackend.dto.comment.CommentDto;
 import com.example.jakwywiozebackend.service.CommentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -21,7 +22,7 @@ public class CommentController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<List<CommentDto>> getCommentsForPoint(@PathVariable Long id){
+    public ResponseEntity<List<CommentBasic>> getCommentsForPoint(@PathVariable Long id){
         return new ResponseEntity<>(commentService.getCommentsForPoint(id), HttpStatus.OK);
     }
 }
