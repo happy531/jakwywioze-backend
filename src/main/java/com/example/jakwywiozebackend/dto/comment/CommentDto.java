@@ -1,8 +1,10 @@
-package com.example.jakwywiozebackend.dto;
+package com.example.jakwywiozebackend.dto.comment;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
+
+import java.time.LocalDateTime;
 
 @Data
 public class CommentDto {
@@ -13,4 +15,5 @@ public class CommentDto {
     private Long point;
     @NotNull
     private Long user;
+    private LocalDateTime createdAt;
 }

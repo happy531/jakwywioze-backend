@@ -8,10 +8,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Table
-public class Comment {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class Comment extends AbstractEntity{
     @Column
     private String text;
     @ManyToOne
