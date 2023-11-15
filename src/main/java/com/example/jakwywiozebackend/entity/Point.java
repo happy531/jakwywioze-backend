@@ -35,9 +35,9 @@ public class Point {
     @Column
     private String imageLink;
     @Column
-    private Boolean type;
-    @PrimaryKeyJoinColumn
+    private Boolean isDynamic;
     @OneToOne
+    @JoinColumn(name = "point", referencedColumnName = "id")
     private DynamicPointInfo dynamicPointInfo;
     @ManyToMany(
             cascade = {CascadeType.ALL}
@@ -49,6 +49,6 @@ public class Point {
     )
     private List<WasteType> wasteTypes;
     @Column
-    @OneToMany
+    @OneToMany(mappedBy = "point")
     private List<Comment> comments;
 }

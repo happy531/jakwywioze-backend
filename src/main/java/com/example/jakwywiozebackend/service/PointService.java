@@ -1,9 +1,6 @@
 package com.example.jakwywiozebackend.service;
 
-import com.example.jakwywiozebackend.dto.FilterInfoDto;
-import com.example.jakwywiozebackend.dto.FilterResponse;
-import com.example.jakwywiozebackend.dto.PointDto;
-import com.example.jakwywiozebackend.dto.WasteTypeDto;
+import com.example.jakwywiozebackend.dto.*;
 
 import java.util.List;
 
@@ -17,5 +14,4 @@ public interface PointService {
     PointDto addWasteType(Long id, WasteTypeDto wasteTypeDto);
 
     FilterResponse getFilteredPoints(FilterInfoDto filterInfoDto);
-
 }

@@ -26,7 +26,7 @@ public class User {
     @OneToMany
     private List<DynamicPointInfo> dynamicPointInfoList;
     @Column
-    @OneToMany
+    @OneToMany(mappedBy = "user")
     private List<Comment> comments;
     @Column
     private boolean active = false;
