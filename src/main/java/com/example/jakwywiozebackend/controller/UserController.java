@@ -48,7 +48,7 @@ public class UserController {
         return new ResponseEntity<>(userService.resetPasswordRequest(resetRequest.getEmail()), HttpStatus.OK);
     }
     @PostMapping("/password-reset-confirmation")
-    public ResponseEntity<String> passwordResetConfirmation(@RequestParam String token, @RequestBody @Valid PasswordResetRequest passwordResetRequest){
-        return new ResponseEntity<>(userService.resetPassword(token, passwordResetRequest.getPassword()), HttpStatus.OK);
+    public ResponseEntity<String> passwordResetConfirmation(@RequestBody @Valid PasswordResetRequest passwordResetRequest){
+        return new ResponseEntity<>(userService.resetPassword(passwordResetRequest.getToken(), passwordResetRequest.getPassword()), HttpStatus.OK);
     }
 }

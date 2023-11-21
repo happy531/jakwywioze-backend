@@ -20,16 +20,16 @@ public class CustomAuthenticationManager implements AuthenticationManager {
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-        String username = String.valueOf(authentication.getName());
+        String email = String.valueOf(authentication.getName());
         String password = String.valueOf(authentication.getCredentials());
 
-        UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+        UserDetails userDetails = userDetailsService.loadUserByUsername(email);
 
         if(passwordMatches(password, userDetails.getPassword())){
             return new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
         }
         else {
-            throw new BadCredentialsException("Invalid username or password");
+            throw new BadCredentialsException("Invalid email or password");
         }
     }
 
