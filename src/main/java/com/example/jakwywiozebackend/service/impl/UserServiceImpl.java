@@ -1,9 +1,6 @@
 package com.example.jakwywiozebackend.service.impl;
 
-import com.example.jakwywiozebackend.dto.LoginRequest;
-import com.example.jakwywiozebackend.dto.RegisterRequest;
-import com.example.jakwywiozebackend.dto.UserDto;
-import com.example.jakwywiozebackend.dto.VerificationTokenDto;
+import com.example.jakwywiozebackend.dto.*;
 import com.example.jakwywiozebackend.entity.User;
 import com.example.jakwywiozebackend.entity.VerificationToken;
 import com.example.jakwywiozebackend.mapper.UserMapper;
@@ -19,6 +16,7 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -55,6 +53,13 @@ public class UserServiceImpl implements UserService {
         return userRepository.findByUsername(username).orElseThrow(() -> new EntityNotFoundException("User not found"));
     }
 
+    public User findUserForLoginByUsername(String username) {
+        return userRepository.findByUsername(username).orElseThrow(() -> new EntityNotFoundException("Login unsuccessful"));
+    }
+    public UserResponse findUserDtoByUsername(String username) {
+        return userMapper.toUserResponse(userRepository.findByUsername(username).orElseThrow(() -> new EntityNotFoundException("User not found")));
+    }
+
     @Override
     public UserDto createUser(UserDto userDto) {
         User user = userMapper.toUser(userDto);
@@ -67,18 +72,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public String login(LoginRequest loginRequest) {
-        if(!userRepository.findByUsername(loginRequest.getUsername()).isPresent()){
-            return "Login unsuccessful";
-        }
-        User user = findUserByUsername(loginRequest.getUsername());
+    public UserResponse login(LoginRequest loginRequest) {
+        User user = findUserForLoginByUsername(loginRequest.getUsername());
         if (!user.isActive()){
-            return "User not active";
+            throw new AuthenticationServiceException("User not active");
         }
         try {
-            return authService.generateToken(loginRequest.getUsername(), loginRequest.getPassword());
+            String username = authService.generateToken(loginRequest.getUsername(), loginRequest.getPassword());
+            return findUserDtoByUsername(username);
         } catch (AuthenticationException e){
-          return "Login unsuccessful";
+          throw new AuthenticationServiceException("Login unsuccessful");
         }
     }
 

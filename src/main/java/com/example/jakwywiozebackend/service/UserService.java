@@ -3,6 +3,7 @@ package com.example.jakwywiozebackend.service;
 import com.example.jakwywiozebackend.dto.LoginRequest;
 import com.example.jakwywiozebackend.dto.RegisterRequest;
 import com.example.jakwywiozebackend.dto.UserDto;
+import com.example.jakwywiozebackend.dto.UserResponse;
 import com.example.jakwywiozebackend.entity.User;
 
 import java.util.List;
@@ -12,7 +13,7 @@ public interface UserService {
     UserDto getUser(Long id);
     UserDto createUser(UserDto userDto);
 
-    String login(LoginRequest loginRequest);
+    UserResponse login(LoginRequest loginRequest);
 
     String register(RegisterRequest registerRequest);
 

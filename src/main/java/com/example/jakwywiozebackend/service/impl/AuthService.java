@@ -1,6 +1,7 @@
 package com.example.jakwywiozebackend.service.impl;
 
 import com.example.jakwywiozebackend.config.JwtProvider;
+import com.example.jakwywiozebackend.dto.UserDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -20,8 +21,14 @@ public class AuthService {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(username, password)
         );
-
-        // If authentication is successful, generate JWT
-        return jwtTokenProvider.generateToken(authentication.getName());
+        return username;
     }
+    public String generateToken(String username, String password, UserDto userDto) {
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(username, password)
+        );
+        // If authentication is successful, generate JWT
+        return jwtTokenProvider.generateToken(userDto);
+    }
+
 }

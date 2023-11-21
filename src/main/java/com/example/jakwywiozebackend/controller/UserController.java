@@ -32,7 +32,7 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody @Valid LoginRequest loginRequest){
+    public ResponseEntity<UserResponse> login(@RequestBody @Valid LoginRequest loginRequest){
         return new ResponseEntity<>(userService.login(loginRequest), HttpStatus.OK);
     }
     @PostMapping("/register")
