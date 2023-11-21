@@ -17,11 +17,11 @@ public class AuthService {
     @Autowired
     private AuthenticationManager authenticationManager;
 
-    public String generateToken(String username, String password) {
+    public String generateToken(String email, String password) {
         Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(username, password)
+                new UsernamePasswordAuthenticationToken(email, password)
         );
-        return username;
+        return email;
     }
     public String generateToken(String username, String password, UserDto userDto) {
         Authentication authentication = authenticationManager.authenticate(

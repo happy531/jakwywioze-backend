@@ -8,4 +8,5 @@ public class PasswordResetRequest {
     private String email;
     @Size(min = 8, message = "Password has to be at least 8 characters long")
     private String password;
+    private String token;
 }

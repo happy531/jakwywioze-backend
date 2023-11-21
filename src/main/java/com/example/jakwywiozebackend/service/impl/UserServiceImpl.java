@@ -53,8 +53,8 @@ public class UserServiceImpl implements UserService {
         return userRepository.findByUsername(username).orElseThrow(() -> new EntityNotFoundException("User not found"));
     }
 
-    public User findUserForLoginByUsername(String username) {
-        return userRepository.findByUsername(username).orElseThrow(() -> new EntityNotFoundException("Login unsuccessful"));
+    public User findUserForLoginByUsername(String email) {
+        return userRepository.findByEmail(email).orElseThrow(() -> new EntityNotFoundException("Login unsuccessful"));
     }
     public UserResponse findUserDtoByUsername(String username) {
         return userMapper.toUserResponse(userRepository.findByUsername(username).orElseThrow(() -> new EntityNotFoundException("User not found")));
@@ -73,13 +73,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserResponse login(LoginRequest loginRequest) {
-        User user = findUserForLoginByUsername(loginRequest.getUsername());
+        User user = findUserForLoginByUsername(loginRequest.getEmail());
         if (!user.isActive()){
             throw new AuthenticationServiceException("User not active");
         }
         try {
-            String username = authService.generateToken(loginRequest.getUsername(), loginRequest.getPassword());
-            return findUserDtoByUsername(username);
+            String email = authService.generateToken(loginRequest.getEmail(), loginRequest.getPassword());
+            return userMapper.toUserResponse(findUserByEmail(email));
         } catch (AuthenticationException e){
           throw new AuthenticationServiceException("Login unsuccessful");
         }
