@@ -88,7 +88,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public String register(RegisterRequest registerRequest) {
         if(userRepository.findByEmail(registerRequest.getEmail()).isPresent()){
-            return "User with this email already exists";
+            throw new EntityExistsException("User with this email already exists");
+//            return "User with this email already exists";
         }
         UserDto userDto = new UserDto();
         userDto.setEmail(registerRequest.getEmail());
