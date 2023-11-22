@@ -8,9 +8,9 @@ import org.springframework.stereotype.Component;
 import java.util.Date;
 @Component
 public class JwtProvider {
-    private String jwtSecret = "secret";
+    private String jwtSecret = "Jakwywioze";
 
-    private int jwtExpirationInMs = 1000000;
+    private int jwtExpirationInMs = 3600000; // 1 hour
 
     public String generateToken(String username) {
         Date now = new Date();

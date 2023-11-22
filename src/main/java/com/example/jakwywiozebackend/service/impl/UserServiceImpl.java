@@ -78,8 +78,11 @@ public class UserServiceImpl implements UserService {
             throw new AuthenticationServiceException("User not active");
         }
         try {
-            String email = authService.generateToken(loginRequest.getEmail(), loginRequest.getPassword());
-            return userMapper.toUserResponse(findUserByEmail(email));
+            GeneratedTokenDto token = authService.generateToken(loginRequest.getEmail(), loginRequest.getPassword());
+            createVerificationTokenForUser(user, token.getToken());
+            UserResponse userResponse =  userMapper.toUserResponse(user);
+            userResponse.setExp(token.getExp());
+            return userResponse;
         } catch (AuthenticationException e){
           throw new AuthenticationServiceException("Login unsuccessful");
         }
@@ -88,7 +91,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public String register(RegisterRequest registerRequest) {
         if(userRepository.findByEmail(registerRequest.getEmail()).isPresent()){
-            return "User with this email already exists";
+            throw new EntityExistsException("User with this email already exists");
+//            return "User with this email already exists";
         }
         UserDto userDto = new UserDto();
         userDto.setEmail(registerRequest.getEmail());

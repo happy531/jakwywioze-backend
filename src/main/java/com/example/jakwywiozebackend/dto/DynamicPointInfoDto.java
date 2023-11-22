@@ -12,6 +12,7 @@ import java.util.List;
 public class DynamicPointInfoDto {
 
     private Long id;
+    private String description;
     private Long user;
     private LocalDate startDate;
     private LocalDate endDate;
