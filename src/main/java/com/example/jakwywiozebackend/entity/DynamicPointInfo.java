@@ -15,6 +15,8 @@ public class DynamicPointInfo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column
+    private String description;
     @ManyToOne
     private User user;
     @OneToOne(mappedBy = "dynamicPointInfo")
