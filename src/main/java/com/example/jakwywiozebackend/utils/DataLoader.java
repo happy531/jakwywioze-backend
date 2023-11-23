@@ -39,7 +39,7 @@ public class DataLoader {
     private void loadAndInsertPoints(Connection connection) {
         String line;
         String splitBy = ";\t";
-        long id = 10000L;
+        long id = 1000L;
 
         try {
             Resource resource = resourceLoader.getResource("classpath:points.txt");
