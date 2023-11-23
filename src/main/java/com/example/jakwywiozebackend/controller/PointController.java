@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -16,7 +17,7 @@ public class PointController {
     private final PointService pointService;
 
     @PostMapping
-    public ResponseEntity<PointDto> createPoint(@RequestBody PointDto pointDto){
+    public ResponseEntity<PointDto> createPoint(@RequestBody PointDto pointDto) throws IOException, InterruptedException {
         return new ResponseEntity<>(pointService.createPoint(pointDto), HttpStatus.CREATED);
     }
 

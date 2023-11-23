@@ -14,7 +14,6 @@ import com.example.jakwywiozebackend.service.DynamicPointInfoService;
 import com.example.jakwywiozebackend.service.PointService;
 import com.example.jakwywiozebackend.service.PointSpecification;
 import com.example.jakwywiozebackend.utils.Utils;
-import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
@@ -22,6 +21,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Pageable;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -49,20 +49,24 @@ public class PointServiceImpl implements PointService {
     }
 
     @Override
-    public PointDto createPoint(PointDto pointDto) {
-        List<PointDto> points = getPoints();
-        for (PointDto p : points) {
-            if (p.getLon() == pointDto.getLon()
-                    && p.getLat() == pointDto.getLat()) {
-                throw new EntityExistsException("Point already exists");
-            }
-        }
+    public PointDto createPoint(PointDto pointDto) throws IOException, InterruptedException {
+//        List<PointDto> points = getPoints();
+//        for (PointDto p : points) {
+//            if (p.getLon() == pointDto.getLon()
+//                    && p.getLat() == pointDto.getLat()) {
+//                throw new EntityExistsException("Point already exists");
+//            }
+//        }
+
         Point point = pointMapper.toPoint(pointDto);
         point.setIsDynamic(false);
-        if(pointDto.getDynamicPointInfo() != null){
+
+        if (pointDto.getDynamicPointInfo() != null) {
             DynamicPointInfo dynamicPointInfo = dynamicPointMapper.toDynamicPointInfo(dynamicPointService.createDynamicPointInfo(pointDto.getDynamicPointInfo()));
             point.setDynamicPointInfo(dynamicPointInfo);
             point.setIsDynamic(true);
+
+            Utils.setLatAndLonForDynamicPointByAddress(point);
         }
         return addIdToPointDto(pointMapper.toPointDto(pointRepository.save(point)));
     }
