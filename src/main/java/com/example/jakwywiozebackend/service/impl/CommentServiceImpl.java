@@ -11,6 +11,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -29,6 +31,24 @@ public class CommentServiceImpl implements CommentService {
     public List<CommentBasic> getCommentsForPoint(Long id) {
         Specification<Comment> spec = Specification
                 .where(CommentSpecification.getCommentsByPoint(id));
-        return commentMapper.toCommentBasicList(commentRepository.findAll(spec));
+        List<CommentBasic> comments = commentMapper.toCommentBasicList(commentRepository.findAll(spec));
+        comments.sort(Comparator.comparing(CommentBasic::getCreatedAt));
+
+        return comments;
+    }
+
+    @Override
+    public List<CommentBasic> getCommentsForUser(Long id) {
+        Specification<Comment> spec = Specification
+                .where(CommentSpecification.getCommentsByUser(id));
+        List<CommentBasic> comments = commentMapper.toCommentBasicList(commentRepository.findAll(spec));
+        comments.sort(Comparator.comparing(CommentBasic::getCreatedAt));
+
+        return comments;
+    }
+
+    @Override
+    public void deleteComment(Long id) {
+        commentRepository.deleteById(id);
     }
 }
