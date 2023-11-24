@@ -9,4 +9,8 @@ public interface CommentService {
     CommentDto createComment(CommentDto commentDto);
 
     List<CommentBasic> getCommentsForPoint(Long id);
+
+    List<CommentBasic> getCommentsForUser(Long id);
+
+    void deleteComment(Long id);
 }

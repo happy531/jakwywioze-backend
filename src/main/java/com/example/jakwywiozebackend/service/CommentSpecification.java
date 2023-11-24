@@ -12,4 +12,10 @@ public class CommentSpecification {
         return (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("point").get("id"), id);
     }
 
+    public static Specification<Comment> getCommentsByUser(Long id) {
+        if(id == null){
+            return ((root, query, criteriaBuilder) -> criteriaBuilder.isTrue(criteriaBuilder.literal(true)));
+        }
+        return (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("user").get("id"), id);
+    }
 }
