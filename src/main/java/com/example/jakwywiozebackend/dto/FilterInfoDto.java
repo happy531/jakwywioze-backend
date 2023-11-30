@@ -12,4 +12,5 @@ public class FilterInfoDto {
     private int range;
     private int page;
     private int itemsPerPage;
+    private boolean addDynamicPoints;
 }
