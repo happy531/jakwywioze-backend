@@ -93,7 +93,7 @@ public class Utils {
 
 //                    "                        <p>Witaj,</p>\n" +
 //                            "                        <p>Dziękujemy za założenie konta na portalu Jakwywioze.pl. Aby potwierdzić rejestrację, kliknij w poniższy przycisk:</p>\n" +
-    public static String getMailHtml(String text1, String text2, String url){
+    public static String getMailHtml(String text1, String text2, String url, String buttonText) {
         return "<html>\n" +
                 "  <head>\n" +
                 "    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"/>\n" +
@@ -273,13 +273,13 @@ public class Utils {
                 "      }\n" +
                 "\n" +
                 "      .btn-primary table td {\n" +
-                "        background-color: #3498db; \n" +
+                "        background-color: #b0e8bc; \n" +
                 "      }\n" +
                 "\n" +
                 "      .btn-primary a {\n" +
-                "        background-color: #3498db;\n" +
-                "        border-color: #3498db;\n" +
-                "        color: #ffffff; \n" +
+                "        background-color: #b0e8bc;\n" +
+                "        border-color: #b0e8bc;\n" +
+                "        color: #1a1a1a; \n" +
                 "      }\n" +
                 "\n" +
                 "      /* -------------------------------------\n" +
@@ -454,7 +454,7 @@ public class Utils {
                 "                                <table role=\"presentation\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">\n" +
                 "                                  <tbody>\n" +
                 "                                    <tr>\n" +
-                "                                      <td> <a href=\"" + url + "\" target=\"_blank\">Potwierdź rejestrację</a> </td>\n" +
+                "                                      <td> <a href=\"" + url + "\" target=\"_blank\">"+buttonText+"</a> </td>\n" +
                 "                                    </tr>\n" +
                 "                                  </tbody>\n" +
                 "                                </table>\n" +

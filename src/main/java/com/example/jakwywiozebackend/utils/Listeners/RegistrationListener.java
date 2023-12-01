@@ -65,7 +65,8 @@ public class RegistrationListener implements
             String content = Utils.getMailHtml(
                     "Dziękujemy za założenie konta na portalu Jakwywioze.pl. Aby potwierdzić rejestrację, kliknij w poniższy przycisk:",
                     "Jeśli nie zakładałeś konta prosimy o zignorowanie tej wiadomości",
-                    confirmationUrl);
+                    confirmationUrl,
+                    "Potwierdź rejestrację");
             message.setContent(content, "text/html; charset=utf-8");
 
             Transport.send(message);

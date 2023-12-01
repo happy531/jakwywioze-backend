@@ -65,7 +65,8 @@ public class PasswordResetListener implements
             String content = Utils.getMailHtml(
                     "W celu zresetowania hasła kliknij w przycisk poniżej:",
                     "Jeśli nie resetowałeś hasła prosimy o kontakt na mail z którego dostałeś tą wiadomość",
-                    confirmationUrl);
+                    confirmationUrl,
+                    "Zresetuj hasło");
             message.setContent(content, "text/html; charset=utf-8");
 
             Transport.send(message);
