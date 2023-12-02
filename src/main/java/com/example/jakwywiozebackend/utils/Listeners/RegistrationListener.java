@@ -62,8 +62,13 @@ public class RegistrationListener implements
             message.setFrom(new InternetAddress(from));
             message.setRecipient(Message.RecipientType.TO, new InternetAddress(recipientAddress));
             message.setSubject(subject);
+//            String content = Utils.getMailHtml(
+//                    "Dziękujemy za założenie konta na portalu Jakwywioze.pl. Aby potwierdzić rejestrację, kliknij w poniższy przycisk:",
+//                    "Jeśli nie zakładałeś konta prosimy o zignorowanie tej wiadomości",
+//                    confirmationUrl,
+//                    "Potwierdź rejestrację");
             String content = Utils.getMailHtml(
-                    "Dziękujemy za założenie konta na portalu Jakwywioze.pl. Aby potwierdzić rejestrację, kliknij w poniższy przycisk:",
+                    "W celu dokończenia procesu rejestracji konta<br> kliknij w poniższy link:",
                     "Jeśli nie zakładałeś konta prosimy o zignorowanie tej wiadomości",
                     confirmationUrl,
                     "Potwierdź rejestrację");

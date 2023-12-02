@@ -31,7 +31,7 @@ public class PointController {
         return new ResponseEntity<>(pointService.getPoints(), HttpStatus.OK);
     }
 
-    @PutMapping("/{id}")
+//    @PutMapping("/{id}")
     public ResponseEntity<PointDto> addWasteType(@RequestBody @PathVariable Long id, @RequestBody WasteTypeDto wasteTypeDto){
         return new ResponseEntity<>(pointService.addWasteType(id, wasteTypeDto), HttpStatus.OK);
     }
