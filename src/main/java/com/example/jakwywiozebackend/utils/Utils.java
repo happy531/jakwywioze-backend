@@ -210,7 +210,10 @@ public class Utils {
                 "        margin: 0;\n" +
                 "        margin-bottom: 30px; \n" +
                 "      }\n" +
-                "\n" +
+                "      .xd {" +
+                "         padding-right: 8px;" +
+                "         margin-bottom: -8px;" +
+                "       }  \n" +
                 "      h1 {\n" +
                 "        font-size: 2.125rem;\n" +
                 "        font-weight: 300;\n" +
@@ -244,6 +247,14 @@ public class Utils {
                 "        text-decoration: underline; \n" +
                 "      }\n" +
                 "\n" +
+                "    h1 > span::after {\n" +
+                "      position: absolute;\n" +
+                "      top:1px;\n" +
+                "      left:3px;\n" +
+                "      content: url();\n" +
+                "      height: 30px;\n" +
+                "      width: 30px;\n" +
+                "    }" +
                 "      .btn {\n" +
                 "        box-sizing: border-box;\n" +
                 "        width: 100%; }\n" +
@@ -344,8 +355,7 @@ public class Utils {
                 "      ------------------------------------- */\n" +
                 "      @media only screen and (max-width: 620px) {\n" +
                 "        table.body h1 {\n" +
-                "          font-size: 28px !important;\n" +
-                "          margin-bottom: 10px !important; \n" +
+                "          margin-bottom: 20px !important; \n" +
                 "        }\n" +
                 "        table.body p,\n" +
                 "        table.body ul,\n" +
@@ -443,7 +453,7 @@ public class Utils {
                 "                  <table role=\"presentation\" cellpadding=\"0\" cellspacing=\"0\">\n" +
                 "                    <tr>\n" +
                 "                      <td>\n" +
-                "                        <h1><img src=\"recycle-solid.svg\" height=\"30px\" width=\"50px\" alt=\"\" style=\"transform: translate(5px, 6px);\"> jakwywioze.pl</h1>\n" +
+                "                        <h1><img src=\"https://upload.wikimedia.org/wikipedia/commons/thumb/5/56/Font_Awesome_5_solid_recycle.svg/1200px-Font_Awesome_5_solid_recycle.svg.png\" height=\"30px\" width=\"30px\" alt=\"\" class = 'xd'\">jakwywioze.pl</h1>\n" +
                 "                        <p style=\"font-size: 1.25rem; margin-bottom: 1rem;\"><strong>Dziękujemy za rejestracje konta</strong></p>\n" +
                 "                        <p class=\"mb0\">"+text1+"</p>\n" +
                 "                        <table role=\"presentation\" cellpadding=\"0\" cellspacing=\"0\" class=\"btn btn-primary\">\n" +
@@ -478,13 +488,13 @@ public class Utils {
                 "              <table role=\"presentation\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">\n" +
                 "                <tr>\n" +
                 "                  <td class=\"content-block\">\n" +
-                "                    <span class=\"apple-link\">Company Inc, 3 Abbey Road, San Francisco CA 94102</span>\n" +
-                "                    <br> Don't like these emails? <a href=\"http://i.imgur.com/CScmqnj.gif\">Unsubscribe</a>.\n" +
+                "                    <span class=\"apple-link\"></span>\n" +
+                "                    <br>\n" +
                 "                  </td>\n" +
                 "                </tr>\n" +
                 "                <tr>\n" +
                 "                  <td class=\"content-block powered-by\">\n" +
-                "                    Powered by <a href=\"http://htmlemail.io\">HTMLemail</a>.\n" +
+                "                   \n" +
                 "                  </td>\n" +
                 "                </tr>\n" +
                 "              </table>\n" +
