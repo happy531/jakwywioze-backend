@@ -1,5 +1,6 @@
 package com.example.jakwywiozebackend.config;
 
+import org.springframework.http.HttpMethod;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -23,8 +24,13 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(authorize ->
                         authorize
                                 .requestMatchers("/users/login").permitAll()
-                                .requestMatchers("/users/login").permitAll()
-                                .requestMatchers("/**").permitAll()
+                                .requestMatchers("/users/register").permitAll()
+                                .requestMatchers("/cities/**").permitAll()
+                                .requestMatchers(HttpMethod.GET,"/comments/{id}").permitAll()
+                                .requestMatchers(HttpMethod.GET,"/points/**").permitAll()
+                                .requestMatchers("/points/filtered").permitAll()
+                                .requestMatchers(HttpMethod.POST,"/users/**").permitAll()
+                                .requestMatchers(HttpMethod.GET,"/waste-types/**").permitAll()
                                 .anyRequest().authenticated()
                 )
                 .logout()
