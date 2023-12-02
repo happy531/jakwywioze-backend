@@ -98,14 +98,9 @@ public class Utils {
                 "  <head>\n" +
                 "    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"/>\n" +
                 "    <meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" />\n" +
-                "    <title>Simple Transactional Email</title>\n" +
+                "    <title>jakwywioze.pl - rejestracja konta</title>\n" +
                 "    <style>\n" +
-                "      /* -------------------------------------\n" +
-                "          GLOBAL RESETS\n" +
-                "      ------------------------------------- */\n" +
-                "      \n" +
-                "      /*All the styling goes here*/\n" +
-                "      \n" +
+                "    @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');\n" +
                 "      img {\n" +
                 "        border: none;\n" +
                 "        -ms-interpolation-mode: bicubic;\n" +
@@ -115,6 +110,7 @@ public class Utils {
                 "      body {\n" +
                 "        background-color: #f6f6f6;\n" +
                 "        font-family: sans-serif;\n" +
+                "        font-family: 'Roboto', sans-serif;\n" +
                 "        -webkit-font-smoothing: antialiased;\n" +
                 "        font-size: 14px;\n" +
                 "        line-height: 1.4;\n" +
@@ -122,6 +118,11 @@ public class Utils {
                 "        padding: 0;\n" +
                 "        -ms-text-size-adjust: 100%;\n" +
                 "        -webkit-text-size-adjust: 100%; \n" +
+                "      }\n" +
+                "      \n" +
+                "      * {\n" +
+                "        font-family: 'Roboto', sans-serif !important;\n" +
+                "        color: #212121 !important;\n" +
                 "      }\n" +
                 "\n" +
                 "      table {\n" +
@@ -131,13 +132,10 @@ public class Utils {
                 "        width: 100%; }\n" +
                 "        table td {\n" +
                 "          font-family: sans-serif;\n" +
+                "        font-family: 'Roboto', sans-serif;\n" +
                 "          font-size: 14px;\n" +
                 "          vertical-align: top; \n" +
                 "      }\n" +
-                "\n" +
-                "      /* -------------------------------------\n" +
-                "          BODY & CONTAINER\n" +
-                "      ------------------------------------- */\n" +
                 "\n" +
                 "      .body {\n" +
                 "        background-color: #f6f6f6;\n" +
@@ -168,7 +166,7 @@ public class Utils {
                 "      ------------------------------------- */\n" +
                 "      .main {\n" +
                 "        background: #ffffff;\n" +
-                "        border-radius: 3px;\n" +
+                "        border-radius: 0.5rem;\n" +
                 "        width: 100%; \n" +
                 "      }\n" +
                 "\n" +
@@ -204,8 +202,9 @@ public class Utils {
                 "      h2,\n" +
                 "      h3,\n" +
                 "      h4 {\n" +
-                "        color: #000000;\n" +
+                "        color: #212121;\n" +
                 "        font-family: sans-serif;\n" +
+                "        font-family: 'Roboto', sans-serif;\n" +
                 "        font-weight: 400;\n" +
                 "        line-height: 1.4;\n" +
                 "        margin: 0;\n" +
@@ -213,20 +212,25 @@ public class Utils {
                 "      }\n" +
                 "\n" +
                 "      h1 {\n" +
-                "        font-size: 35px;\n" +
+                "        font-size: 2.125rem;\n" +
                 "        font-weight: 300;\n" +
                 "        text-align: center;\n" +
-                "        text-transform: capitalize; \n" +
+                "        background: #b0e8bc;\n" +
+                "        padding: 1rem;\n" +
+                "        border-radius: 6px;\n" +
+                "        /* margin: -1.25rem -1.25rem 1.5rem -1.25rem; */\n" +
                 "      }\n" +
                 "\n" +
                 "      p,\n" +
                 "      ul,\n" +
                 "      ol {\n" +
                 "        font-family: sans-serif;\n" +
-                "        font-size: 14px;\n" +
+                "        font-family: 'Roboto', sans-serif;\n" +
+                "        font-size: 1rem;\n" +
                 "        font-weight: normal;\n" +
                 "        margin: 0;\n" +
                 "        margin-bottom: 15px; \n" +
+                "        text-align: center;\n" +
                 "      }\n" +
                 "        p li,\n" +
                 "        ul li,\n" +
@@ -240,9 +244,6 @@ public class Utils {
                 "        text-decoration: underline; \n" +
                 "      }\n" +
                 "\n" +
-                "      /* -------------------------------------\n" +
-                "          BUTTONS\n" +
-                "      ------------------------------------- */\n" +
                 "      .btn {\n" +
                 "        box-sizing: border-box;\n" +
                 "        width: 100%; }\n" +
@@ -264,22 +265,20 @@ public class Utils {
                 "          color: #3498db;\n" +
                 "          cursor: pointer;\n" +
                 "          display: inline-block;\n" +
-                "          font-size: 14px;\n" +
+                "          font-size: 1rem;\n" +
                 "          font-weight: bold;\n" +
                 "          margin: 0;\n" +
                 "          padding: 12px 25px;\n" +
                 "          text-decoration: none;\n" +
-                "          text-transform: capitalize; \n" +
                 "      }\n" +
                 "\n" +
                 "      .btn-primary table td {\n" +
-                "        background-color: #b0e8bc; \n" +
+                "        background-color: #3498db; \n" +
                 "      }\n" +
                 "\n" +
                 "      .btn-primary a {\n" +
                 "        background-color: #b0e8bc;\n" +
-                "        border-color: #b0e8bc;\n" +
-                "        color: #1a1a1a; \n" +
+                "        border-color: #b0e8bc; \n" +
                 "      }\n" +
                 "\n" +
                 "      /* -------------------------------------\n" +
@@ -420,8 +419,8 @@ public class Utils {
                 "          background-color: #34495e !important; \n" +
                 "        }\n" +
                 "        .btn-primary a:hover {\n" +
-                "          background-color: #34495e !important;\n" +
-                "          border-color: #34495e !important; \n" +
+                "          background-color: #64ce7b !important;\n" +
+                "          border-color: #64ce7b !important; \n" +
                 "        } \n" +
                 "      }\n" +
                 "\n" +
@@ -429,7 +428,7 @@ public class Utils {
                 "  </head>\n" +
                 "  <body>\n" +
                 "    <span class=\"preheader\"></span>\n" +
-                "    <table role=\"presentation\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" class=\"body\">\n" +
+                "    <table role=\"presentation\" cellpadding=\"0\" cellspacing=\"0\" class=\"body\">\n" +
                 "      <tr>\n" +
                 "        <td>&nbsp;</td>\n" +
                 "        <td class=\"container\">\n" +
@@ -441,20 +440,20 @@ public class Utils {
                 "              <!-- START MAIN CONTENT AREA -->\n" +
                 "              <tr>\n" +
                 "                <td class=\"wrapper\">\n" +
-                "                  <table role=\"presentation\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">\n" +
+                "                  <table role=\"presentation\" cellpadding=\"0\" cellspacing=\"0\">\n" +
                 "                    <tr>\n" +
                 "                      <td>\n" +
-                "                        <p>Witaj,</p>\n" +
-                "                        <p>" + text1 + "</p>\n" +
-                "                       <br>" +
-                "                        <table role=\"presentation\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" class=\"btn btn-primary\">\n" +
+                "                        <h1><img src=\"recycle-solid.svg\" height=\"30px\" width=\"50px\" alt=\"\" style=\"transform: translate(5px, 6px);\"> jakwywioze.pl</h1>\n" +
+                "                        <p style=\"font-size: 1.25rem; margin-bottom: 1rem;\"><strong>Dziękujemy za rejestracje konta</strong></p>\n" +
+                "                        <p class=\"mb0\">"+text1+"</p>\n" +
+                "                        <table role=\"presentation\" cellpadding=\"0\" cellspacing=\"0\" class=\"btn btn-primary\">\n" +
                 "                          <tbody>\n" +
                 "                            <tr>\n" +
-                "                              <td align=\"center\">\n" +
-                "                                <table role=\"presentation\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">\n" +
+                "                              <td align=\"center\" style=\"padding:1.75rem 0 !important;\">\n" +
+                "                                <table role=\"presentation\" cellpadding=\"0\" cellspacing=\"0\">\n" +
                 "                                  <tbody>\n" +
                 "                                    <tr>\n" +
-                "                                      <td> <a href=\"" + url + "\" target=\"_blank\">"+buttonText+"</a> </td>\n" +
+                "                                      <td><a href=\"#\" target=\"_blank\">"+buttonText+"</a></td>\n" +
                 "                                    </tr>\n" +
                 "                                  </tbody>\n" +
                 "                                </table>\n" +
@@ -462,9 +461,8 @@ public class Utils {
                 "                            </tr>\n" +
                 "                          </tbody>\n" +
                 "                        </table>\n" +
-                "                       <br>" +
-                "                        <p>"+text2+"</p>\n" +
-                "                        <p></p>\n" +
+                "                        <p style=\"margin-bottom: 0.325rem;\">"+text2+"</p>\n" +
+                "                        <p>Wiadomość wygenerowana automatycznie.<br> Prosimy na nią nie odpowiadać.</p>\n" +
                 "                      </td>\n" +
                 "                    </tr>\n" +
                 "                  </table>\n" +
@@ -480,11 +478,14 @@ public class Utils {
                 "              <table role=\"presentation\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\">\n" +
                 "                <tr>\n" +
                 "                  <td class=\"content-block\">\n" +
-                "                    <span class=\"apple-link\"> Jakwywioze.pl</span>\n" +
-                "                    <br>\n" +
+                "                    <span class=\"apple-link\">Company Inc, 3 Abbey Road, San Francisco CA 94102</span>\n" +
+                "                    <br> Don't like these emails? <a href=\"http://i.imgur.com/CScmqnj.gif\">Unsubscribe</a>.\n" +
                 "                  </td>\n" +
                 "                </tr>\n" +
                 "                <tr>\n" +
+                "                  <td class=\"content-block powered-by\">\n" +
+                "                    Powered by <a href=\"http://htmlemail.io\">HTMLemail</a>.\n" +
+                "                  </td>\n" +
                 "                </tr>\n" +
                 "              </table>\n" +
                 "            </div>\n" +
@@ -496,6 +497,6 @@ public class Utils {
                 "      </tr>\n" +
                 "    </table>\n" +
                 "  </body>\n" +
-                "</html>";
+                "</html>\n";
     }
 }
