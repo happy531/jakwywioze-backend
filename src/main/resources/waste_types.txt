@@ -1,48 +1,163 @@
-przeterminowane leki;
-odpady wielkogabarytowe;
-odpady zielone;
-odpady budowlane; poremontowe i rozbiórkowe;
-zużyte opony;
-elektrośmieci; czyli sprzęt elektryczny i elektroniczny;
-baterie i akumulatory;
-opakowania z papieru i tektury;
-odpady opakowaniowe z metali i tworzyw sztucznych;
-szkło opakowaniowe;
-opakowania z tekstyliów;
-opakowania zawierające pozostałości substancji niebezpiecznych lub nimi zanieczyszczone;
-pojemniki pod ciśnieniem po aerozolach; zużyte lub przeterminowane gaśnice samochodowe i z gospodarstw domowych;
-opony pojazdów osobowych, motocykli, rowerów;
-beton oraz gruz betonowy;
-gruz ceglany;
-zmieszane odpady z betonu, gruzu ceglanego, ceramiki, glazury, terakoty itp;
-szkło okienne; szkło drzwiowe; szkło bezbarwne; szkło lustra;
-odzież;
-tekstylia;
-rozpuszczalniki;
-kwasy;
-alkalia (substancje żrące);
-odczynniki fotograficzne;
-środki ochrony roślin zawierające substancje niebezpieczne;
-świetlówki; świetlówki energooszczędne;
-termometry rtęciowe;
-urządzenia chłodnicze i klimatyzacyjne;
-oleje spożywcze (przeterminowane zużyte);
-przepracowane lub przeterminowane oleje silników samochodowych;
-farby; farby drukarskie; tusze; tonery do drukarek zawierające substancje niebezpieczne;
-żywice zawierające substancje niebezpieczne;
-tonery do drukarek;
-kleje; lepiszcze; żywice;
-detergenty zawierające substancje niebezpieczne;
-detergenty;
-leki;
-akumulatory i baterie;
-telewizory; monitory;
-małe i duże urządzenia elektryczne i elektroniczne;
-drewno zawierające substancje niebezpieczne;
-drewno;
-odpady tworzyw sztucznych;
-odpady metali;
-środki ochrony roślin niezawierające substancji niebezpiecznych;
-inne odpady komunalne;
-odpady wielkogabarytowe – meble;
-odpady wielkogabarytowe – materace
+0;	papier
+1;	metal
+2;	tworzywa sztuczne
+3;	szkło
+4;	opakowania wielomateriałowe
+5;	bioodpady
+6;	zużyte baterie i akumulatory
+7;	zużyty sprzęt elektryczny i elektroniczny
+8;	odpady problemowe
+9;	zużyte opony
+10;	odpady budowlane i rozbiórkowe
+11;	przeterminowane leki
+12;	chemikalia
+13;	termometry rtęciowe
+14;	odzież
+15;	tekstylia
+16;	odpady wytworzone podczas iniekcji domowych
+17;	odpady wielkogabarytowe
+18;	odpady ulegające biodegradacji
+19;	odpady gruzu budowalnego ( bez zanieczyszczeń )
+20;	zmieszane odpady z budowy, remontu lub demontażu
+21;	odpadowa papa
+22;	zużyte opony od pojazdów do 3,5 tony
+23;	opakowania po farbach i lakierach
+24;	tektura
+25;	metale
+26;	zużyty sprzęt elektryczny i elektorniczny
+27;	opakowania z papieru
+28;	opakowania z tektury
+29;	opakowania z tworzyw sztucznych
+30;	opakowania z metali
+31;	opakowania ze szkła
+32;	opakowania zawierające pozostałości substancji niebezpiecznych lub nimi zanieczyszczone
+33;	beton oraz gruz betonowy
+34;	lampy fluorescencyjne
+35;	odpady zawierające rtęć
+36;	urządzenia zawierające freon
+37;	leki
+38;	odpady zielone
+39;	sprzęt elektryczny i elektroniczny
+40;	baterie i akumulatory
+41;	opakowania z metalu
+42;	opakowania z tekstyliów
+43;	pojemniki pod ciśnieniem po aerozolach
+44;	zużyte lub przeterminowane gaśnice samochodowe i z gospodarstw domowych
+45;	beton
+46;	gruz betonowy
+47;	gruz ceglany
+48;	szkło okienne, drzwiowe, bezbarwne, lustra
+49;	rozpuszczalniki
+50;	kwasy
+51;	alkalia (substancje żrące)
+52;	odczynniki fotograficzne
+53;	środki ochrony roślin
+54;	świetlówki
+55;	urządzenia chłodnicze i klimatyzacyjne
+56;	oleje spożywcze
+57;	oleje silników samochodowych
+58;	farby
+59;	farby drukarskie
+60;	tusze
+61;	tonery do drukarek
+62;	kleje
+63;	lepiszcze
+64;	żywice
+65;	detergenty
+66;	telewizory, monitory
+67;	drewno
+68;	odpady tworzyw sztucznych
+69;	odpady metali
+70;	odpady komunalne
+71;	odpady bio
+72;	odpady niebezpieczne
+73;	zużyty olej silnikowy i przekładniowy
+74;	filtry olejowe
+75;	opakowania po olejach
+76;	styropian opakowaniowy
+77;	niezanieczyszczony gruz ceglany i/lub betonowy
+78;	meble
+79;	niezanieczyszczone frakcje odpadów budowlanych
+80;	oleje
+81;	tłuszcze jadalne
+82;	opakowania z drewna
+83;	filtry powietrza
+84;	tonery
+85;	magnetyczne nośniki danych
+86;	optyczne nośniki danych
+87;	olej silnikowy
+88;	czysty styropian opakowaniowy
+89;	opakowania z tworzywa sztucznego
+90;	popiół i żużel
+91;	szkło płaskie bez zanieczyszczeń
+92;	opakowania zawierające pozostałości substancji niebezpiecznych
+93;	tłuszcze
+94;	zmieszane odpady z budowy, remontu, demontażu
+95;	niezanieczyszcone odpady budowlane
+96;	magnetyczne i optyczne nośniki danych
+97;	makulatura
+98;	elektronika
+99;	odpady biodegradowalne
+100;	gruz
+101;	odpady budowlane
+102;	inne odpady problemowe
+103;	odpady opakowaniowe ze szkła
+104;	opady budowlane, robiórkowe
+105;	odpady drewniane
+106;	ubrania
+107;	obuwie
+108;	zużyty sprzęt pochodzący z gospodarstw domowych
+109;	opakowania wielomateriatowe
+110;	odpady ulegajqce biodegradacji
+111;	przeterminowane oleje
+112;	odpady medyczne powstałe w gospodarstwach domowych
+113;	zużyty sprzęt elektroniczny i elektryczny pochodzący z gospodarstw domowych
+114;	żarówki
+115;	odpady selektywnie
+116;	popiół
+117;	szkło opakowaniowe
+118;	przepracowane oleje silnikowe
+119;	opakowania po środkach niebezpiecznych bądź z ich zawartością
+120;	lakiery
+121;	kartridże z drukarek domowych
+122;	odpady pochodzące z iniekcji
+123;	zużyty sprzęt elektroniczny i elektryczny
+124;	odpady budowalne pochodzące z drobynch remontów
+125;	niezanieczyszczone odpady betonowe oraz gruz betonowy i ceglany
+126;	odpady niebezpiecznie
+127;	odpady budowlane i rozbiórkowe z gospodarstw domowych
+128;	przeterminowane chemikalia
+129;	środki ochrony roślin i ich opakowania
+130;	posegregowane odpady remontowe i budowlane
+131;	opakowania tektury
+132;	opakowania zawierające pozostałosci substancji niebezpiecznych lub nimi zanieczyszczone
+133;	zużyte opony (o średnicy do 1250 mm)
+134;	zmieszane odpady z betonu, gruzu ceglanego, odpadowych materiałów ceramicznych i elementów wyposażenia
+135;	styropian
+136;	wełna mineralna
+137;	urzadzenia zawierajace freon
+138;	detergenty zawierające substancje niebezpieczne
+139;	syntetyczne oleje silnikowe, przekładniowe i smarowe
+140;	pozostałości farb, lakierów, kwasów
+141;	odpady poremontowe i budowlane
+142;	odpady ulegejące biodegradacji
+143;	środki ochrony roślin (wraz z opakowaniami)
+144;	opakowania zanieczyszczone substancjami toksycznymi
+145;	zużyty sprzęt elektryczny i elektroniczny zawierający niebezpieczne substancje
+146;	przeterminowane nawozy
+147;	opakowania po środkach ochrony roślin
+148;	zużyte tonery drukarskie, cartridge
+149;	opakowania po detergentach zawierajacych niebezpieczne substancje
+150;	opakowania po rozpuszczalnikach
+151;	opakowania po farbach, tuszach, klejach, lepiszczech i żywicach
+152;	środki farmakologiczne inne niż niebezpieczne
+153;	odpady budowlane po drobnych remontach
+154;	przeterminowane środki ochrony roślin
+155;	termometry
+156;	igły
+157;	strzykawki
+158;	odpady rozbiórkowe, poremontowe zawierające płyty gipsowe, suporeks, płytki ceramiczne
+159;	chemikalia typowe dla prac domowych
+160;	odpady posegregowane
+161;	odpady komunalne ulegające biodegradacji za wyjątkiem odpadów spożywczych, kuchennych
+162;	pozostałości rozpuszczalników, farb, olejów odpadowych itp.
