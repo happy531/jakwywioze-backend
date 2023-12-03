@@ -120,6 +120,9 @@ public class PointServiceImpl implements PointService {
         if(!filterInfoDto.isAddDynamicPoints()){
             points.removeIf(point -> point.getDynamicPointInfo() != null);
         }
+        points = points.stream()
+                .distinct()
+                .collect(Collectors.toList());
 
         Pageable pageable = PageRequest.of(filterInfoDto.getPage(), filterInfoDto.getItemsPerPage());
         PageDTO<Point> pointsPage = getPaginatedList(points, pageable.getPageNumber(), pageable.getPageSize());

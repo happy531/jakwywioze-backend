@@ -91,8 +91,6 @@ public class Utils {
         point.setLon(lon);
     }
 
-//                    "                        <p>Witaj,</p>\n" +
-//                            "                        <p>Dziękujemy za założenie konta na portalu Jakwywioze.pl. Aby potwierdzić rejestrację, kliknij w poniższy przycisk:</p>\n" +
     public static String getMailHtml(String text1, String text2, String url, String buttonText) {
         return "<html>\n" +
                 "  <head>\n" +
