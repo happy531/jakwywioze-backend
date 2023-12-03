@@ -11,6 +11,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.sql.*;
 
+import static com.example.jakwywiozebackend.utils.Roles.ADMIN;
+
 @Component
 public class DataLoader {
 
@@ -104,8 +106,8 @@ public class DataLoader {
 
     private void loadAndInsertWasteTypes(Connection connection) {
         String line;
-        String splitBy = ";";
-        int id = 1000;
+        String splitBy = ";\t";
+        int id = 0;
 
         try {
             Resource resource = resourceLoader.getResource("classpath:waste_types.txt");
@@ -119,7 +121,7 @@ public class DataLoader {
                 String[] data = line.split(splitBy);
 
                 preparedStatement.setInt(1, id++);
-                preparedStatement.setString(2, data[0]);
+                preparedStatement.setString(2, data[1]);
 
                 preparedStatement.executeUpdate();
             }
@@ -130,13 +132,14 @@ public class DataLoader {
 
     private void insertUser(Connection connection) {
         try {
-            String query = "INSERT INTO \"user\" (id, username, password, role, active) VALUES (?, ?, ?, ?, ?) ON CONFLICT (id) DO NOTHING";
+            String query = "INSERT INTO \"user\" (id, username, email, password, role, active) VALUES (?, ?, ?, ?, ?, ?) ON CONFLICT (id) DO NOTHING";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setLong(1, 1000L);
             preparedStatement.setString(2, "admin");
-            preparedStatement.setString(3, "$2a$12$QcRYVci5qvmVlPMrZynv4.CuolM6g1IhGBgs690Ga6fQRMVP/GMue");
-            preparedStatement.setString(4, "ADMIN");
-            preparedStatement.setBoolean(5, true);
+            preparedStatement.setString(3, "jakwywioze@gmail.com");
+            preparedStatement.setString(4, "$2a$12$QcRYVci5qvmVlPMrZynv4.CuolM6g1IhGBgs690Ga6fQRMVP/GMue");
+            preparedStatement.setString(5, ADMIN);
+            preparedStatement.setBoolean(6, true);
 
             preparedStatement.executeUpdate();
         } catch (Exception e) {

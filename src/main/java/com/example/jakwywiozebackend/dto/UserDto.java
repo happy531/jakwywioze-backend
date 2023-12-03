@@ -13,6 +13,7 @@ public class UserDto {
     private Long id;
     private String email;
     private String username;
+    private String role;
     @Length(min = 8, message = "Password should be at least 8 characters long")
     private String password;
 }

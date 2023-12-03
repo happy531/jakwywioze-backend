@@ -24,6 +24,8 @@ import org.springframework.stereotype.Service;
 import java.util.Calendar;
 import java.util.List;
 
+import static com.example.jakwywiozebackend.utils.Roles.USER;
+
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
@@ -97,6 +99,7 @@ public class UserServiceImpl implements UserService {
         }
         UserDto userDto = new UserDto();
         userDto.setEmail(registerRequest.getEmail());
+        userDto.setRole(USER);
         userDto.setUsername(registerRequest.getUsername());
         userDto.setPassword(registerRequest.getPassword());
         User user = userMapper.toUser(createUser(userDto));
