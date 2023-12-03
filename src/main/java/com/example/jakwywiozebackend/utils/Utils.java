@@ -463,7 +463,7 @@ public class Utils {
                 "                                <table role=\"presentation\" cellpadding=\"0\" cellspacing=\"0\">\n" +
                 "                                  <tbody>\n" +
                 "                                    <tr>\n" +
-                "                                      <td><a href=\"#\" target=\"_blank\">"+buttonText+"</a></td>\n" +
+                "                                      <td><a href=\"" + url + "\" target=\"_blank\">"+buttonText+"</a></td>\n" +
                 "                                    </tr>\n" +
                 "                                  </tbody>\n" +
                 "                                </table>\n" +
