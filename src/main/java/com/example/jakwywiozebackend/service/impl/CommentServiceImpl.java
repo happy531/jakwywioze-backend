@@ -31,7 +31,7 @@ public class CommentServiceImpl implements CommentService {
         Specification<Comment> spec = Specification
                 .where(CommentSpecification.getCommentsByPoint(id));
         List<CommentBasic> comments = commentMapper.toCommentBasicList(commentRepository.findAll(spec));
-        comments.sort(Comparator.comparing(CommentBasic::getCreatedAt));
+        comments.sort(Comparator.comparing(CommentBasic::getCreatedAt).reversed());
 
         return comments;
     }
