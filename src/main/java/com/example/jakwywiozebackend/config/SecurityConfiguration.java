@@ -37,7 +37,8 @@ public class SecurityConfiguration {
                 .logoutUrl("/users/logout")
                 .logoutSuccessUrl("/users/login")
                 .and()
-                .csrf().disable();
+                .csrf().disable()
+                .cors();
         http.addFilter(new BasicAuthenticationFilter(authenticationManager));
         return http.build();
     }
