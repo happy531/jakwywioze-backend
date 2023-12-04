@@ -23,7 +23,7 @@ public class DynamicPointInfoController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<DynamicPointInfoDto> getDynamicPointInfo(@RequestBody @PathVariable Long id){
+    public ResponseEntity<DynamicPointInfoDto> getDynamicPointInfo(@PathVariable Long id){
         return new ResponseEntity<>(dynamicPointInfoService.getDynamicPointInfo(id), HttpStatus.OK);
     }
 

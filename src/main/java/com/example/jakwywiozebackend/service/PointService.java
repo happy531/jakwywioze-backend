@@ -15,4 +15,6 @@ public interface PointService {
     PointDto addWasteType(Long id, WasteTypeDto wasteTypeDto);
 
     FilterResponse getFilteredPoints(FilterInfoDto filterInfoDto);
+
+    List<PointDto> getPointsAssignedToUser(Long userId);
 }
