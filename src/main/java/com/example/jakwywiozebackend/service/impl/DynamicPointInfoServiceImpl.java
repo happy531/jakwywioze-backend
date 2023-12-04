@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class DynamicPointInfoServiceImpl implements DynamicPointInfoService {
@@ -29,5 +30,10 @@ public class DynamicPointInfoServiceImpl implements DynamicPointInfoService {
     public DynamicPointInfoDto createDynamicPointInfo(DynamicPointInfoDto dynamicPointInfoDto) {
         DynamicPointInfo dynamicPointInfo = dynamicPointInfoMapper.toDynamicPointInfo(dynamicPointInfoDto);
         return dynamicPointInfoMapper.toDynamicPointInfoDto(dynamicPointInfoRepository.save(dynamicPointInfo));
+    }
+
+    @Override
+    public List<DynamicPointInfo> findDynamicPointsAssignedToUser(Long userId) {
+        return dynamicPointInfoRepository.findByUserId(userId);
     }
 }

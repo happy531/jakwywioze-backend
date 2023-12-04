@@ -40,4 +40,9 @@ public class PointController {
     public ResponseEntity<FilterResponse> getFilteredPoints(@RequestBody FilterInfoDto filterInfoDto){
         return new ResponseEntity<>(pointService.getFilteredPoints(filterInfoDto), HttpStatus.OK);
     }
+
+    @GetMapping("/user/{id}")
+    public ResponseEntity<List<PointDto>> getPointsAssignedToUser(@PathVariable Long id){
+        return new ResponseEntity<>(pointService.getPointsAssignedToUser(id), HttpStatus.OK);
+    }
 }

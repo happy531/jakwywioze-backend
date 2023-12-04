@@ -50,14 +50,6 @@ public class PointServiceImpl implements PointService {
 
     @Override
     public PointDto createPoint(PointDto pointDto) throws IOException, InterruptedException {
-//        List<PointDto> points = getPoints();
-//        for (PointDto p : points) {
-//            if (p.getLon() == pointDto.getLon()
-//                    && p.getLat() == pointDto.getLat()) {
-//                throw new EntityExistsException("Point already exists");
-//            }
-//        }
-
         Point point = pointMapper.toPoint(pointDto);
         point.setIsDynamic(false);
 
@@ -163,5 +155,21 @@ public class PointServiceImpl implements PointService {
             point.setCityId(cityService.getCityByName(point.getCity()).getId());
         }
         return point;
+    }
+
+    @Override
+    public List<PointDto> getPointsAssignedToUser(Long userId) {
+        List<DynamicPointInfo> dynamicPointInfos = dynamicPointService.findDynamicPointsAssignedToUser(userId);
+
+        List<Long> dynamicPointInfosIds = dynamicPointInfos.stream()
+                .map(DynamicPointInfo::getId)
+                .collect(Collectors.toList());
+
+        List<PointDto> userPoints;
+        userPoints = dynamicPointInfosIds.stream()
+                .map(this::getPoint)
+                .collect(Collectors.toList());
+
+        return userPoints;
     }
 }

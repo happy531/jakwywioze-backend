@@ -17,4 +17,5 @@ public interface DynamicPointInfoRepository extends JpaRepository<DynamicPointIn
 
     Optional<DynamicPointInfo> findById(Long id);
 
+    List<DynamicPointInfo> findByUserId(Long userId);
 }
