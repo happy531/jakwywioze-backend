@@ -20,6 +20,7 @@ public interface CommentMapper {
     CommentDto toCommentDto(Comment comment);
     @Mapping(source = "user.username", target = "user")
     @Mapping(source = "createdAt", target = "createdAt")
+    @Mapping(source = "user.id", target = "userId")
     CommentBasic toCommentBasic(Comment comment);
     List<Comment> toCommentList(List<CommentDto> commentDtos);
     List<CommentDto> toCommentDtoList(List<Comment> comments);
