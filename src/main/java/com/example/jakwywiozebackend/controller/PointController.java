@@ -17,8 +17,8 @@ public class PointController {
     private final PointService pointService;
 
     @PostMapping
-    public ResponseEntity<PointDto> createPoint(@RequestBody PointDto pointDto) throws IOException, InterruptedException {
-        return new ResponseEntity<>(pointService.createPoint(pointDto), HttpStatus.CREATED);
+    public ResponseEntity<PointDto> createPoint(@RequestBody DynamicPointCreateDto pointDto) throws IOException, InterruptedException {
+        return new ResponseEntity<>(pointService.createDynamicPoint(pointDto), HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")

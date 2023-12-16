@@ -11,6 +11,7 @@ public interface PointService {
     PointDto getPoint(Long id);
 
     PointDto createPoint(PointDto pointDto) throws IOException, InterruptedException;
+    PointDto createDynamicPoint(DynamicPointCreateDto pointDto) throws IOException, InterruptedException;
 
     PointDto addWasteType(Long id, WasteTypeDto wasteTypeDto);
 
