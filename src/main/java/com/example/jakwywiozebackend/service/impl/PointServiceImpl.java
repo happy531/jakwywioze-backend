@@ -22,6 +22,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Pageable;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -56,6 +57,26 @@ public class PointServiceImpl implements PointService {
         if (pointDto.getDynamicPointInfo() != null) {
             DynamicPointInfo dynamicPointInfo = dynamicPointMapper.toDynamicPointInfo(dynamicPointService.createDynamicPointInfo(pointDto.getDynamicPointInfo()));
             point.setDynamicPointInfo(dynamicPointInfo);
+            point.setIsDynamic(true);
+
+            Utils.setLatAndLonForDynamicPointByAddress(point);
+        }
+        return addIdToPointDto(pointMapper.toPointDto(pointRepository.save(point)));
+    }
+    @Override
+    public PointDto createDynamicPoint(DynamicPointCreateDto pointDto) throws IOException, InterruptedException {
+        Point point = pointMapper.toPoint(pointDto);
+        point.setIsDynamic(false);
+
+        if (pointDto.getDynamicPointInfo() != null) {
+            DynamicPointInfo dynamicPointInfo = dynamicPointMapper.toDynamicPointInfo(dynamicPointService.createDynamicPointInfo(pointDto.getDynamicPointInfo()));
+            List<String> stringWasteTypes = pointDto.getWasteTypes();
+            List<WasteType> wasteTypes = new ArrayList<>();
+            for (String name: stringWasteTypes) {
+                wasteTypes.add(wasteTypeRepository.findByName(name).orElseThrow(EntityNotFoundException::new));
+            }
+            point.setDynamicPointInfo(dynamicPointInfo);
+            point.setWasteTypes(wasteTypes);
             point.setIsDynamic(true);
 
             Utils.setLatAndLonForDynamicPointByAddress(point);
