@@ -82,38 +82,6 @@ public class PointServiceTest {
     }
 
     @Test
-    public void testCreatePoint() throws IOException, InterruptedException {
-        PointDto pointDto = new PointDto();
-        pointDto.setLon(1.0F);
-        pointDto.setLat(2.0F);
-
-        List<Point> points = new ArrayList<>();
-        points.add(new Point());
-
-        when(pointRepository.findAll()).thenReturn(points);
-
-        List<PointDto> pointDtos = new ArrayList<>();
-        pointDtos.add(new PointDto());
-
-        when(pointMapper.toPointDtoList(points)).thenReturn(pointDtos);
-
-        Point point = new Point();
-        when(pointMapper.toPoint(pointDto)).thenReturn(point);
-
-        when(pointRepository.save(point)).thenReturn(point);
-
-        when(pointMapper.toPointDto(point)).thenReturn(pointDto);
-
-        PointDto result = pointService.createPoint(pointDto);
-
-        assertEquals(pointDto, result);
-//        verify(pointRepository, times(1)).findAll();
-//        verify(pointMapper, times(1)).toPointDtoList(points);
-        verify(pointMapper, times(1)).toPoint(pointDto);
-        verify(pointRepository, times(1)).save(point);
-    }
-
-    @Test
     public void testAddWasteType_shouldThrowExceptionIfPointNotFound() {
         Long id = 1L;
         WasteTypeDto wasteTypeDto = new WasteTypeDto();

@@ -59,17 +59,17 @@ public class Utils {
         return (float) (earthRadius * c);
     }
 
-    private static String createEncodedAddressString(String street, String city, String zipCode) {
-        String formattedAddress = street + ", " + city + ", " + zipCode;
+    private static String createEncodedAddressString(String street, String city) {
+        String formattedAddress = street + ", " + city;
         return URLEncoder.encode(formattedAddress, StandardCharsets.UTF_8);
     }
 
-    public static void setLatAndLonForDynamicPointByAddress(Point point) throws IOException, InterruptedException {
-        String address = createEncodedAddressString(point.getCity(), point.getStreet(), point.getZipcode());
+    public static JsonNode getLatAndLonForDynamicPointByAddress(Point point) throws IOException, InterruptedException {
+        String address = createEncodedAddressString(point.getCity(), point.getStreet());
         String apiKey = System.getenv("GEOCODING_API_KEY") != null ? System.getenv("GEOCODING_API_KEY") : null;
 
         if (apiKey == null) {
-            return;
+            throw new RuntimeException("Przepraszamy, coś poszło nie tak. Pracujemy nad rozwiązaniem problemu");
         }
 
         HttpRequest request = HttpRequest.newBuilder()
@@ -81,14 +81,13 @@ public class Utils {
         HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
 
         ObjectMapper objectMapper = new ObjectMapper();
-        JsonNode jsonResponse = objectMapper.readTree(response.body());
-        JsonNode resultNodeLocation = jsonResponse.get("results").get(0).get("location");
+        JsonNode jsonResponse = objectMapper.readTree(response.body()).get("results").get(0);
 
-        float lat = Float.parseFloat(String.valueOf(resultNodeLocation.get("lat")));
-        float lon = Float.parseFloat(String.valueOf(resultNodeLocation.get("lng")));
+        if (jsonResponse == null) {
+            throw new RuntimeException("Nie udało się znaleźć lokalizacji, wpisz poprawne dane");
+        }
 
-        point.setLat(lat);
-        point.setLon(lon);
+        return jsonResponse.get("location");
     }
 
     public static String getMailHtml(String text1, String text2, String url, String buttonText) {

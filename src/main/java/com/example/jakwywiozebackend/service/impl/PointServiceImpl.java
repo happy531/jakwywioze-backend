@@ -14,6 +14,7 @@ import com.example.jakwywiozebackend.service.DynamicPointInfoService;
 import com.example.jakwywiozebackend.service.PointService;
 import com.example.jakwywiozebackend.service.PointSpecification;
 import com.example.jakwywiozebackend.utils.Utils;
+import com.fasterxml.jackson.databind.JsonNode;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
@@ -50,38 +51,30 @@ public class PointServiceImpl implements PointService {
     }
 
     @Override
-    public PointDto createPoint(PointDto pointDto) throws IOException, InterruptedException {
-        Point point = pointMapper.toPoint(pointDto);
-        point.setIsDynamic(false);
-
-        if (pointDto.getDynamicPointInfo() != null) {
-            DynamicPointInfo dynamicPointInfo = dynamicPointMapper.toDynamicPointInfo(dynamicPointService.createDynamicPointInfo(pointDto.getDynamicPointInfo()));
-            point.setDynamicPointInfo(dynamicPointInfo);
-            point.setIsDynamic(true);
-
-            Utils.setLatAndLonForDynamicPointByAddress(point);
-        }
-        return addIdToPointDto(pointMapper.toPointDto(pointRepository.save(point)));
-    }
-    @Override
     public PointDto createDynamicPoint(DynamicPointCreateDto pointDto) throws IOException, InterruptedException {
         Point point = pointMapper.toPoint(pointDto);
         point.setIsDynamic(false);
 
-        if (pointDto.getDynamicPointInfo() != null) {
+        JsonNode dynamicPointLocation = Utils.getLatAndLonForDynamicPointByAddress(point);
+
+        if (pointDto.getDynamicPointInfo() != null && dynamicPointLocation != null) {
             DynamicPointInfo dynamicPointInfo = dynamicPointMapper.toDynamicPointInfo(dynamicPointService.createDynamicPointInfo(pointDto.getDynamicPointInfo()));
             List<String> stringWasteTypes = pointDto.getWasteTypes();
             List<WasteType> wasteTypes = new ArrayList<>();
-            for (String name: stringWasteTypes) {
+            for (String name : stringWasteTypes) {
                 wasteTypes.add(wasteTypeRepository.findByName(name).orElseThrow(EntityNotFoundException::new));
             }
             point.setDynamicPointInfo(dynamicPointInfo);
             point.setWasteTypes(wasteTypes);
-            point.setIsDynamic(true);
 
-            Utils.setLatAndLonForDynamicPointByAddress(point);
+            float lat = Float.parseFloat(String.valueOf(dynamicPointLocation.get("lat")));
+            float lon = Float.parseFloat(String.valueOf(dynamicPointLocation.get("lng")));
+            point.setLat(lat);
+            point.setLon(lon);
+            point.setIsDynamic(true);
+            return addIdToPointDto(pointMapper.toPointDto(pointRepository.save(point)));
         }
-        return addIdToPointDto(pointMapper.toPointDto(pointRepository.save(point)));
+        return null;
     }
 
     @Override
@@ -130,7 +123,7 @@ public class PointServiceImpl implements PointService {
                 }
             });
         }
-        if(!filterInfoDto.isAddDynamicPoints()){
+        if (!filterInfoDto.isAddDynamicPoints()) {
             points.removeIf(point -> point.getDynamicPointInfo() != null);
         }
         points = points.stream()
@@ -188,9 +181,13 @@ public class PointServiceImpl implements PointService {
 
         List<PointDto> userPoints;
         userPoints = dynamicPointInfosIds.stream()
-                .map(this::getPoint)
+                .map(this::getPointAssignedToDynamicPoint)
                 .collect(Collectors.toList());
 
         return userPoints;
+    }
+
+    private PointDto getPointAssignedToDynamicPoint(Long dynamicPointId) {
+        return addIdToPointDto(pointMapper.toPointDto(pointRepository.findByDynamicPointInfo_Id(dynamicPointId).orElseThrow(() -> new EntityNotFoundException("Point not found"))));
     }
 }

@@ -22,4 +22,5 @@ public interface PointRepository extends JpaRepository<Point,Long> {
     List<Point> findAll(Specification<Point> spec);
     Page<Point> findAll(Specification<Point> spec, Pageable pageable);
 
+    Optional<Point> findByDynamicPointInfo_Id(Long id);
 }
