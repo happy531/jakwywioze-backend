@@ -1,163 +1,167 @@
 0;	papier
 1;	metal
 2;	tworzywa sztuczne
-3;	szk≈Ço
-4;	opakowania wielomateria≈Çowe
+3;	szk≥o
+4;	opakowania wielomateria≥owe
 5;	bioodpady
-6;	zu≈ºyte baterie i akumulatory
-7;	zu≈ºyty sprzƒôt elektryczny i elektroniczny
+6;	zuøyte baterie i akumulatory
+7;	zuøyty sprzÍt elektryczny i elektroniczny
 8;	odpady problemowe
-9;	zu≈ºyte opony
-10;	odpady budowlane i rozbi√≥rkowe
+9;	zuøyte opony
+10;	odpady budowlane i rozbiÛrkowe
 11;	przeterminowane leki
 12;	chemikalia
-13;	termometry rtƒôciowe
-14;	odzie≈º
+13;	termometry rtÍciowe
+14;	odzieø
 15;	tekstylia
 16;	odpady wytworzone podczas iniekcji domowych
 17;	odpady wielkogabarytowe
-18;	odpady ulegajƒÖce biodegradacji
-19;	odpady gruzu budowalnego ( bez zanieczyszcze≈Ñ )
-20;	zmieszane odpady z budowy, remontu lub demonta≈ºu
+18;	odpady ulegajπce biodegradacji
+19;	odpady gruzu budowalnego ( bez zanieczyszczeÒ )
+20;	zmieszane odpady z budowy, remontu, demontaøu
 21;	odpadowa papa
-22;	zu≈ºyte opony od pojazd√≥w do 3,5 tony
+22;	zuøyte opony od pojazdÛw do 3,5 tony
 23;	opakowania po farbach i lakierach
 24;	tektura
 25;	metale
-26;	zu≈ºyty sprzƒôt elektryczny i elektorniczny
+26;	zuøyty sprzÍt elektryczny i elektorniczny
 27;	opakowania z papieru
 28;	opakowania z tektury
 29;	opakowania z tworzyw sztucznych
 30;	opakowania z metali
-31;	opakowania ze szk≈Ça
-32;	opakowania zawierajƒÖce pozosta≈Ço≈õci substancji niebezpiecznych lub nimi zanieczyszczone
-33;	beton oraz gruz betonowy
-34;	lampy fluorescencyjne
-35;	odpady zawierajƒÖce rtƒôƒá
-36;	urzƒÖdzenia zawierajƒÖce freon
-37;	leki
-38;	odpady zielone
-39;	sprzƒôt elektryczny i elektroniczny
-40;	baterie i akumulatory
-41;	opakowania z metalu
-42;	opakowania z tekstyli√≥w
-43;	pojemniki pod ci≈õnieniem po aerozolach
-44;	zu≈ºyte lub przeterminowane ga≈õnice samochodowe i z gospodarstw domowych
-45;	beton
-46;	gruz betonowy
-47;	gruz ceglany
-48;	szk≈Ço okienne, drzwiowe, bezbarwne, lustra
-49;	rozpuszczalniki
-50;	kwasy
-51;	alkalia (substancje ≈ºrƒÖce)
-52;	odczynniki fotograficzne
-53;	≈õrodki ochrony ro≈õlin
-54;	≈õwietl√≥wki
-55;	urzƒÖdzenia ch≈Çodnicze i klimatyzacyjne
-56;	oleje spo≈ºywcze
-57;	oleje silnik√≥w samochodowych
-58;	farby
-59;	farby drukarskie
-60;	tusze
-61;	tonery do drukarek
-62;	kleje
-63;	lepiszcze
-64;	≈ºywice
-65;	detergenty
-66;	telewizory, monitory
-67;	drewno
-68;	odpady tworzyw sztucznych
-69;	odpady metali
-70;	odpady komunalne
-71;	odpady bio
-72;	odpady niebezpieczne
-73;	zu≈ºyty olej silnikowy i przek≈Çadniowy
-74;	filtry olejowe
-75;	opakowania po olejach
-76;	styropian opakowaniowy
-77;	niezanieczyszczony gruz ceglany i/lub betonowy
-78;	meble
-79;	niezanieczyszczone frakcje odpad√≥w budowlanych
-80;	oleje
-81;	t≈Çuszcze jadalne
-82;	opakowania z drewna
-83;	filtry powietrza
-84;	tonery
-85;	magnetyczne no≈õniki danych
-86;	optyczne no≈õniki danych
-87;	olej silnikowy
-88;	czysty styropian opakowaniowy
-89;	opakowania z tworzywa sztucznego
-90;	popi√≥≈Ç i ≈ºu≈ºel
-91;	szk≈Ço p≈Çaskie bez zanieczyszcze≈Ñ
-92;	opakowania zawierajƒÖce pozosta≈Ço≈õci substancji niebezpiecznych
-93;	t≈Çuszcze
-94;	zmieszane odpady z budowy, remontu, demonta≈ºu
-95;	niezanieczyszcone odpady budowlane
-96;	magnetyczne i optyczne no≈õniki danych
-97;	makulatura
-98;	elektronika
-99;	odpady biodegradowalne
-100;	gruz
-101;	odpady budowlane
-102;	inne odpady problemowe
-103;	odpady opakowaniowe ze szk≈Ça
-104;	opady budowlane, robi√≥rkowe
-105;	odpady drewniane
-106;	ubrania
-107;	obuwie
-108;	zu≈ºyty sprzƒôt pochodzƒÖcy z gospodarstw domowych
-109;	opakowania wielomateriatowe
-110;	odpady ulegajqce biodegradacji
-111;	przeterminowane oleje
-112;	odpady medyczne powsta≈Çe w gospodarstwach domowych
-113;	zu≈ºyty sprzƒôt elektroniczny i elektryczny pochodzƒÖcy z gospodarstw domowych
-114;	≈ºar√≥wki
-115;	odpady selektywnie
-116;	popi√≥≈Ç
-117;	szk≈Ço opakowaniowe
-118;	przepracowane oleje silnikowe
-119;	opakowania po ≈õrodkach niebezpiecznych bƒÖd≈∫ z ich zawarto≈õciƒÖ
-120;	lakiery
-121;	kartrid≈ºe z drukarek domowych
-122;	odpady pochodzƒÖce z iniekcji
-123;	zu≈ºyty sprzƒôt elektroniczny i elektryczny
-124;	odpady budowalne pochodzƒÖce z drobynch remont√≥w
-125;	niezanieczyszczone odpady betonowe oraz gruz betonowy i ceglany
-126;	odpady niebezpiecznie
-127;	odpady budowlane i rozbi√≥rkowe z gospodarstw domowych
-128;	przeterminowane chemikalia
-129;	≈õrodki ochrony ro≈õlin i ich opakowania
-130;	posegregowane odpady remontowe i budowlane
-131;	opakowania tektury
-132;	opakowania zawierajƒÖce pozosta≈Çosci substancji niebezpiecznych lub nimi zanieczyszczone
-133;	zu≈ºyte opony (o ≈õrednicy do 1250 mm)
-134;	zmieszane odpady z betonu, gruzu ceglanego, odpadowych materia≈Ç√≥w ceramicznych i element√≥w wyposa≈ºenia
-135;	styropian
-136;	we≈Çna mineralna
-137;	urzadzenia zawierajace freon
-138;	detergenty zawierajƒÖce substancje niebezpieczne
-139;	syntetyczne oleje silnikowe, przek≈Çadniowe i smarowe
-140;	pozosta≈Ço≈õci farb, lakier√≥w, kwas√≥w
-141;	odpady poremontowe i budowlane
-142;	odpady ulegejƒÖce biodegradacji
-143;	≈õrodki ochrony ro≈õlin (wraz z opakowaniami)
-144;	opakowania zanieczyszczone substancjami toksycznymi
-145;	zu≈ºyty sprzƒôt elektryczny i elektroniczny zawierajƒÖcy niebezpieczne substancje
-146;	przeterminowane nawozy
-147;	opakowania po ≈õrodkach ochrony ro≈õlin
-148;	zu≈ºyte tonery drukarskie, cartridge
-149;	opakowania po detergentach zawierajacych niebezpieczne substancje
-150;	opakowania po rozpuszczalnikach
-151;	opakowania po farbach, tuszach, klejach, lepiszczech i ≈ºywicach
-152;	≈õrodki farmakologiczne inne ni≈º niebezpieczne
-153;	odpady budowlane po drobnych remontach
-154;	przeterminowane ≈õrodki ochrony ro≈õlin
-155;	termometry
-156;	ig≈Çy
-157;	strzykawki
-158;	odpady rozbi√≥rkowe, poremontowe zawierajƒÖce p≈Çyty gipsowe, suporeks, p≈Çytki ceramiczne
-159;	chemikalia typowe dla prac domowych
-160;	odpady posegregowane
-161;	odpady komunalne ulegajƒÖce biodegradacji za wyjƒÖtkiem odpad√≥w spo≈ºywczych, kuchennych
-162;	pozosta≈Ço≈õci rozpuszczalnik√≥w, farb, olej√≥w odpadowych itp.
+31;	opakowania ze szk≥a
+32;	opakowania zawierajπce pozosta≥oúci substancji niebezpiecznych lub nimi zanieczyszczone
+33;	beton
+34;	gruz betonowy
+35;	lampy fluorescencyjne
+36;	odpady zawierajπce rtÍÊ
+37;	urzπdzenia zawierajπce freon
+38;	leki
+39;	termometry
+40;	magnetyczne noúniki danych
+41;	optyczne noúniki danych
+42;	zuøyte tonery drukarskie, cartridge
+43;	strzykawki
+44;	ig≥y
+45;	odpady o charakterze medycznym pochodzπce z gospodarstw domowych
+46;	farby
+47;	lakiery
+48;	kleje
+49;	lepiszcze
+50;	øywice
+51;	rozpuszczalniki
+52;	detergenty
+53;	úrodki ochrony roúlin
+54;	opakowania zawierajπce substancje niebezpieczne
+55;	meble
+56;	zuøyte opony od pojazdÛw osobowych
+57;	zuøyte opony od jednoúladÛw
+58;	niezanieczyszczone odpady betonowe oraz gruz betonowy i ceglany
+59;	czysty styropian
+60;	odpady drewniane
+61;	odpady zielone
+62;	sprzÍt elektryczny i elektroniczny
+63;	baterie i akumulatory
+64;	opakowania z metalu
+65;	opakowania z tekstyliÛw
+66;	pojemniki pod ciúnieniem po aerozolach
+67;	zuøyte lub przeterminowane gaúnice samochodowe i z gospodarstw domowych
+68;	gruz ceglany
+69;	szk≥o okienne, drzwiowe, bezbarwne, lustra
+70;	kwasy
+71;	alkalia
+72;	odczynniki fotograficzne
+73;	úwietlÛwki
+74;	urzπdzenia ch≥odnicze i klimatyzacyjne
+75;	oleje spoøywcze
+76;	oleje silnikÛw samochodowych
+77;	farby drukarskie
+78;	tusze
+79;	tonery do drukarek
+80;	telewizory, monitory
+81;	drewno
+82;	odpady tworzyw sztucznych
+83;	odpady metali
+84;	odpady komunalne
+85;	odpady bio
+86;	odpady niebezpieczne
+87;	zuøyty olej silnikowy i przek≥adniowy
+88;	filtry olejowe
+89;	opakowania po olejach
+90;	styropian opakowaniowy
+91;	niezanieczyszczony gruz ceglany i/lub betonowy
+92;	niezanieczyszczone frakcje odpadÛw budowlanych
+93;	oleje
+94;	t≥uszcze jadalne
+95;	opakowania z drewna
+96;	filtry powietrza
+97;	tonery
+98;	olej silnikowy
+99;	czysty styropian opakowaniowy
+100;	opakowania z tworzywa sztucznego
+101;	popiÛ≥ i øuøel
+102;	szk≥o p≥askie bez zanieczyszczeÒ
+103;	opakowania zawierajπce pozosta≥oúci substancji niebezpiecznych
+104;	t≥uszcze
+105;	niezanieczyszcone odpady budowlane
+106;	magnetyczne i optyczne noúniki danych
+107;	makulatura
+108;	elektronika
+109;	odpady biodegradowalne
+110;	gruz
+111;	odpady budowlane
+112;	inne odpady problemowe
+113;	odpady opakowaniowe ze szk≥a
+114;	opady budowlane, robiÛrkowe
+115;	ubrania
+116;	obuwie
+117;	zuøyty sprzÍt pochodzπcy z gospodarstw domowych
+118;	opakowania wielomateriatowe
+119;	odpady ulegajqce biodegradacji
+120;	przeterminowane oleje
+121;	odpady medyczne powsta≥e w gospodarstwach domowych
+122;	zuøyty sprzÍt elektroniczny i elektryczny pochodzπcy z gospodarstw domowych
+123;	øarÛwki
+124;	odpady selektywnie
+125;	popiÛ≥
+126;	szk≥o opakowaniowe
+127;	przepracowane oleje silnikowe
+128;	opakowania po úrodkach niebezpiecznych bπdü z ich zawartoúciπ
+129;	kartridøe z drukarek domowych
+130;	odpady pochodzπce z iniekcji
+131;	zuøyty sprzÍt elektroniczny i elektryczny
+132;	odpady budowalne pochodzπce z drobynch remontÛw
+133;	odpady niebezpiecznie
+134;	odpady budowlane i rozbiÛrkowe z gospodarstw domowych
+135;	przeterminowane chemikalia
+136;	úrodki ochrony roúlin i ich opakowania
+137;	posegregowane odpady remontowe i budowlane
+138;	pozosta≥oúci farb, lakierÛw, kwasÛw
+139;	odpady poremontowe i budowlane
+140;	opakowania tektury
+141;	opakowania zawierajπce pozosta≥osci substancji niebezpiecznych lub nimi zanieczyszczone
+142;	zuøyte opony (o úrednicy do 1250 mm)
+143;	zmieszane odpady z betonu, gruzu ceglanego, odpadowych materia≥Ûw ceramicznych i elementÛw wyposaøenia
+144;	styropian
+145;	we≥na mineralna
+146;	urzadzenia zawierajace freon
+147;	detergenty zawierajπce substancje niebezpieczne
+148;	syntetyczne oleje silnikowe, przek≥adniowe i smarowe
+149;	odpady ulegejπce biodegradacji
+150;	úrodki ochrony roúlin (wraz z opakowaniami)
+151;	opakowania zanieczyszczone substancjami toksycznymi
+152;	zuøyty sprzÍt elektryczny i elektroniczny zawierajπcy niebezpieczne substancje
+153;	przeterminowane nawozy
+154;	opakowania po úrodkach ochrony roúlin
+155;	opakowania po detergentach zawierajacych niebezpieczne substancje
+156;	opakowania po rozpuszczalnikach
+157;	opakowania po farbach, tuszach, klejach, lepiszczech i øywicach
+158;	úrodki farmakologiczne inne niø niebezpieczne
+159;	odpady budowlane po drobnych remontach
+160;	przeterminowane úrodki ochrony roúlin
+161;	odpady rozbiÛrkowe, poremontowe zawierajπce p≥yty gipsowe, suporeks, p≥ytki ceramiczne
+162;	chemikalia typowe dla prac domowych
+163;	odpady posegregowane
+164;	odpady komunalne ulegajπce biodegradacji za wyjπtkiem odpadÛw spoøywczych, kuchennych
+165;	pozosta≥oúci rozpuszczalnikÛw, farb, olejÛw odpadowych itp.
+166;	szk≥o p≥askie
