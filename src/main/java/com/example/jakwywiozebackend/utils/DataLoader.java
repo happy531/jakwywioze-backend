@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.nio.charset.Charset;
 import java.sql.*;
 
 import static com.example.jakwywiozebackend.utils.Roles.ADMIN;
@@ -46,7 +47,7 @@ public class DataLoader {
         try {
             Resource resource = resourceLoader.getResource("classpath:points.txt");
             InputStream inputStream = resource.getInputStream();
-            BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));
+            BufferedReader br = new BufferedReader(new InputStreamReader(inputStream, "windows-1250"));
 
             String query = "INSERT INTO point (id, city, image_link, lat, lon, name, opening_hours, phone_number, street, is_dynamic, website, zipcode) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ON CONFLICT (id) DO NOTHING";
 
@@ -82,7 +83,7 @@ public class DataLoader {
         try {
             Resource resource = resourceLoader.getResource("classpath:cities.txt");
             InputStream inputStream = resource.getInputStream();
-            BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));
+            BufferedReader br = new BufferedReader(new InputStreamReader(inputStream, "windows-1250"));
 
             String query = "INSERT INTO city (id, county, latitude, longitude, name, voivodeship) VALUES (?, ?, ?, ?, ?, ?) ON CONFLICT (id) DO NOTHING";
 
@@ -112,7 +113,7 @@ public class DataLoader {
         try {
             Resource resource = resourceLoader.getResource("classpath:waste_types.txt");
             InputStream inputStream = resource.getInputStream();
-            BufferedReader br = new BufferedReader(new InputStreamReader(inputStream));
+            BufferedReader br = new BufferedReader(new InputStreamReader(inputStream, "windows-1250"));
 
             String query = "INSERT INTO waste_type (id, name) VALUES (?, ?) ON CONFLICT (id) DO NOTHING";
             PreparedStatement preparedStatement = connection.prepareStatement(query);

@@ -4,6 +4,9 @@
       <env name="EMAIL" value="jakwywioze@gmail.com" />
       <env name="PASSWORD" value="mfuunbwozssnuesp" />
       <env name="GEOCODING_API_KEY" value="" />
+      <env name="BASE_FRONTEND_URL" value="https://www.jakwywioze.pl" />
+      <env name="BASE_FRONTEND_SHORT_URL" value="https://jakwywioze.pl" />
+      <env name="BASE_FRONTEND_LOCALHOST_URL" value="http://localhost:3000" />
     </envs>
     <module name="jakwywioze-backend" />
     <option name="SPRING_BOOT_MAIN_CLASS" value="com.example.jakwywiozebackend.JakwywiozeBackendApplication" />
