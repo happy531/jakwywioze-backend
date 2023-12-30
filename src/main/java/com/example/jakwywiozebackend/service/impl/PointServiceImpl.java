@@ -23,6 +23,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Pageable;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -125,6 +126,13 @@ public class PointServiceImpl implements PointService {
         }
         if (!filterInfoDto.isAddDynamicPoints()) {
             points.removeIf(point -> point.getDynamicPointInfo() != null);
+        }
+        else {
+            points.removeIf(point ->
+                    point.getDynamicPointInfo() != null
+                            && point.getDynamicPointInfo().getEndDate() != null
+                            && point.getDynamicPointInfo().getEndDate().isBefore(LocalDate.now())
+            );
         }
         points = points.stream()
                 .distinct()
