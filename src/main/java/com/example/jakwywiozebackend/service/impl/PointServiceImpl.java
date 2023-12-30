@@ -194,6 +194,16 @@ public class PointServiceImpl implements PointService {
         return pointMapper.toPointDto(pointRepository.save(point));
     }
 
+    @Override
+    public String deletePoint(Long id) {
+        Point point = pointRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+        if(!point.getIsDynamic()){
+            throw new IllegalArgumentException("Can't delete non dynamic point");
+        }
+        pointRepository.delete(point);
+        return "Twój punkt dynamiczny został usunięty";
+    }
+
     private PointDto getPointAssignedToDynamicPoint(Long dynamicPointId) {
         return addIdToPointDto(pointMapper.toPointDto(pointRepository.findByDynamicPointInfo_Id(dynamicPointId).orElseThrow(() -> new EntityNotFoundException("Point not found"))));
     }
