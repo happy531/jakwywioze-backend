@@ -23,6 +23,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Pageable;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -126,6 +127,13 @@ public class PointServiceImpl implements PointService {
         if (!filterInfoDto.isAddDynamicPoints()) {
             points.removeIf(point -> point.getDynamicPointInfo() != null);
         }
+        else {
+            points.removeIf(point ->
+                    point.getDynamicPointInfo() != null
+                            && point.getDynamicPointInfo().getEndDate() != null
+                            && point.getDynamicPointInfo().getEndDate().isBefore(LocalDate.now())
+            );
+        }
         points = points.stream()
                 .distinct()
                 .collect(Collectors.toList());
@@ -185,6 +193,23 @@ public class PointServiceImpl implements PointService {
                 .collect(Collectors.toList());
 
         return userPoints;
+    }
+
+    @Override
+    public PointDto updatePoint(PointDto pointDto) {
+        Point point  = pointRepository.findById(pointDto.getId()).orElseThrow(EntityNotFoundException::new);
+        pointMapper.updatePointFromDto(pointDto, point);
+        return pointMapper.toPointDto(pointRepository.save(point));
+    }
+
+    @Override
+    public String deletePoint(Long id) {
+        Point point = pointRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+        if(!point.getIsDynamic()){
+            throw new IllegalArgumentException("Can't delete non dynamic point");
+        }
+        pointRepository.delete(point);
+        return "Twój punkt dynamiczny został usunięty";
     }
 
     private PointDto getPointAssignedToDynamicPoint(Long dynamicPointId) {

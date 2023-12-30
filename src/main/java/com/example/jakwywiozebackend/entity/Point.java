@@ -40,7 +40,7 @@ public class Point {
     @JoinColumn(name = "point", referencedColumnName = "id")
     private DynamicPointInfo dynamicPointInfo;
     @ManyToMany(
-            cascade = {CascadeType.ALL}
+            cascade = {CascadeType.DETACH, CascadeType.REFRESH}
     )
     @JoinTable(
             name = "point_waste",

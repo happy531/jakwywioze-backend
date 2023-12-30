@@ -5,6 +5,7 @@ import com.example.jakwywiozebackend.entity.WasteType;
 import jakarta.persistence.criteria.Path;
 import org.springframework.data.jpa.domain.Specification;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public class PointSpecification {
@@ -23,6 +24,9 @@ public class PointSpecification {
             final Path<WasteType> wasteTypePath = root.get("wasteTypes").get("name");
             return wasteTypePath.in(wasteTypes);
         };
+    }
 
+    public static Specification<Point> getPointsBeforeEndDate() {
+        return (root, query, criteriaBuilder) -> criteriaBuilder.greaterThanOrEqualTo(root.get("dynamicPointInfo").get("endDate"), LocalDate.now());
     }
 }
