@@ -17,4 +17,6 @@ public interface PointService {
     FilterResponse getFilteredPoints(FilterInfoDto filterInfoDto);
 
     List<PointDto> getPointsAssignedToUser(Long userId);
+
+    PointDto updatePoint(PointDto pointDto);
 }

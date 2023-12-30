@@ -187,6 +187,13 @@ public class PointServiceImpl implements PointService {
         return userPoints;
     }
 
+    @Override
+    public PointDto updatePoint(PointDto pointDto) {
+        Point point  = pointRepository.findById(pointDto.getId()).orElseThrow(EntityNotFoundException::new);
+        pointMapper.updatePointFromDto(pointDto, point);
+        return pointMapper.toPointDto(pointRepository.save(point));
+    }
+
     private PointDto getPointAssignedToDynamicPoint(Long dynamicPointId) {
         return addIdToPointDto(pointMapper.toPointDto(pointRepository.findByDynamicPointInfo_Id(dynamicPointId).orElseThrow(() -> new EntityNotFoundException("Point not found"))));
     }

@@ -45,4 +45,9 @@ public class PointController {
     public ResponseEntity<List<PointDto>> getPointsAssignedToUser(@PathVariable Long id){
         return new ResponseEntity<>(pointService.getPointsAssignedToUser(id), HttpStatus.OK);
     }
+
+    @PutMapping
+    public ResponseEntity<PointDto> updatePoint(@RequestBody PointDto pointDto){
+        return new ResponseEntity<>(pointService.updatePoint(pointDto), HttpStatus.OK);
+    }
 }

@@ -3,8 +3,7 @@ import com.example.jakwywiozebackend.dto.DynamicPointCreateDto;
 import com.example.jakwywiozebackend.dto.PointDto;
 import com.example.jakwywiozebackend.entity.Point;
 import com.example.jakwywiozebackend.entity.City;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
+import org.mapstruct.*;
 
 
 import java.util.List;
@@ -21,6 +20,9 @@ public interface PointMapper {
     @Mapping(source = "dynamicPointInfo.user.id", target = "dynamicPointInfo.user")
     @Mapping(source = "dynamicPointInfo.description", target = "dynamicPointInfo.description")
     PointDto toPointDto(Point point);
+    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    @Mapping(target = "dynamicPointInfo.user", ignore = true)
+    void updatePointFromDto(PointDto dto, @MappingTarget Point point);
     List<Point> toPointList(List<PointDto> pointDtos);
     List<PointDto> toPointDtoList(List<Point> points);
     City map(String cityName);
