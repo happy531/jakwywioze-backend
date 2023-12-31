@@ -47,7 +47,7 @@ public class PointController {
     }
 
     @PutMapping
-    public ResponseEntity<PointDto> updatePoint(@RequestBody PointDto pointDto){
+    public ResponseEntity<PointDto> updatePoint(@RequestBody PointUpdateDto pointDto){
         return new ResponseEntity<>(pointService.updatePoint(pointDto), HttpStatus.OK);
     }
     @DeleteMapping("/{id}")

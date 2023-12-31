@@ -18,7 +18,7 @@ public interface PointService {
 
     List<PointDto> getPointsAssignedToUser(Long userId);
 
-    PointDto updatePoint(PointDto pointDto);
+    PointDto updatePoint(PointUpdateDto pointDto);
 
     String deletePoint(Long id);
 }

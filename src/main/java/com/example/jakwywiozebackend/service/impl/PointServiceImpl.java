@@ -198,9 +198,15 @@ public class PointServiceImpl implements PointService {
     }
 
     @Override
-    public PointDto updatePoint(PointDto pointDto) {
+    public PointDto updatePoint(PointUpdateDto pointDto) {
         Point point  = pointRepository.findById(pointDto.getId()).orElseThrow(EntityNotFoundException::new);
+        List<String> wasteTypes = pointDto.getWasteTypes();
+        List<WasteType> wasteTypesFromDb = new ArrayList<>();
+        for (String name : wasteTypes) {
+            wasteTypesFromDb.add(wasteTypeRepository.findByName(name).orElseThrow(EntityNotFoundException::new));
+        }
         pointMapper.updatePointFromDto(pointDto, point);
+        point.setWasteTypes(wasteTypesFromDb);
         return pointMapper.toPointDto(pointRepository.save(point));
     }
 
