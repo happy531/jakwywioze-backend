@@ -23,7 +23,7 @@ public class User {
     @Column
     private String role;
     @Column
-    @OneToMany
+    @OneToMany(cascade = {CascadeType.DETACH, CascadeType.REFRESH})
     private List<DynamicPointInfo> dynamicPointInfoList;
     @Column
     @OneToMany(mappedBy = "user")

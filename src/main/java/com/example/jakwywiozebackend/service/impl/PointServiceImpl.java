@@ -7,6 +7,7 @@ import com.example.jakwywiozebackend.entity.WasteType;
 import com.example.jakwywiozebackend.mapper.DynamicPointInfoMapper;
 import com.example.jakwywiozebackend.mapper.PointMapper;
 import com.example.jakwywiozebackend.mapper.WasteTypeMapper;
+import com.example.jakwywiozebackend.repository.DynamicPointInfoRepository;
 import com.example.jakwywiozebackend.repository.PointRepository;
 import com.example.jakwywiozebackend.repository.WasteTypeRepository;
 import com.example.jakwywiozebackend.service.CityService;
@@ -40,6 +41,7 @@ public class PointServiceImpl implements PointService {
     private final CityService cityService;
     private final DynamicPointInfoService dynamicPointService;
     private final DynamicPointInfoMapper dynamicPointMapper;
+    private final DynamicPointInfoRepository dynamicPointInfoRepository;
 
     @Override
     public List<PointDto> getPoints() {
@@ -209,6 +211,7 @@ public class PointServiceImpl implements PointService {
             throw new IllegalArgumentException("Can't delete non dynamic point");
         }
         pointRepository.delete(point);
+        dynamicPointInfoRepository.delete(point.getDynamicPointInfo());
         return "Twój punkt dynamiczny został usunięty";
     }
 
