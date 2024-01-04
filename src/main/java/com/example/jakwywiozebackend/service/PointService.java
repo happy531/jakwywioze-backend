@@ -18,7 +18,7 @@ public interface PointService {
 
     List<PointDto> getPointsAssignedToUser(Long userId);
 
-    PointDto updatePoint(PointUpdateDto pointDto);
+    PointDto updatePoint(PointUpdateDto pointDto) throws IOException, InterruptedException;
 
     String deletePoint(Long id);
 }

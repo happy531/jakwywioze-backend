@@ -198,7 +198,7 @@ public class PointServiceImpl implements PointService {
     }
 
     @Override
-    public PointDto updatePoint(PointUpdateDto pointDto) {
+    public PointDto updatePoint(PointUpdateDto pointDto) throws IOException, InterruptedException {
         Point point  = pointRepository.findById(pointDto.getId()).orElseThrow(EntityNotFoundException::new);
         List<String> wasteTypes = pointDto.getWasteTypes();
         List<WasteType> wasteTypesFromDb = new ArrayList<>();
@@ -207,6 +207,11 @@ public class PointServiceImpl implements PointService {
         }
         pointMapper.updatePointFromDto(pointDto, point);
         point.setWasteTypes(wasteTypesFromDb);
+        if (!pointDto.getStreet().equals(point.getStreet())){
+            JsonNode dynamicPointLocation = Utils.getLatAndLonForDynamicPointByAddress(point);
+            point.setLat(Float.parseFloat(String.valueOf(dynamicPointLocation.get("lat"))));
+            point.setLon(Float.parseFloat(String.valueOf(dynamicPointLocation.get("lon"))));
+        }
         return pointMapper.toPointDto(pointRepository.save(point));
     }
 
