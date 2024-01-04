@@ -208,7 +208,7 @@ public class PointServiceImpl implements PointService {
         point.setWasteTypes(wasteTypesFromDb);
         JsonNode dynamicPointLocation = Utils.getLatAndLonForDynamicPointByAddress(point);
         point.setLat(Float.parseFloat(String.valueOf(dynamicPointLocation.get("lat"))));
-        point.setLon(Float.parseFloat(String.valueOf(dynamicPointLocation.get("lon"))));
+        point.setLon(Float.parseFloat(String.valueOf(dynamicPointLocation.get("lng"))));
         return pointMapper.toPointDto(pointRepository.save(point));
     }
 
