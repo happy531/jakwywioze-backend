@@ -2,6 +2,7 @@ package com.example.jakwywiozebackend.controller;
 
 import com.example.jakwywiozebackend.dto.*;
 import com.example.jakwywiozebackend.service.PointService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +18,7 @@ public class PointController {
     private final PointService pointService;
 
     @PostMapping
-    public ResponseEntity<PointDto> createPoint(@RequestBody DynamicPointCreateDto pointDto) throws IOException, InterruptedException {
+    public ResponseEntity<PointDto> createPoint(@RequestBody @Valid DynamicPointCreateDto pointDto) throws IOException, InterruptedException {
         return new ResponseEntity<>(pointService.createDynamicPoint(pointDto), HttpStatus.CREATED);
     }
 
