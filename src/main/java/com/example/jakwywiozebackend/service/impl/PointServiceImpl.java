@@ -128,8 +128,7 @@ public class PointServiceImpl implements PointService {
         }
         if (!filterInfoDto.isAddDynamicPoints()) {
             points.removeIf(point -> point.getDynamicPointInfo() != null);
-        }
-        else {
+        } else {
             points.removeIf(point ->
                     point.getDynamicPointInfo() != null
                             && point.getDynamicPointInfo().getEndDate() != null
@@ -199,7 +198,7 @@ public class PointServiceImpl implements PointService {
 
     @Override
     public PointDto updatePoint(PointUpdateDto pointDto) throws IOException, InterruptedException {
-        Point point  = pointRepository.findById(pointDto.getId()).orElseThrow(EntityNotFoundException::new);
+        Point point = pointRepository.findById(pointDto.getId()).orElseThrow(EntityNotFoundException::new);
         List<String> wasteTypes = pointDto.getWasteTypes();
         List<WasteType> wasteTypesFromDb = new ArrayList<>();
         for (String name : wasteTypes) {
@@ -207,18 +206,16 @@ public class PointServiceImpl implements PointService {
         }
         pointMapper.updatePointFromDto(pointDto, point);
         point.setWasteTypes(wasteTypesFromDb);
-        if (!pointDto.getStreet().equals(point.getStreet())){
-            JsonNode dynamicPointLocation = Utils.getLatAndLonForDynamicPointByAddress(point);
-            point.setLat(Float.parseFloat(String.valueOf(dynamicPointLocation.get("lat"))));
-            point.setLon(Float.parseFloat(String.valueOf(dynamicPointLocation.get("lon"))));
-        }
+        JsonNode dynamicPointLocation = Utils.getLatAndLonForDynamicPointByAddress(point);
+        point.setLat(Float.parseFloat(String.valueOf(dynamicPointLocation.get("lat"))));
+        point.setLon(Float.parseFloat(String.valueOf(dynamicPointLocation.get("lon"))));
         return pointMapper.toPointDto(pointRepository.save(point));
     }
 
     @Override
     public String deletePoint(Long id) {
         Point point = pointRepository.findById(id).orElseThrow(EntityNotFoundException::new);
-        if(!point.getIsDynamic()){
+        if (!point.getIsDynamic()) {
             throw new IllegalArgumentException("Can't delete non dynamic point");
         }
         pointRepository.delete(point);
