@@ -49,6 +49,6 @@ public class Point {
     )
     private List<WasteType> wasteTypes;
     @Column
-    @OneToMany(mappedBy = "point")
+    @OneToMany(mappedBy = "point",  cascade = {CascadeType.ALL})
     private List<Comment> comments;
 }

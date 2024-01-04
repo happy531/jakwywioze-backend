@@ -1,13 +1,16 @@
 package com.example.jakwywiozebackend.dto;
 
 import lombok.Data;
-import org.hibernate.validator.constraints.Length;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
 @Data
-public class DynamicPointCreateDto {
+@Getter
+@Setter
+public class PointUpdateDto {
+
     private Long id;
-    @Length(max = 250, message = "Name too long")
     private String name;
     private String openingHours;
     private float lon;

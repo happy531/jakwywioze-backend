@@ -7,6 +7,7 @@ import com.example.jakwywiozebackend.entity.WasteType;
 import com.example.jakwywiozebackend.mapper.DynamicPointInfoMapper;
 import com.example.jakwywiozebackend.mapper.PointMapper;
 import com.example.jakwywiozebackend.mapper.WasteTypeMapper;
+import com.example.jakwywiozebackend.repository.DynamicPointInfoRepository;
 import com.example.jakwywiozebackend.repository.PointRepository;
 import com.example.jakwywiozebackend.repository.WasteTypeRepository;
 import com.example.jakwywiozebackend.service.CityService;
@@ -40,6 +41,7 @@ public class PointServiceImpl implements PointService {
     private final CityService cityService;
     private final DynamicPointInfoService dynamicPointService;
     private final DynamicPointInfoMapper dynamicPointMapper;
+    private final DynamicPointInfoRepository dynamicPointInfoRepository;
 
     @Override
     public List<PointDto> getPoints() {
@@ -196,9 +198,20 @@ public class PointServiceImpl implements PointService {
     }
 
     @Override
-    public PointDto updatePoint(PointDto pointDto) {
+    public PointDto updatePoint(PointUpdateDto pointDto) throws IOException, InterruptedException {
         Point point  = pointRepository.findById(pointDto.getId()).orElseThrow(EntityNotFoundException::new);
+        List<String> wasteTypes = pointDto.getWasteTypes();
+        List<WasteType> wasteTypesFromDb = new ArrayList<>();
+        for (String name : wasteTypes) {
+            wasteTypesFromDb.add(wasteTypeRepository.findByName(name).orElseThrow(EntityNotFoundException::new));
+        }
         pointMapper.updatePointFromDto(pointDto, point);
+        point.setWasteTypes(wasteTypesFromDb);
+        if (!pointDto.getStreet().equals(point.getStreet())){
+            JsonNode dynamicPointLocation = Utils.getLatAndLonForDynamicPointByAddress(point);
+            point.setLat(Float.parseFloat(String.valueOf(dynamicPointLocation.get("lat"))));
+            point.setLon(Float.parseFloat(String.valueOf(dynamicPointLocation.get("lon"))));
+        }
         return pointMapper.toPointDto(pointRepository.save(point));
     }
 
@@ -209,6 +222,7 @@ public class PointServiceImpl implements PointService {
             throw new IllegalArgumentException("Can't delete non dynamic point");
         }
         pointRepository.delete(point);
+        dynamicPointInfoRepository.delete(point.getDynamicPointInfo());
         return "Twój punkt dynamiczny został usunięty";
     }
 
